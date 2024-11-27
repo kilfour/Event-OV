@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Events</title>
+	<style>
+		body {
+			padding: 0;
+			margin: 0;
+		}
+
+		[data-testid='challenge-screen--iframe'] {
+			width: 100% !important;
+		}
+	</style>
+	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+	<script src="https://gateway.sumup.com/gateway/ecom/card/v2/sdk.js"></script>
+	<script type="text/javascript" src="main.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+</body>
+
+<script type="text/javascript">
+
+	var app = Elm.App.init({ flags: "http://localhost:3000/" });
+	// --------------------------------------------------------------------------------------------
+	// SUMUP INTEGRATION
+	app.ports.showSumUpWidget.subscribe(function (checkoutId) {
+		SumUpCard.mount({
+			id: 'sumup-card',
+			locale: 'nl-BE',
+			checkoutId: checkoutId,
+			onResponse: function (type, body) {
+				if (type == 'success') {
+					if (body.status == 'FAILED') {
+						app.ports.sumUpFailure.send(true);
+					} else {
+						app.ports.sumUpFailure.send(false);
+					}
+				}
+			},
+		});
+	});
+	// --------------------------------------------------------------------------------------------
+	// FIX FOR CARET POSITION WHEN ENTERING INVALID TEXTS
+	window.addEventListener('input', event => {
+		// capture the value the browser set
+		const target = event.target
+		const { value, selectionStart } = target
+		// wait for Elm to decide what the new value
+		// of the input actually should look like
+		requestAnimationFrame(() => {
+			const newValue = target.value
+			if (value !== newValue) {
+				target.selectionEnd = target.selectionStart =
+					selectionStart - (value.length - newValue.length)
+			}
+		})
+	}, true)
+	// --------------------------------------------------------------------------------------------
+</script>
+
+</html>
