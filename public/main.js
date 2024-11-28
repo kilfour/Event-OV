@@ -6840,7 +6840,7 @@ var $author$project$Api$OrderConfirmed$dispatch = F3(
 var $author$project$Pages$Payment$init = F2(
 	function (shared, orderId) {
 		return _Utils_Tuple2(
-			{dP: orderId, fQ: ''},
+			{dP: orderId},
 			A3($author$project$Api$OrderConfirmed$dispatch, shared.ez, orderId, $author$project$Pages$Payment$OrderConfirmed));
 	});
 var $author$project$Pages$PaymentSuccess$OrderInfoLoaded = function (a) {
@@ -9275,7 +9275,7 @@ var $author$project$Pages$Home$update = F3(
 		return _Utils_Tuple2(
 			model,
 			$author$project$Lib$Effect$Cmd(
-				A2($elm$browser$Browser$Navigation$pushUrl, shared.fl, '/order-tickets/')));
+				$elm$browser$Browser$Navigation$load('https://www.mollie.com/checkout/select-method/EGdmU7d9Wq')));
 	});
 var $author$project$Shared$Error = function (a) {
 	return {$: 2, a: a};
@@ -10306,7 +10306,10 @@ var $author$project$Pages$Payment$update = F3(
 			return _Utils_Tuple2(model, $author$project$Lib$Effect$None);
 		} else {
 			if (!msg.a.$) {
-				return _Utils_Tuple2(model, $author$project$Lib$Effect$none);
+				return _Utils_Tuple2(
+					model,
+					$author$project$Lib$Effect$Cmd(
+						A2($elm$browser$Browser$Navigation$pushUrl, shared.fl, '/payment-success/' + model.dP)));
 			} else {
 				var err = msg.a.a;
 				return _Utils_Tuple2(model, $author$project$Lib$Effect$none);
@@ -15168,26 +15171,7 @@ var $author$project$Pages$Payment$view = F2(
 								[
 									$rtfeldman$elm_css$Html$Styled$text(evt.bQ)
 								])),
-							$elm$core$String$isEmpty(model.fQ) ? $rtfeldman$elm_css$Html$Styled$text('Verificatie in behandeling.') : A2(
-							$rtfeldman$elm_css$Html$Styled$div,
-							_List_Nil,
-							_List_fromArray(
-								[
-									A4(
-									$rtfeldman$elm_css$Html$Styled$styled,
-									$rtfeldman$elm_css$Html$Styled$a,
-									_List_fromArray(
-										[$author$project$Style$hyperLink]),
-									_List_fromArray(
-										[
-											$rtfeldman$elm_css$Html$Styled$Attributes$href(model.fQ)
-										]),
-									_List_fromArray(
-										[
-											$rtfeldman$elm_css$Html$Styled$text('Naar Betalings Site')
-										])),
-									$rtfeldman$elm_css$Html$Styled$text('Na succesvolle betaling wordt u terug naar deze site omgeleid.')
-								])),
+							$rtfeldman$elm_css$Html$Styled$text('Verificatie in behandeling.'),
 							maybeMargin
 						]))
 				]));
