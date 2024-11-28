@@ -37,7 +37,7 @@ ticketsString evt =
 theEvent : Event
 theEvent =
     { id = Nothing
-    , name = "Event Ondernemend Mechelen"
+    , name = "Event Naam"
     , address = "Maneblusser City\nNora Tilleylaan 28\n2800 Mechelen"
     , date = "Donderdag 9 Januari 2025"
     , time = "18:30"

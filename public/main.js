@@ -13150,7 +13150,7 @@ var $author$project$Domain$Event$theEvent = {
 	a8: 'Donderdag 9 Januari 2025',
 	bE: 'Gratis parkeren.\nDrank en gerechtjes inbegrepen tot 21u30.',
 	dx: $elm$core$Maybe$Nothing,
-	bR: 'Event Ondernemend Mechelen',
+	bR: 'Event Naam',
 	b3: _List_fromArray(
 		[
 			{eS: 'Standaard', dx: 'VVK', bf: _List_Nil, fu: 60},
