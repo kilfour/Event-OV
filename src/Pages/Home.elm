@@ -34,7 +34,7 @@ update msg shared model =
         GotoTickets ->
             ( model
               --, Effect.Cmd <| Nav.pushUrl shared.navKey "/order-tickets/"
-            , Effect.Cmd <| Nav.load "https:/www.google.com"
+            , Effect.Cmd <| Nav.load "https://www.google.com"
             )
 
 
