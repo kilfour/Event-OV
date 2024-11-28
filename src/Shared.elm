@@ -62,6 +62,7 @@ type Msg
     | Error Http.Error
     | OrderInfoEntered OrderInfoEntered.OrderInfo Float
     | OrderInfoEnteredSaved (Result Http.Error Id)
+    | CheckOutCreated (Result Http.Error String)
     | LogToServer String
     | StuffLogged (Result Http.Error Api.LogToServer.Response)
 
@@ -85,12 +86,17 @@ update msg model =
 
         OrderInfoEnteredSaved (Ok objectId) ->
             ( model
-              --, CreateCheckOut.dispatch model.baseApiUrl objectId.id model.currentOrderAmount CheckOutCreated
-            , Nav.pushUrl model.navKey <| "/payment/" ++ objectId.id
+            , CreateCheckOut.dispatch model.baseApiUrl objectId.id model.currentOrderAmount CheckOutCreated
             )
 
         OrderInfoEnteredSaved (Err error) ->
             ( { model | error = Just error }, Cmd.none )
+
+        CheckOutCreated (Ok url) ->
+            ( model, Nav.load url )
+
+        CheckOutCreated (Err err) ->
+            ( { model | error = Just err }, Cmd.none )
 
         LogToServer info ->
             ( model, Api.LogToServer.dispatch model.baseApiUrl info StuffLogged )

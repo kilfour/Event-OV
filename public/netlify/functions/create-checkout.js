@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+import createMollieClient from '@mollie/api-client';
 
 exports.handler = async function (event, context) {
 
@@ -6,27 +6,30 @@ exports.handler = async function (event, context) {
 
         const data = JSON.parse(event.body);
         console.log(event.body);
-        const postData = JSON.stringify({
-            checkout_reference: data.orderId,
-            amount: data.amount,
-            currency: 'EUR',
-            pay_to_email: process.env.SUMUP_MAIL,
-            description: "EVENT AHM 07/10/24"
-        });
 
-        const result = await fetch(
-            "https://api.sumup.com/v0.1/checkouts",
-            {
-                method: 'POST',
-                headers: { 'Authorization': `Bearer ${process.env.SUMUP_KEY}` },
-                body: postData,
-            }
-        )
-        const resultJSON = await result.json();
-        console.log(resultJSON);
+        const mollieClient = createMollieClient({ apiKey: 'test_zPhwMGNRwTThJxUwGR9n4fJHtUVUaU' });
+
+        (async () => {
+
+            const payment = await mollieClient.payments.create({
+                amount: {
+                    currency: 'EUR',
+                    value: String(data.amount), // You must send the correct number of decimals, thus we enforce the use of strings
+                },
+                description: 'EVENT OM 09/10/25',
+                redirectUrl: 'https://pequivents.netlify.app/payment/' + data.orderId + '/',
+                // webhookUrl: 'https://webshop.example.org/payments/webhook/',
+                metadata: {
+                    order_id: data.orderId,
+                },
+            });
+
+            console.log(payment);
+
+        })();
         return {
             statusCode: 200,
-            body: JSON.stringify(resultJSON)
+            body: JSON.stringify(payment.getCheckoutUrl())
         }
     } catch (err) {
         return {

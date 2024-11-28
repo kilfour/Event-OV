@@ -13257,12 +13257,53 @@ var $author$project$Lib$Effect$toCmd = F2(
 			}
 		}
 	});
+var $author$project$Shared$CheckOutCreated = function (a) {
+	return {$: 'CheckOutCreated', a: a};
+};
 var $author$project$Shared$OrderInfoEnteredSaved = function (a) {
 	return {$: 'OrderInfoEnteredSaved', a: a};
 };
 var $author$project$Shared$StuffLogged = function (a) {
 	return {$: 'StuffLogged', a: a};
 };
+var $elm$json$Json$Encode$float = _Json_wrap;
+var $author$project$Api$CreateCheckOut$encoder = F2(
+	function (orderId, amount) {
+		return $elm$json$Json$Encode$object(
+			_List_fromArray(
+				[
+					_Utils_Tuple2(
+					'orderId',
+					$elm$json$Json$Encode$string(orderId)),
+					_Utils_Tuple2(
+					'amount',
+					$elm$json$Json$Encode$float(amount))
+				]));
+	});
+var $elm$http$Http$expectString = function (toMsg) {
+	return A2(
+		$elm$http$Http$expectStringResponse,
+		toMsg,
+		$elm$http$Http$resolve($elm$core$Result$Ok));
+};
+var $author$project$Api$CreateCheckOut$dispatch = F4(
+	function (baseApiUrl, id, amount, msg) {
+		var jsonPayload = A2(
+			$elm$json$Json$Encode$encode,
+			0,
+			A2($author$project$Api$CreateCheckOut$encoder, id, amount));
+		var request = $elm$http$Http$request(
+			{
+				body: A2($elm$http$Http$stringBody, 'application/json', jsonPayload),
+				expect: $elm$http$Http$expectString(msg),
+				headers: _List_Nil,
+				method: 'POST',
+				timeout: $elm$core$Maybe$Nothing,
+				tracker: $elm$core$Maybe$Nothing,
+				url: baseApiUrl + 'create-checkout'
+			});
+		return request;
+	});
 var $author$project$Api$LogToServer$requestEncoder = function (message) {
 	return $elm$json$Json$Encode$object(
 		_List_fromArray(
@@ -13299,7 +13340,6 @@ var $author$project$Api$LogToServer$dispatch = F3(
 			});
 		return request;
 	});
-var $elm$json$Json$Encode$float = _Json_wrap;
 var $elm$json$Json$Encode$int = _Json_wrap;
 var $author$project$Api$OrderInfoEntered$ticketEncoder = function (ticketInfo) {
 	return $elm$json$Json$Encode$object(
@@ -13360,7 +13400,7 @@ var $author$project$Shared$getDevice = F2(
 	function (width, height) {
 		return (_Utils_cmp(width, height) < 0) ? $author$project$Shared$Phone : $author$project$Shared$Desktop;
 	});
-var $elm$browser$Browser$Navigation$pushUrl = _Browser_pushUrl;
+var $elm$browser$Browser$Navigation$load = _Browser_load;
 var $elm$core$Basics$round = _Basics_round;
 var $author$project$Shared$update = F2(
 	function (msg, model) {
@@ -13409,7 +13449,7 @@ var $author$project$Shared$update = F2(
 					var objectId = msg.a.a;
 					return _Utils_Tuple2(
 						model,
-						A2($elm$browser$Browser$Navigation$pushUrl, model.navKey, '/payment/' + objectId.id));
+						A4($author$project$Api$CreateCheckOut$dispatch, model.baseApiUrl, objectId.id, model.currentOrderAmount, $author$project$Shared$CheckOutCreated));
 				} else {
 					var error = msg.a.a;
 					return _Utils_Tuple2(
@@ -13417,6 +13457,22 @@ var $author$project$Shared$update = F2(
 							model,
 							{
 								error: $elm$core$Maybe$Just(error)
+							}),
+						$elm$core$Platform$Cmd$none);
+				}
+			case 'CheckOutCreated':
+				if (msg.a.$ === 'Ok') {
+					var url = msg.a.a;
+					return _Utils_Tuple2(
+						model,
+						$elm$browser$Browser$Navigation$load(url));
+				} else {
+					var err = msg.a.a;
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{
+								error: $elm$core$Maybe$Just(err)
 							}),
 						$elm$core$Platform$Cmd$none);
 				}
@@ -13476,7 +13532,7 @@ var $author$project$App$applyEffect = F2(
 						$elm$core$Platform$Cmd$map($author$project$App$SharedMsg),
 						cmd))));
 	});
-var $elm$browser$Browser$Navigation$load = _Browser_load;
+var $elm$browser$Browser$Navigation$pushUrl = _Browser_pushUrl;
 var $elm$url$Url$addPort = F2(
 	function (maybePort, starter) {
 		if (maybePort.$ === 'Nothing') {
@@ -24690,4 +24746,4 @@ var $author$project$App$main = $elm$browser$Browser$application(
 			};
 		}
 	});
-_Platform_export({'App':{'init':$author$project$App$main($elm$json$Json$Decode$string)({"versions":{"elm":"0.19.1"},"types":{"message":"App.Msg","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"},"Api.Helpers.ObjectId.Id":{"args":[],"type":"{ id : String.String }"},"Api.OrderInfoEntered.OrderInfo":{"args":[],"type":"{ christianName : String.String, lastName : String.String, email : String.String, ticketsInfo : List.List Api.OrderInfoEntered.TicketInfo }"},"Api.LogToServer.Response":{"args":[],"type":"{ success : Basics.Bool }"},"Api.OrderInfoEntered.TicketInfo":{"args":[],"type":"{ id : String.String, description : String.String, price : Basics.Float, numberOfTickets : Basics.Int }"},"Browser.Dom.Viewport":{"args":[],"type":"{ scene : { width : Basics.Float, height : Basics.Float }, viewport : { x : Basics.Float, y : Basics.Float, width : Basics.Float, height : Basics.Float } }"},"Api.SendMail.MailResult":{"args":[],"type":"{ success : Basics.Bool }"},"Api.GetOrderInfo.Order":{"args":[],"type":"{ id : String.String, code : String.String, christianName : String.String, lastName : String.String, email : String.String, tickets : List.List Api.GetOrderInfo.Ticket }"},"Api.GetFreeTicketsAvailable.Response":{"args":[],"type":"{ amount : Basics.Int }"},"Api.GetOrderInfo.Ticket":{"args":[],"type":"{ id : String.String, description : String.String, price : Basics.Float }"}},"unions":{"App.Msg":{"args":[],"tags":{"SharedMsg":["Shared.Msg"],"HelmsmanMsg":["Helmsman.Msg"],"LinkClicked":["Browser.UrlRequest"],"UrlChanged":["Url.Url"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Helmsman.Msg":{"args":[],"tags":{"HomeMsg":["Pages.Home.Msg"],"OrderTicketsMsg":["Pages.OrderTickets.Msg"],"PaymentSuccessMsg":["Pages.PaymentSuccess.Msg"],"PaymentMsg":["Pages.Payment.Msg"],"TeesAndCeesMsg":["Pages.TeesAndCees.Msg"],"InvoiceInfoMsg":["Pages.InvoiceInfo.Msg"],"TicketsMsg":["Pages.Tickets.Msg"],"OrderTicketsTempMsg":["Pages.OrderTicketsTemp.Msg"]}},"Shared.Msg":{"args":[],"tags":{"GotViewport":["Browser.Dom.Viewport"],"OnResize":["Basics.Int","Basics.Int"],"Error":["Http.Error"],"OrderInfoEntered":["Api.OrderInfoEntered.OrderInfo","Basics.Float"],"OrderInfoEnteredSaved":["Result.Result Http.Error Api.Helpers.ObjectId.Id"],"LogToServer":["String.String"],"StuffLogged":["Result.Result Http.Error Api.LogToServer.Response"]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}},"Basics.Bool":{"args":[],"tags":{"True":[],"False":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String.String"],"Timeout":[],"NetworkError":[],"BadStatus":["Basics.Int"],"BadBody":["String.String"]}},"Basics.Float":{"args":[],"tags":{"Float":[]}},"List.List":{"args":["a"],"tags":{}},"Pages.Home.Msg":{"args":[],"tags":{"GotoTickets":[]}},"Pages.InvoiceInfo.Msg":{"args":[],"tags":{"UpdateCompanyName":["String.String"],"UpdateAddress":["String.String"],"UpdateVatNumber":["String.String"],"SaveInfo":[],"InvoiceInfoSaved":["Result.Result Http.Error Api.Helpers.ObjectId.Id"]}},"Pages.OrderTickets.Msg":{"args":[],"tags":{"NoOp":[],"FreeTicketsAvailableReceived":["Result.Result Http.Error Api.GetFreeTicketsAvailable.Response"],"UpdateChristianName":["String.String"],"UpdateLastName":["String.String"],"UpdateEmail":["String.String"],"UpdateConfirmEmail":["String.String"],"AddStandardTicket":[],"RemoveStandardTicket":[],"AddVipTicket":[],"RemoveVipTicket":[],"GotoPayment":[]}},"Pages.OrderTicketsTemp.Msg":{"args":[],"tags":{"NoOp":[],"FreeTicketsAvailableReceived":["Result.Result Http.Error Api.GetFreeTicketsAvailable.Response"],"UpdateChristianName":["String.String"],"UpdateLastName":["String.String"],"UpdateEmail":["String.String"],"UpdateConfirmEmail":["String.String"],"UpdateFreeTicketCode":["String.String"],"AddMemberTicket":[],"RemoveMemberTicket":[],"AddNonMemberTicket":[],"RemoveNonMemberTicket":[],"AddFreeTicket":[],"RemoveFreeTicket":[],"GotoPayment":[]}},"Pages.Payment.Msg":{"args":[],"tags":{"NoOp":[],"OrderConfirmed":["Result.Result Http.Error Api.Helpers.ObjectId.Id"]}},"Pages.PaymentSuccess.Msg":{"args":[],"tags":{"NoOp":[],"OrderInfoLoaded":["Result.Result Http.Error Api.GetOrderInfo.Order"],"MailSend":["Result.Result Http.Error Api.SendMail.MailResult"]}},"Pages.TeesAndCees.Msg":{"args":[],"tags":{"Back":[]}},"Pages.Tickets.Msg":{"args":[],"tags":{"NoOp":[],"OrderInfoLoaded":["Result.Result Http.Error Api.GetOrderInfo.Order"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}}}})}});}(this));
+_Platform_export({'App':{'init':$author$project$App$main($elm$json$Json$Decode$string)({"versions":{"elm":"0.19.1"},"types":{"message":"App.Msg","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"},"Api.Helpers.ObjectId.Id":{"args":[],"type":"{ id : String.String }"},"Api.OrderInfoEntered.OrderInfo":{"args":[],"type":"{ christianName : String.String, lastName : String.String, email : String.String, ticketsInfo : List.List Api.OrderInfoEntered.TicketInfo }"},"Api.LogToServer.Response":{"args":[],"type":"{ success : Basics.Bool }"},"Api.OrderInfoEntered.TicketInfo":{"args":[],"type":"{ id : String.String, description : String.String, price : Basics.Float, numberOfTickets : Basics.Int }"},"Browser.Dom.Viewport":{"args":[],"type":"{ scene : { width : Basics.Float, height : Basics.Float }, viewport : { x : Basics.Float, y : Basics.Float, width : Basics.Float, height : Basics.Float } }"},"Api.SendMail.MailResult":{"args":[],"type":"{ success : Basics.Bool }"},"Api.GetOrderInfo.Order":{"args":[],"type":"{ id : String.String, code : String.String, christianName : String.String, lastName : String.String, email : String.String, tickets : List.List Api.GetOrderInfo.Ticket }"},"Api.GetFreeTicketsAvailable.Response":{"args":[],"type":"{ amount : Basics.Int }"},"Api.GetOrderInfo.Ticket":{"args":[],"type":"{ id : String.String, description : String.String, price : Basics.Float }"}},"unions":{"App.Msg":{"args":[],"tags":{"SharedMsg":["Shared.Msg"],"HelmsmanMsg":["Helmsman.Msg"],"LinkClicked":["Browser.UrlRequest"],"UrlChanged":["Url.Url"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Helmsman.Msg":{"args":[],"tags":{"HomeMsg":["Pages.Home.Msg"],"OrderTicketsMsg":["Pages.OrderTickets.Msg"],"PaymentSuccessMsg":["Pages.PaymentSuccess.Msg"],"PaymentMsg":["Pages.Payment.Msg"],"TeesAndCeesMsg":["Pages.TeesAndCees.Msg"],"InvoiceInfoMsg":["Pages.InvoiceInfo.Msg"],"TicketsMsg":["Pages.Tickets.Msg"],"OrderTicketsTempMsg":["Pages.OrderTicketsTemp.Msg"]}},"Shared.Msg":{"args":[],"tags":{"GotViewport":["Browser.Dom.Viewport"],"OnResize":["Basics.Int","Basics.Int"],"Error":["Http.Error"],"OrderInfoEntered":["Api.OrderInfoEntered.OrderInfo","Basics.Float"],"OrderInfoEnteredSaved":["Result.Result Http.Error Api.Helpers.ObjectId.Id"],"CheckOutCreated":["Result.Result Http.Error String.String"],"LogToServer":["String.String"],"StuffLogged":["Result.Result Http.Error Api.LogToServer.Response"]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}},"Basics.Bool":{"args":[],"tags":{"True":[],"False":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String.String"],"Timeout":[],"NetworkError":[],"BadStatus":["Basics.Int"],"BadBody":["String.String"]}},"Basics.Float":{"args":[],"tags":{"Float":[]}},"List.List":{"args":["a"],"tags":{}},"Pages.Home.Msg":{"args":[],"tags":{"GotoTickets":[]}},"Pages.InvoiceInfo.Msg":{"args":[],"tags":{"UpdateCompanyName":["String.String"],"UpdateAddress":["String.String"],"UpdateVatNumber":["String.String"],"SaveInfo":[],"InvoiceInfoSaved":["Result.Result Http.Error Api.Helpers.ObjectId.Id"]}},"Pages.OrderTickets.Msg":{"args":[],"tags":{"NoOp":[],"FreeTicketsAvailableReceived":["Result.Result Http.Error Api.GetFreeTicketsAvailable.Response"],"UpdateChristianName":["String.String"],"UpdateLastName":["String.String"],"UpdateEmail":["String.String"],"UpdateConfirmEmail":["String.String"],"AddStandardTicket":[],"RemoveStandardTicket":[],"AddVipTicket":[],"RemoveVipTicket":[],"GotoPayment":[]}},"Pages.OrderTicketsTemp.Msg":{"args":[],"tags":{"NoOp":[],"FreeTicketsAvailableReceived":["Result.Result Http.Error Api.GetFreeTicketsAvailable.Response"],"UpdateChristianName":["String.String"],"UpdateLastName":["String.String"],"UpdateEmail":["String.String"],"UpdateConfirmEmail":["String.String"],"UpdateFreeTicketCode":["String.String"],"AddMemberTicket":[],"RemoveMemberTicket":[],"AddNonMemberTicket":[],"RemoveNonMemberTicket":[],"AddFreeTicket":[],"RemoveFreeTicket":[],"GotoPayment":[]}},"Pages.Payment.Msg":{"args":[],"tags":{"NoOp":[],"OrderConfirmed":["Result.Result Http.Error Api.Helpers.ObjectId.Id"]}},"Pages.PaymentSuccess.Msg":{"args":[],"tags":{"NoOp":[],"OrderInfoLoaded":["Result.Result Http.Error Api.GetOrderInfo.Order"],"MailSend":["Result.Result Http.Error Api.SendMail.MailResult"]}},"Pages.TeesAndCees.Msg":{"args":[],"tags":{"Back":[]}},"Pages.Tickets.Msg":{"args":[],"tags":{"NoOp":[],"OrderInfoLoaded":["Result.Result Http.Error Api.GetOrderInfo.Order"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}}}})}});}(this));

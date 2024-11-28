@@ -13,7 +13,7 @@ encoder orderId amount =
         ]
 
 
-dispatch : String -> String -> Float -> (Result Http.Error Id -> msg) -> Cmd msg
+dispatch : String -> String -> Float -> (Result Http.Error String -> msg) -> Cmd msg
 dispatch baseApiUrl id amount msg =
     let
         jsonPayload : String
@@ -26,7 +26,7 @@ dispatch baseApiUrl id amount msg =
                 , headers = []
                 , url = baseApiUrl ++ "create-checkout"
                 , body = Http.stringBody "application/json" jsonPayload
-                , expect = Http.expectJson msg objectIdDecoder
+                , expect = Http.expectString msg
                 , timeout = Nothing
                 , tracker = Nothing
                 }
