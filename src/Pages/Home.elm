@@ -83,10 +83,7 @@ view shared _ =
         [ Banner.view shared.device
         , Html.styled Html.div Style.container [] <|
             [ Html.styled Html.h1 (Style.pageHeader ++ [ Css.marginTop (Css.em 0.3) ]) [] [ Html.text evt.name ]
-            , Html.div []
-                [ Html.styled Html.h4 Style.pageHeader [] [ Html.text evt.date ]
-                , Html.styled Html.div [ Css.marginLeft (Css.em 1), Css.marginBottom (Css.em 1) ] [] [ Html.text (evt.time ++ " uur") ]
-                ]
+            , dateTimeRow
             , Html.styled Html.h2 Style.pageHeader [] [ Html.text "Locatie" ]
             , Html.styled Html.div (Style.address ++ [ Css.marginLeft (Css.em 1), Css.marginBottom (Css.em 1) ]) [] [ Html.text evt.address ]
             , Html.styled Html.h2 Style.pageHeader [] [ Html.text "Extra Info" ]
@@ -97,5 +94,6 @@ view shared _ =
             , Html.br [] []
             , Html.br [] []
             , maybeMargin
+            , maybeBottomButton
             ]
         ]

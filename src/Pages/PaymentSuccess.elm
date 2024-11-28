@@ -26,17 +26,11 @@ emptyModel =
     }
 
 
-init : Shared.Model -> ( Model, Cmd Msg )
-init shared =
-    if shared.currentOrder == "" then
-        ( emptyModel
-        , Nav.pushUrl shared.navKey "/order-tickets/"
-        )
-
-    else
-        ( emptyModel
-        , GetOrderInfo.dispatch shared.baseApiUrl shared.currentOrder OrderInfoLoaded
-        )
+init : Shared.Model -> String -> ( Model, Cmd Msg )
+init shared orderId =
+    ( emptyModel
+    , GetOrderInfo.dispatch shared.baseApiUrl orderId OrderInfoLoaded
+    )
 
 
 type Msg
@@ -55,14 +49,15 @@ update msg shared model =
 
         OrderInfoLoaded (Ok orderInfo) ->
             ( { model | orderInfo = Just orderInfo }
-            , Effect.Cmd <|
-                SendMail.dispatch shared.baseApiUrl
-                    { email = orderInfo.email
-                    , orderId = orderInfo.id
-                    , total = totalAmount orderInfo
-                    , url = "https://pequivents.netlify.app/tickets/" ++ orderInfo.id ++ "-" ++ orderInfo.code
-                    }
-                    MailSend
+            , Effect.none
+              -- , Effect.Cmd <|
+              --     SendMail.dispatch shared.baseApiUrl
+              --         { email = orderInfo.email
+              --         , orderId = orderInfo.id
+              --         , total = totalAmount orderInfo
+              --         , url = "https://pequivents.netlify.app/tickets/" ++ orderInfo.id ++ "-" ++ orderInfo.code
+              --         }
+              --         MailSend
             )
 
         OrderInfoLoaded (Err error) ->
@@ -90,17 +85,13 @@ view shared model =
 
         Just orderInfo ->
             let
-                maybeInvoiceInfoLink =
-                    if totalAmount orderInfo > 0 then
-                        [ Html.div [] <|
-                            [ Html.text "Indien u een faktuur vereist, gelieve uw bedrijfs informatie in te geven via het volgende formulier :" ]
-                        , Html.div [] <|
-                            [ Html.styled Html.a [ Style.hyperLink, Css.fontSize (Css.em 1.25) ] [ href "/invoice-info" ] [ Html.text "Fakturatie gegevens" ] ]
-                        , Html.br [] []
-                        ]
-
-                    else
-                        []
+                invoiceInfoLink =
+                    [ Html.div [] <|
+                        [ Html.text "Indien u een faktuur vereist, gelieve uw bedrijfs informatie in te geven via het volgende formulier :" ]
+                    , Html.div [] <|
+                        [ Html.styled Html.a [ Style.hyperLink, Css.fontSize (Css.em 1.25) ] [ href "/invoice-info" ] [ Html.text "Fakturatie gegevens" ] ]
+                    , Html.br [] []
+                    ]
 
                 ticketHref =
                     "/tickets/" ++ orderInfo.id ++ "-" ++ orderInfo.code
@@ -110,24 +101,24 @@ view shared model =
                 , Html.styled Html.div Style.container [] <|
                     [ Html.styled Html.h2 ([ Css.marginBottom (Css.em 0.375), Css.paddingBottom (Css.em 0.5) ] ++ Style.pageHeader) [] [ Html.text "Tickets Aangekocht" ]
                     , Html.styled Html.div [ Css.paddingLeft (Css.em 1), Css.paddingBottom (Css.em 1.5) ] [] <|
-                        maybeInvoiceInfoLink
-                            ++ [ Html.div [] <|
-                                    [ Html.text
-                                        ("Hieronder vind u een link naar de aangekochte tickets. "
-                                            ++ "U kan deze afdrukken, bewaren als pdf (via 'Print to Pdf'), of u kan ook deze pagina rechtstreeks gebruiken als toegang op het event."
-                                        )
-                                    ]
-                               , Html.br [] []
-                               , Html.div [] <|
-                                    [ Html.text
-                                        ("Een kopie van deze informatie inclusief link naar afdrukbare pagina is naar "
-                                            ++ orderInfo.email
-                                            ++ " verstuurd."
-                                        )
-                                    ]
-                               , Html.br [] []
-                               , Html.div [] <|
-                                    [ Html.styled Html.a [ Style.hyperLink, Css.fontSize (Css.em 1.25) ] [ href ticketHref ] [ Html.text "Tickets Weergeven" ] ]
-                               ]
+                        -- invoiceInfoLink ++
+                        [ Html.div [] <|
+                            [ Html.text
+                                ("Hieronder vind u een link naar de aangekochte tickets. "
+                                    ++ "U kan deze afdrukken, bewaren als pdf (via 'Print to Pdf'), of u kan ook deze pagina rechtstreeks gebruiken als toegang op het event."
+                                )
+                            ]
+                        , Html.br [] []
+                        , Html.div [] <|
+                            [ Html.text
+                                ("Een kopie van deze informatie inclusief link naar afdrukbare pagina is naar "
+                                    ++ orderInfo.email
+                                    ++ " verstuurd."
+                                )
+                            ]
+                        , Html.br [] []
+                        , Html.div [] <|
+                            [ Html.styled Html.a [ Style.hyperLink, Css.fontSize (Css.em 1.25) ] [ href ticketHref ] [ Html.text "Tickets Weergeven" ] ]
+                        ]
                     ]
                 ]

@@ -1,11 +1,14 @@
 module Pages.Payment exposing (..)
 
+import Api.Helpers.ObjectId exposing (Id)
+import Api.OrderConfirmed as OrderConfirmed
 import Browser.Navigation as Nav
 import Css
 import Domain.Event exposing (..)
 import Html.Styled as Html exposing (Html)
 import Html.Styled.Attributes exposing (..)
 import Html.Styled.Events exposing (..)
+import Http
 import Lib.Effect as Effect exposing (Effect)
 import Lib.ViewHelpers as UI
 import Pages.ViewParts.Banner as Banner
@@ -20,22 +23,14 @@ type alias SumUpFailure =
 
 
 type alias Model =
-    { sumUpFailed : Bool
-    , retried : Int
-    }
+    { orderId : String }
 
 
-init : Shared.Model -> ( Model, Cmd Msg )
-init shared =
-    if shared.currentOrder == "" then
-        ( { sumUpFailed = False, retried = 0 }
-        , Nav.pushUrl shared.navKey "/order-tickets/"
-        )
-
-    else
-        ( { sumUpFailed = False, retried = 0 }
-        , Cmd.none
-        )
+init : Shared.Model -> String -> ( Model, Cmd Msg )
+init shared orderId =
+    ( { orderId = orderId }
+    , OrderConfirmed.dispatch shared.baseApiUrl orderId OrderConfirmed
+    )
 
 
 subscriptions : Model -> Sub Msg
@@ -45,9 +40,7 @@ subscriptions _ =
 
 type Msg
     = NoOp
-    | WidgetMounted Bool
-    | SumUpBodyStatusOk Bool
-    | SumUpFailed SumUpFailure
+    | OrderConfirmed (Result Http.Error Id)
 
 
 update : Msg -> Shared.Model -> Model -> ( Model, Effect Shared.Msg Msg )
@@ -58,43 +51,11 @@ update msg shared model =
             , Effect.None
             )
 
-        WidgetMounted succes ->
-            if succes then
-                ( model
-                , --Effect.none )
-                  Effect.Shared <| Shared.LogToServer "Widget Mounted."
-                )
+        OrderConfirmed (Ok _) ->
+            ( model, Effect.Cmd <| Nav.pushUrl shared.navKey ("/payment-success/" ++ model.orderId) )
 
-            else
-                let
-                    retried =
-                        model.retried
-
-                    effect =
-                        if retried < 3 then
-                            Effect.Batch <|
-                                [ Effect.Shared <| Shared.LogToServer "Sumup failed to mount, retrying."
-                                , Effect.none
-                                ]
-
-                        else
-                            Effect.none
-                in
-                ( { model | retried = retried + 1 }
-                , effect
-                )
-
-        SumUpBodyStatusOk succes ->
-            if succes then
-                ( model, Effect.Shared ConfirmOrder )
-
-            else
-                ( { model | sumUpFailed = True }, Effect.none )
-
-        SumUpFailed failure ->
-            ( { model | sumUpFailed = True }
-            , Effect.Shared <| Shared.LogToServer (failure.failureType ++ " :  " ++ failure.body)
-            )
+        OrderConfirmed (Err err) ->
+            ( model, Effect.none )
 
 
 view : Shared.Model -> Model -> Html Msg
@@ -115,12 +76,7 @@ view shared model =
         [ Banner.view shared.device
         , Html.styled Html.div Style.container [] <|
             [ Html.styled Html.h1 Style.pageHeader [] [ Html.text evt.name ]
-            , UI.showIf model.sumUpFailed <|
-                Html.styled Html.div (Style.validation ++ [ Css.fontSize (Css.em 1.25), Css.paddingLeft (Css.em 2) ]) [] <|
-                    [ Html.text "Uw kaart informatie kon niet geverifiëerd worden. Gelieve de gegevens te controleren." ]
-            , Html.styled Html.div [ Css.fontSize (Css.em 1.25), Css.paddingLeft (Css.em 2) ] [] <|
-                [ Html.text "Opgelet SumUp ondersteunt enkel deze onderstaande kaarten." ]
-            , Html.div [ id "sumup-card" ] []
+            , Html.text "Verificatie in behandeling."
             , maybeMargin
             ]
         ]

@@ -20,8 +20,8 @@ type Route
     | Home
     | OrderTickets
     | OrderTicketsTemp
-    | Payment
-    | PaymentSuccess
+    | Payment String
+    | PaymentSuccess String
     | TeesAndCees
     | InvoiceInfo
     | Tickets String
@@ -34,8 +34,8 @@ parser =
         , Parser.map Home (Parser.s "home")
         , Parser.map OrderTickets (Parser.s "order-tickets")
         , Parser.map OrderTicketsTemp (Parser.s "order-tickets-temp")
-        , Parser.map Payment (Parser.s "payment")
-        , Parser.map PaymentSuccess (Parser.s "payment-success")
+        , Parser.map Payment (Parser.s "payment" </> Parser.string)
+        , Parser.map PaymentSuccess (Parser.s "payment-success" </> Parser.string)
         , Parser.map TeesAndCees (Parser.s "tees-and-cees")
         , Parser.map InvoiceInfo (Parser.s "invoice-info")
         , Parser.map Tickets (Parser.s "tickets" </> Parser.string)
@@ -77,17 +77,17 @@ changeRouteTo route model =
             in
             ( { model | helmsman = Helmsman.OrderTicketsTempPage page }, Cmd.map Helmsman.OrderTicketsTempMsg cmd )
 
-        Payment ->
+        Payment orderId ->
             let
                 ( page, cmd ) =
-                    Payment.init model.shared
+                    Payment.init model.shared orderId
             in
             ( { model | helmsman = Helmsman.PaymentPage page }, Cmd.map Helmsman.PaymentMsg cmd )
 
-        PaymentSuccess ->
+        PaymentSuccess orderId ->
             let
                 ( page, cmd ) =
-                    PaymentSuccess.init model.shared
+                    PaymentSuccess.init model.shared orderId
             in
             ( { model | helmsman = Helmsman.PaymentSuccessPage page }, Cmd.map Helmsman.PaymentSuccessMsg cmd )
 

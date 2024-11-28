@@ -11321,15 +11321,12 @@ var $author$project$Pages$OrderTickets$init = function (shared) {
 			emailExists: true,
 			emailIsValid: true,
 			emailMatches: true,
-			freeTicketCode: '',
-			freeTicketCodeMatches: true,
-			freeTicketInfo: {description: 'Gratis', id: 'GR', numberOfTickets: 0, price: 0},
 			freeTicketsAvailable: 0,
 			hasTickets: true,
 			lastName: '',
 			lastNameExists: true,
-			memberTicketInfo: {description: 'Leden', id: 'LID', numberOfTickets: 0, price: 40},
-			nonMemberTicketInfo: {description: 'Niet-Leden', id: 'N-LID', numberOfTickets: 0, price: 60}
+			standardTicketInfo: {description: 'Standaard', id: 'VVK', numberOfTickets: 0, price: 60},
+			vipTicketInfo: {description: 'Vip Tafel', id: 'VIP', numberOfTickets: 0, price: 500}
 		},
 		$elm$core$Platform$Cmd$none);
 };
@@ -11357,72 +11354,9 @@ var $author$project$Pages$OrderTicketsTemp$init = function (shared) {
 		},
 		$elm$core$Platform$Cmd$none);
 };
-var $elm$browser$Browser$Navigation$pushUrl = _Browser_pushUrl;
-var $author$project$Pages$Payment$showSumUpWidget = _Platform_outgoingPort('showSumUpWidget', $elm$json$Json$Encode$string);
-var $author$project$Pages$Payment$init = function (shared) {
-	return (shared.currentOrder === '') ? _Utils_Tuple2(
-		{retried: 0, sumUpFailed: false},
-		A2($elm$browser$Browser$Navigation$pushUrl, shared.navKey, '/order-tickets/')) : _Utils_Tuple2(
-		{retried: 0, sumUpFailed: false},
-		$author$project$Pages$Payment$showSumUpWidget(shared.currentCheckOut));
+var $author$project$Pages$Payment$OrderConfirmed = function (a) {
+	return {$: 'OrderConfirmed', a: a};
 };
-var $author$project$Pages$PaymentSuccess$OrderInfoLoaded = function (a) {
-	return {$: 'OrderInfoLoaded', a: a};
-};
-var $author$project$Api$GetOrderInfo$Order = F6(
-	function (id, code, christianName, lastName, email, tickets) {
-		return {christianName: christianName, code: code, email: email, id: id, lastName: lastName, tickets: tickets};
-	});
-var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom = $elm$json$Json$Decode$map2($elm$core$Basics$apR);
-var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required = F3(
-	function (key, valDecoder, decoder) {
-		return A2(
-			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom,
-			A2($elm$json$Json$Decode$field, key, valDecoder),
-			decoder);
-	});
-var $author$project$Api$GetOrderInfo$Ticket = F3(
-	function (id, description, price) {
-		return {description: description, id: id, price: price};
-	});
-var $author$project$Api$GetOrderInfo$ticketDecoder = A3(
-	$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-	'price',
-	$elm$json$Json$Decode$float,
-	A3(
-		$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-		'description',
-		$elm$json$Json$Decode$string,
-		A3(
-			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-			'id',
-			$elm$json$Json$Decode$string,
-			$elm$json$Json$Decode$succeed($author$project$Api$GetOrderInfo$Ticket))));
-var $author$project$Api$GetOrderInfo$decoder = A3(
-	$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-	'tickets',
-	$elm$json$Json$Decode$list($author$project$Api$GetOrderInfo$ticketDecoder),
-	A3(
-		$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-		'email',
-		$elm$json$Json$Decode$string,
-		A3(
-			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-			'lastName',
-			$elm$json$Json$Decode$string,
-			A3(
-				$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-				'christianName',
-				$elm$json$Json$Decode$string,
-				A3(
-					$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-					'code',
-					$elm$json$Json$Decode$string,
-					A3(
-						$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-						'id',
-						$elm$json$Json$Decode$string,
-						$elm$json$Json$Decode$succeed($author$project$Api$GetOrderInfo$Order)))))));
 var $elm$http$Http$BadStatus_ = F2(
 	function (a, b) {
 		return {$: 'BadStatus_', a: a, b: b};
@@ -11516,6 +11450,22 @@ var $elm$http$Http$expectJson = F2(
 						A2($elm$json$Json$Decode$decodeString, decoder, string));
 				}));
 	});
+var $author$project$Api$Helpers$ObjectId$Id = function (id) {
+	return {id: id};
+};
+var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom = $elm$json$Json$Decode$map2($elm$core$Basics$apR);
+var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required = F3(
+	function (key, valDecoder, decoder) {
+		return A2(
+			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom,
+			A2($elm$json$Json$Decode$field, key, valDecoder),
+			decoder);
+	});
+var $author$project$Api$Helpers$ObjectId$objectIdDecoder = A3(
+	$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+	'id',
+	$elm$json$Json$Decode$string,
+	$elm$json$Json$Decode$succeed($author$project$Api$Helpers$ObjectId$Id));
 var $author$project$Api$Helpers$ObjectId$objectIdEncoder = function (id) {
 	return $elm$json$Json$Encode$object(
 		_List_fromArray(
@@ -11676,6 +11626,79 @@ var $elm$http$Http$request = function (r) {
 			{allowCookiesFromOtherDomains: false, body: r.body, expect: r.expect, headers: r.headers, method: r.method, timeout: r.timeout, tracker: r.tracker, url: r.url}));
 };
 var $elm$http$Http$stringBody = _Http_pair;
+var $author$project$Api$OrderConfirmed$dispatch = F3(
+	function (baseApiUrl, id, msg) {
+		var jsonPayload = A2(
+			$elm$json$Json$Encode$encode,
+			0,
+			$author$project$Api$Helpers$ObjectId$objectIdEncoder(id));
+		var request = $elm$http$Http$request(
+			{
+				body: A2($elm$http$Http$stringBody, 'application/json', jsonPayload),
+				expect: A2($elm$http$Http$expectJson, msg, $author$project$Api$Helpers$ObjectId$objectIdDecoder),
+				headers: _List_Nil,
+				method: 'POST',
+				timeout: $elm$core$Maybe$Nothing,
+				tracker: $elm$core$Maybe$Nothing,
+				url: baseApiUrl + 'confirm-order'
+			});
+		return request;
+	});
+var $author$project$Pages$Payment$init = F2(
+	function (shared, orderId) {
+		return _Utils_Tuple2(
+			{orderId: orderId},
+			A3($author$project$Api$OrderConfirmed$dispatch, shared.baseApiUrl, orderId, $author$project$Pages$Payment$OrderConfirmed));
+	});
+var $author$project$Pages$PaymentSuccess$OrderInfoLoaded = function (a) {
+	return {$: 'OrderInfoLoaded', a: a};
+};
+var $author$project$Api$GetOrderInfo$Order = F6(
+	function (id, code, christianName, lastName, email, tickets) {
+		return {christianName: christianName, code: code, email: email, id: id, lastName: lastName, tickets: tickets};
+	});
+var $author$project$Api$GetOrderInfo$Ticket = F3(
+	function (id, description, price) {
+		return {description: description, id: id, price: price};
+	});
+var $author$project$Api$GetOrderInfo$ticketDecoder = A3(
+	$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+	'price',
+	$elm$json$Json$Decode$float,
+	A3(
+		$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+		'description',
+		$elm$json$Json$Decode$string,
+		A3(
+			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+			'id',
+			$elm$json$Json$Decode$string,
+			$elm$json$Json$Decode$succeed($author$project$Api$GetOrderInfo$Ticket))));
+var $author$project$Api$GetOrderInfo$decoder = A3(
+	$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+	'tickets',
+	$elm$json$Json$Decode$list($author$project$Api$GetOrderInfo$ticketDecoder),
+	A3(
+		$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+		'email',
+		$elm$json$Json$Decode$string,
+		A3(
+			$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+			'lastName',
+			$elm$json$Json$Decode$string,
+			A3(
+				$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+				'christianName',
+				$elm$json$Json$Decode$string,
+				A3(
+					$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+					'code',
+					$elm$json$Json$Decode$string,
+					A3(
+						$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+						'id',
+						$elm$json$Json$Decode$string,
+						$elm$json$Json$Decode$succeed($author$project$Api$GetOrderInfo$Order)))))));
 var $author$project$Api$GetOrderInfo$dispatch = F3(
 	function (baseApiUrl, id, msg) {
 		var jsonPayload = A2(
@@ -11695,13 +11718,12 @@ var $author$project$Api$GetOrderInfo$dispatch = F3(
 		return request;
 	});
 var $author$project$Pages$PaymentSuccess$emptyModel = {orderInfo: $elm$core$Maybe$Nothing};
-var $author$project$Pages$PaymentSuccess$init = function (shared) {
-	return (shared.currentOrder === '') ? _Utils_Tuple2(
-		$author$project$Pages$PaymentSuccess$emptyModel,
-		A2($elm$browser$Browser$Navigation$pushUrl, shared.navKey, '/order-tickets/')) : _Utils_Tuple2(
-		$author$project$Pages$PaymentSuccess$emptyModel,
-		A3($author$project$Api$GetOrderInfo$dispatch, shared.baseApiUrl, shared.currentOrder, $author$project$Pages$PaymentSuccess$OrderInfoLoaded));
-};
+var $author$project$Pages$PaymentSuccess$init = F2(
+	function (shared, orderId) {
+		return _Utils_Tuple2(
+			$author$project$Pages$PaymentSuccess$emptyModel,
+			A3($author$project$Api$GetOrderInfo$dispatch, shared.baseApiUrl, orderId, $author$project$Pages$PaymentSuccess$OrderInfoLoaded));
+	});
 var $author$project$Pages$TeesAndCees$init = '# Algemene Voorwaarden\r\n\r\n## 1. Inleiding\r\n\r\nWelkom bij Pequivents (de "Website"). Deze Algemene Voorwaarden zijn van toepassing op uw gebruik van de Website en de aankoop van tickets via de Website. Door toegang te krijgen tot of gebruik te maken van de Website, gaat u akkoord met deze Voorwaarden. Als u niet akkoord gaat met deze Voorwaarden, mag u de Website niet gebruiken.\r\n\r\n## 2. Definities\r\n\r\n- **"Wij," "Ons," "Onze"** verwijst naar [Uw Bedrijfsnaam], de eigenaar en exploitant van de Website.\r\n- **"U," "Uw"** verwijst naar de persoon of entiteit die toegang heeft tot of gebruik maakt van de Website.\r\n- **"Evenement"** verwijst naar het evenement waarvoor tickets worden verkocht via de Website.\r\n- **"Ticket"** verwijst naar de licentie om een Evenement bij te wonen, gekocht via de Website.\r\n\r\n## 3. Gebruik van de Website\r\n\r\n### 3.1 Geschiktheid\r\n\r\nDoor gebruik te maken van de Website, verklaart u dat u ten minste 18 jaar oud bent of de toestemming van een wettelijke voogd heeft.\r\n\r\n### 3.2 Account Aanmaken\r\n\r\nOm tickets te kopen, moet u mogelijk een account aanmaken op de Website. U stemt ermee in om nauwkeurige en volledige informatie te verstrekken tijdens de registratie en om uw accountinformatie up-to-date te houden.\r\n\r\n### 3.3 Verboden Activiteiten\r\n\r\nU stemt ermee in de Website niet te gebruiken voor enig onwettig doel of op een manier die ons, andere gebruikers of de Evenementorganisatoren zou kunnen schaden. Dit omvat, maar is niet beperkt tot, het doorverkopen van tickets, het gebruik van bots om tickets te kopen, of het deelnemen aan frauduleuze activiteiten.\r\n\r\n## 4. Ticket Aankoop\r\n\r\n### 4.1 Prijzen en Beschikbaarheid\r\n\r\nTicketprijzen zijn zoals vermeld op de Website. We behouden ons het recht voor om prijzen op elk moment zonder voorafgaande kennisgeving te wijzigen. Tickets zijn onder voorbehoud van beschikbaarheid, en we garanderen niet dat tickets op elk moment beschikbaar zullen zijn voor aankoop.\r\n\r\n### 4.2 Betaling\r\n\r\nAlle ticketaankopen moeten volledig worden betaald op het moment van aankoop. We accepteren betaalmethoden zoals vermeld op de Website. Door betalingsinformatie te verstrekken, verklaart en garandeert u dat u wettelijk recht hebt om de betaalmethode te gebruiken.\r\n\r\n### 4.3 Orderbevestiging\r\n\r\nZodra uw bestelling succesvol is geplaatst, ontvangt u een orderbevestiging via e-mail. Controleer uw spam- of ongewenste e-mailmap als u de bevestiging niet ontvangt.\r\n\r\n### 4.4 Ticketlevering\r\n\r\nTickets worden elektronisch geleverd naar het e-mailadres dat tijdens de aankoop is opgegeven of beschikbaar gesteld voor download in uw accountdashboard.\r\n\r\n## 5. Restituties en Ruilingen\r\n\r\n### 5.1 Geen Restituties\r\n\r\nAlle ticketverkopen zijn definitief, en we bieden geen restituties of ruilingen aan, tenzij het Evenement wordt geannuleerd, uitgesteld of verplaatst door de Evenementorganisator.\r\n\r\n### 5.2 Annulering van het Evenement\r\n\r\nIn geval van annulering, uitstel, of significante wijziging van het Evenement, zullen we proberen u zo snel mogelijk op de hoogte te stellen. Restituties of ruilingen voor geannuleerde of verplaatste Evenementen worden aangeboden in overeenstemming met het beleid van de Evenementorganisator.\r\n\r\n## 6. Toegang tot het Evenement\r\n\r\n### 6.1 Toelatingsvereisten\r\n\r\nU moet een geldig ticket tonen om toegang te krijgen tot het Evenement. De Evenementorganisator behoudt zich het recht voor om elke persoon zonder restitutie de toegang te weigeren.\r\n\r\n### 6.2 Gedrag op het Evenement\r\n\r\nU stemt ermee in om alle regels en voorschriften van het Evenement na te leven, inclusief die met betrekking tot gedrag, veiligheid en beveiliging. Het niet naleven van deze regels kan resulteren in uw verwijdering van het Evenement zonder restitutie.\r\n\r\n## 7. Intellectueel Eigendom\r\n\r\n### 7.1 Website Inhoud\r\n\r\nAlle inhoud op de Website, inclusief tekst, afbeeldingen, logo\'s en afbeeldingen, is eigendom van [Uw Bedrijfsnaam] of haar licentiegevers en is beschermd door intellectuele eigendomswetten.\r\n\r\n### 7.2 Beperkte Licentie\r\n\r\nU krijgt een beperkte, niet-exclusieve, niet-overdraagbare licentie om toegang te krijgen tot en gebruik te maken van de Website voor persoonlijke, niet-commerciële doeleinden.\r\n\r\n## 8. Afwijzing van Garanties\r\n\r\nDe Website en alle via de Website verkochte tickets worden geleverd "zoals ze zijn" en "zoals beschikbaar" zonder enige vorm van garanties, expliciet of impliciet. We garanderen niet dat de Website foutloos, veilig of vrij van virussen zal zijn.\r\n\r\n## 9. Beperking van Aansprakelijkheid\r\n\r\nVoor zover maximaal toegestaan door de wet, zullen [Uw Bedrijfsnaam] en haar gelieerde ondernemingen niet aansprakelijk zijn voor enige indirecte, incidentele, speciale, gevolg- of bestraffende schade voortvloeiend uit of gerelateerd aan uw gebruik van de Website of uw deelname aan een Evenement.\r\n\r\n## 10. Vrijwaring\r\n\r\nU stemt ermee in [Uw Bedrijfsnaam] en haar gelieerde ondernemingen te vrijwaren en schadeloos te stellen van enige claims, verliezen, schade, aansprakelijkheden, inclusief juridische kosten, voortvloeiend uit uw gebruik van de Website of schending van deze Voorwaarden.\r\n\r\n## 11. Toepasselijk Recht\r\n\r\nDeze Voorwaarden en eventuele geschillen voortvloeiend uit uw gebruik van de Website worden beheerst door en geïnterpreteerd in overeenstemming met de wetten van [Uw Jurisdictie], zonder rekening te houden met conflicten van rechtsprincipes.\r\n\r\n## 12. Wijzigingen in de Voorwaarden\r\n\r\nWe behouden ons het recht voor om deze Voorwaarden op elk moment te wijzigen. Wijzigingen worden onmiddellijk van kracht na plaatsing op de Website. Uw voortgezet gebruik van de Website na plaatsing van wijzigingen houdt in dat u akkoord gaat met de gewijzigde Voorwaarden.\r\n\r\n## 13. Contactinformatie\r\n\r\nAls u vragen heeft over deze Voorwaarden, kunt u contact met ons opnemen via: kilfour@gmail.com\r\n\r\n';
 var $author$project$Pages$Tickets$OrderInfoLoaded = function (a) {
 	return {$: 'OrderInfoLoaded', a: a};
@@ -11777,7 +11799,8 @@ var $author$project$Routes$changeRouteTo = F2(
 						}),
 					A2($elm$core$Platform$Cmd$map, $author$project$Helmsman$OrderTicketsTempMsg, cmd));
 			case 'Payment':
-				var _v3 = $author$project$Pages$Payment$init(model.shared);
+				var orderId = route.a;
+				var _v3 = A2($author$project$Pages$Payment$init, model.shared, orderId);
 				var page = _v3.a;
 				var cmd = _v3.b;
 				return _Utils_Tuple2(
@@ -11788,7 +11811,8 @@ var $author$project$Routes$changeRouteTo = F2(
 						}),
 					A2($elm$core$Platform$Cmd$map, $author$project$Helmsman$PaymentMsg, cmd));
 			case 'PaymentSuccess':
-				var _v4 = $author$project$Pages$PaymentSuccess$init(model.shared);
+				var orderId = route.a;
+				var _v4 = A2($author$project$Pages$PaymentSuccess$init, model.shared, orderId);
 				var page = _v4.a;
 				var cmd = _v4.b;
 				return _Utils_Tuple2(
@@ -11952,8 +11976,12 @@ var $author$project$Routes$Home = {$: 'Home'};
 var $author$project$Routes$InvoiceInfo = {$: 'InvoiceInfo'};
 var $author$project$Routes$OrderTickets = {$: 'OrderTickets'};
 var $author$project$Routes$OrderTicketsTemp = {$: 'OrderTicketsTemp'};
-var $author$project$Routes$Payment = {$: 'Payment'};
-var $author$project$Routes$PaymentSuccess = {$: 'PaymentSuccess'};
+var $author$project$Routes$Payment = function (a) {
+	return {$: 'Payment', a: a};
+};
+var $author$project$Routes$PaymentSuccess = function (a) {
+	return {$: 'PaymentSuccess', a: a};
+};
 var $author$project$Routes$TeesAndCees = {$: 'TeesAndCees'};
 var $author$project$Routes$Tickets = function (a) {
 	return {$: 'Tickets', a: a};
@@ -12101,11 +12129,17 @@ var $author$project$Routes$parser = $elm$url$Url$Parser$oneOf(
 			A2(
 			$elm$url$Url$Parser$map,
 			$author$project$Routes$Payment,
-			$elm$url$Url$Parser$s('payment')),
+			A2(
+				$elm$url$Url$Parser$slash,
+				$elm$url$Url$Parser$s('payment'),
+				$elm$url$Url$Parser$string)),
 			A2(
 			$elm$url$Url$Parser$map,
 			$author$project$Routes$PaymentSuccess,
-			$elm$url$Url$Parser$s('payment-success')),
+			A2(
+				$elm$url$Url$Parser$slash,
+				$elm$url$Url$Parser$s('payment-success'),
+				$elm$url$Url$Parser$string)),
 			A2(
 			$elm$url$Url$Parser$map,
 			$author$project$Routes$TeesAndCees,
@@ -12138,7 +12172,7 @@ var $elm$browser$Browser$Dom$getViewport = _Browser_withWindow(_Browser_getViewp
 var $author$project$Shared$init = F2(
 	function (baseApiUrl, navKey) {
 		return _Utils_Tuple2(
-			{baseApiUrl: baseApiUrl, currentCheckOut: '', currentOrder: '', currentOrderAmount: 0, device: $author$project$Shared$Desktop, error: $elm$core$Maybe$Nothing, navKey: navKey, paid: false},
+			{baseApiUrl: baseApiUrl, currentOrderAmount: 0, device: $author$project$Shared$Desktop, error: $elm$core$Maybe$Nothing, navKey: navKey, paid: false},
 			$elm$core$Platform$Cmd$batch(
 				_List_fromArray(
 					[
@@ -12166,41 +12200,8 @@ var $author$project$App$init = F3(
 					])));
 	});
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
-var $author$project$Pages$Payment$SumUpBodyStatusOk = function (a) {
-	return {$: 'SumUpBodyStatusOk', a: a};
-};
-var $author$project$Pages$Payment$SumUpFailed = function (a) {
-	return {$: 'SumUpFailed', a: a};
-};
-var $author$project$Pages$Payment$WidgetMounted = function (a) {
-	return {$: 'WidgetMounted', a: a};
-};
-var $elm$json$Json$Decode$bool = _Json_decodeBool;
-var $author$project$Pages$Payment$sumUpBodyStatusOk = _Platform_incomingPort('sumUpBodyStatusOk', $elm$json$Json$Decode$bool);
-var $elm$json$Json$Decode$andThen = _Json_andThen;
-var $author$project$Pages$Payment$sumUpFailure = _Platform_incomingPort(
-	'sumUpFailure',
-	A2(
-		$elm$json$Json$Decode$andThen,
-		function (failureType) {
-			return A2(
-				$elm$json$Json$Decode$andThen,
-				function (body) {
-					return $elm$json$Json$Decode$succeed(
-						{body: body, failureType: failureType});
-				},
-				A2($elm$json$Json$Decode$field, 'body', $elm$json$Json$Decode$string));
-		},
-		A2($elm$json$Json$Decode$field, 'failureType', $elm$json$Json$Decode$string)));
-var $author$project$Pages$Payment$widgetMounted = _Platform_incomingPort('widgetMounted', $elm$json$Json$Decode$bool);
 var $author$project$Pages$Payment$subscriptions = function (_v0) {
-	return $elm$core$Platform$Sub$batch(
-		_List_fromArray(
-			[
-				$author$project$Pages$Payment$widgetMounted($author$project$Pages$Payment$WidgetMounted),
-				$author$project$Pages$Payment$sumUpBodyStatusOk($author$project$Pages$Payment$SumUpBodyStatusOk),
-				$author$project$Pages$Payment$sumUpFailure($author$project$Pages$Payment$SumUpFailed)
-			]));
+	return $elm$core$Platform$Sub$none;
 };
 var $author$project$Helmsman$subscriptions = function (model) {
 	if (model.$ === 'PaymentPage') {
@@ -13256,58 +13257,12 @@ var $author$project$Lib$Effect$toCmd = F2(
 			}
 		}
 	});
-var $author$project$Shared$CheckOutCreated = function (a) {
-	return {$: 'CheckOutCreated', a: a};
-};
-var $author$project$Shared$OrderConfirmed = function (a) {
-	return {$: 'OrderConfirmed', a: a};
-};
 var $author$project$Shared$OrderInfoEnteredSaved = function (a) {
 	return {$: 'OrderInfoEnteredSaved', a: a};
 };
 var $author$project$Shared$StuffLogged = function (a) {
 	return {$: 'StuffLogged', a: a};
 };
-var $elm$json$Json$Encode$float = _Json_wrap;
-var $author$project$Api$CreateCheckOut$encoder = F2(
-	function (orderId, amount) {
-		return $elm$json$Json$Encode$object(
-			_List_fromArray(
-				[
-					_Utils_Tuple2(
-					'orderId',
-					$elm$json$Json$Encode$string(orderId)),
-					_Utils_Tuple2(
-					'amount',
-					$elm$json$Json$Encode$float(amount))
-				]));
-	});
-var $author$project$Api$Helpers$ObjectId$Id = function (id) {
-	return {id: id};
-};
-var $author$project$Api$Helpers$ObjectId$objectIdDecoder = A3(
-	$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-	'id',
-	$elm$json$Json$Decode$string,
-	$elm$json$Json$Decode$succeed($author$project$Api$Helpers$ObjectId$Id));
-var $author$project$Api$CreateCheckOut$dispatch = F4(
-	function (baseApiUrl, id, amount, msg) {
-		var jsonPayload = A2(
-			$elm$json$Json$Encode$encode,
-			0,
-			A2($author$project$Api$CreateCheckOut$encoder, id, amount));
-		var request = $elm$http$Http$request(
-			{
-				body: A2($elm$http$Http$stringBody, 'application/json', jsonPayload),
-				expect: A2($elm$http$Http$expectJson, msg, $author$project$Api$Helpers$ObjectId$objectIdDecoder),
-				headers: _List_Nil,
-				method: 'POST',
-				timeout: $elm$core$Maybe$Nothing,
-				tracker: $elm$core$Maybe$Nothing,
-				url: baseApiUrl + 'create-checkout'
-			});
-		return request;
-	});
 var $author$project$Api$LogToServer$requestEncoder = function (message) {
 	return $elm$json$Json$Encode$object(
 		_List_fromArray(
@@ -13320,6 +13275,7 @@ var $author$project$Api$LogToServer$requestEncoder = function (message) {
 var $author$project$Api$LogToServer$Response = function (success) {
 	return {success: success};
 };
+var $elm$json$Json$Decode$bool = _Json_decodeBool;
 var $author$project$Api$LogToServer$responseDecoder = A3(
 	$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
 	'success',
@@ -13343,24 +13299,7 @@ var $author$project$Api$LogToServer$dispatch = F3(
 			});
 		return request;
 	});
-var $author$project$Api$OrderConfirmed$dispatch = F3(
-	function (baseApiUrl, id, msg) {
-		var jsonPayload = A2(
-			$elm$json$Json$Encode$encode,
-			0,
-			$author$project$Api$Helpers$ObjectId$objectIdEncoder(id));
-		var request = $elm$http$Http$request(
-			{
-				body: A2($elm$http$Http$stringBody, 'application/json', jsonPayload),
-				expect: A2($elm$http$Http$expectJson, msg, $author$project$Api$Helpers$ObjectId$objectIdDecoder),
-				headers: _List_Nil,
-				method: 'POST',
-				timeout: $elm$core$Maybe$Nothing,
-				tracker: $elm$core$Maybe$Nothing,
-				url: baseApiUrl + 'confirm-order'
-			});
-		return request;
-	});
+var $elm$json$Json$Encode$float = _Json_wrap;
 var $elm$json$Json$Encode$int = _Json_wrap;
 var $author$project$Api$OrderInfoEntered$ticketEncoder = function (ticketInfo) {
 	return $elm$json$Json$Encode$object(
@@ -13421,6 +13360,7 @@ var $author$project$Shared$getDevice = F2(
 	function (width, height) {
 		return (_Utils_cmp(width, height) < 0) ? $author$project$Shared$Phone : $author$project$Shared$Desktop;
 	});
+var $elm$browser$Browser$Navigation$pushUrl = _Browser_pushUrl;
 var $elm$core$Basics$round = _Basics_round;
 var $author$project$Shared$update = F2(
 	function (msg, model) {
@@ -13467,12 +13407,9 @@ var $author$project$Shared$update = F2(
 			case 'OrderInfoEnteredSaved':
 				if (msg.a.$ === 'Ok') {
 					var objectId = msg.a.a;
-					var cmd = (!model.currentOrderAmount) ? A3($author$project$Api$OrderConfirmed$dispatch, model.baseApiUrl, objectId.id, $author$project$Shared$OrderConfirmed) : A4($author$project$Api$CreateCheckOut$dispatch, model.baseApiUrl, objectId.id, model.currentOrderAmount, $author$project$Shared$CheckOutCreated);
 					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{currentOrder: objectId.id}),
-						cmd);
+						model,
+						A2($elm$browser$Browser$Navigation$pushUrl, model.navKey, '/payment/' + objectId.id));
 				} else {
 					var error = msg.a.a;
 					return _Utils_Tuple2(
@@ -13480,45 +13417,6 @@ var $author$project$Shared$update = F2(
 							model,
 							{
 								error: $elm$core$Maybe$Just(error)
-							}),
-						$elm$core$Platform$Cmd$none);
-				}
-			case 'CheckOutCreated':
-				if (msg.a.$ === 'Ok') {
-					var objectId = msg.a.a;
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{currentCheckOut: objectId.id}),
-						A2($elm$browser$Browser$Navigation$pushUrl, model.navKey, '/payment/'));
-				} else {
-					var err = msg.a.a;
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{
-								error: $elm$core$Maybe$Just(err)
-							}),
-						$elm$core$Platform$Cmd$none);
-				}
-			case 'ConfirmOrder':
-				return _Utils_Tuple2(
-					model,
-					A3($author$project$Api$OrderConfirmed$dispatch, model.baseApiUrl, model.currentOrder, $author$project$Shared$OrderConfirmed));
-			case 'OrderConfirmed':
-				if (msg.a.$ === 'Ok') {
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{paid: true}),
-						A2($elm$browser$Browser$Navigation$pushUrl, model.navKey, '/payment-success/'));
-				} else {
-					var err = msg.a.a;
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{
-								error: $elm$core$Maybe$Just(err)
 							}),
 						$elm$core$Platform$Cmd$none);
 				}
@@ -13775,7 +13673,7 @@ var $author$project$Pages$InvoiceInfo$update = F3(
 				var isValid = updatedModel.companyNameExists && (updatedModel.addressExists && updatedModel.vatNumberExists);
 				var effect = function () {
 					if (isValid) {
-						var info = {address: model.address, companyName: model.companyName, orderId: shared.currentOrder, vatNumber: model.vatNumber};
+						var info = {address: model.address, companyName: model.companyName, orderId: 'TODO', vatNumber: model.vatNumber};
 						return $author$project$Lib$Effect$Cmd(
 							A3($author$project$Api$SaveInvoiceInfo$dispatch, shared.baseApiUrl, info, $author$project$Pages$InvoiceInfo$InvoiceInfoSaved));
 					} else {
@@ -14399,13 +14297,9 @@ var $bellroy$elm_email$Email$fromString = function (string) {
 		return $elm$core$Maybe$Nothing;
 	}
 };
-var $elm$core$Basics$min = F2(
-	function (x, y) {
-		return (_Utils_cmp(x, y) < 0) ? x : y;
-	});
 var $author$project$Pages$OrderTickets$totalAmount = function (model) {
-	var nonMemberTotal = model.nonMemberTicketInfo.numberOfTickets * model.nonMemberTicketInfo.price;
-	var memberTotal = model.memberTicketInfo.numberOfTickets * model.memberTicketInfo.price;
+	var nonMemberTotal = model.vipTicketInfo.numberOfTickets * model.vipTicketInfo.price;
+	var memberTotal = model.standardTicketInfo.numberOfTickets * model.standardTicketInfo.price;
 	return memberTotal + nonMemberTotal;
 };
 var $author$project$Pages$OrderTickets$update = F3(
@@ -14469,18 +14363,8 @@ var $author$project$Pages$OrderTickets$update = F3(
 							confirmEmailExists: !$elm$core$String$isEmpty(str)
 						}),
 					$author$project$Lib$Effect$None);
-			case 'UpdateFreeTicketCode':
-				var str = msg.a;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{
-							freeTicketCode: str,
-							freeTicketCodeMatches: !$elm$core$String$isEmpty(str)
-						}),
-					$author$project$Lib$Effect$None);
 			case 'GotoPayment':
-				var totalNumberOfTickets = (model.memberTicketInfo.numberOfTickets + model.nonMemberTicketInfo.numberOfTickets) + model.freeTicketInfo.numberOfTickets;
+				var totalNumberOfTickets = model.standardTicketInfo.numberOfTickets + model.vipTicketInfo.numberOfTickets;
 				var updatedModel = _Utils_update(
 					model,
 					{
@@ -14508,87 +14392,54 @@ var $author$project$Pages$OrderTickets$update = F3(
 							email: model.email,
 							lastName: model.lastName,
 							ticketsInfo: _List_fromArray(
-								[model.memberTicketInfo, model.nonMemberTicketInfo, model.freeTicketInfo])
+								[model.standardTicketInfo, model.vipTicketInfo])
 						},
 						$author$project$Pages$OrderTickets$totalAmount(model))) : $author$project$Lib$Effect$None;
 				return _Utils_Tuple2(updatedModel, effect);
-			case 'AddMemberTicket':
-				var info = model.memberTicketInfo;
+			case 'AddStandardTicket':
+				var info = model.standardTicketInfo;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
 							hasTickets: true,
-							memberTicketInfo: _Utils_update(
+							standardTicketInfo: _Utils_update(
 								info,
 								{numberOfTickets: info.numberOfTickets + 1})
 						}),
 					$author$project$Lib$Effect$None);
-			case 'RemoveMemberTicket':
-				var info = model.memberTicketInfo;
+			case 'RemoveStandardTicket':
+				var info = model.standardTicketInfo;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							memberTicketInfo: _Utils_update(
+							standardTicketInfo: _Utils_update(
 								info,
 								{
 									numberOfTickets: A2($elm$core$Basics$max, 0, info.numberOfTickets - 1)
 								})
 						}),
 					$author$project$Lib$Effect$None);
-			case 'AddNonMemberTicket':
-				var info = model.nonMemberTicketInfo;
+			case 'AddVipTicket':
+				var info = model.vipTicketInfo;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
 							hasTickets: true,
-							nonMemberTicketInfo: _Utils_update(
+							vipTicketInfo: _Utils_update(
 								info,
 								{numberOfTickets: info.numberOfTickets + 1})
 						}),
 					$author$project$Lib$Effect$None);
-			case 'RemoveNonMemberTicket':
-				var info = model.nonMemberTicketInfo;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{
-							nonMemberTicketInfo: _Utils_update(
-								info,
-								{
-									numberOfTickets: A2($elm$core$Basics$max, 0, info.numberOfTickets - 1)
-								})
-						}),
-					$author$project$Lib$Effect$None);
-			case 'AddFreeTicket':
-				var info = model.freeTicketInfo;
-				var freeTicketMax = A2($elm$core$Basics$min, model.freeTicketsAvailable, 2);
-				var freeTicketCodeMatches = model.freeTicketCode === 'MMOKT0724';
-				return freeTicketCodeMatches ? _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{
-							freeTicketInfo: _Utils_update(
-								info,
-								{
-									numberOfTickets: A2($elm$core$Basics$min, freeTicketMax, info.numberOfTickets + 1)
-								}),
-							hasTickets: true
-						}),
-					$author$project$Lib$Effect$None) : _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{freeTicketCodeMatches: false}),
-					$author$project$Lib$Effect$none);
 			default:
-				var info = model.freeTicketInfo;
+				var info = model.vipTicketInfo;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							freeTicketInfo: _Utils_update(
+							vipTicketInfo: _Utils_update(
 								info,
 								{
 									numberOfTickets: A2($elm$core$Basics$max, 0, info.numberOfTickets - 1)
@@ -14596,6 +14447,10 @@ var $author$project$Pages$OrderTickets$update = F3(
 						}),
 					$author$project$Lib$Effect$None);
 		}
+	});
+var $elm$core$Basics$min = F2(
+	function (x, y) {
+		return (_Utils_cmp(x, y) < 0) ? x : y;
 	});
 var $author$project$Pages$OrderTicketsTemp$totalAmount = function (model) {
 	return 666;
@@ -14789,116 +14644,22 @@ var $author$project$Pages$OrderTicketsTemp$update = F3(
 					$author$project$Lib$Effect$None);
 		}
 	});
-var $author$project$Shared$ConfirmOrder = {$: 'ConfirmOrder'};
-var $author$project$Shared$LogToServer = function (a) {
-	return {$: 'LogToServer', a: a};
-};
 var $author$project$Pages$Payment$update = F3(
 	function (msg, shared, model) {
-		switch (msg.$) {
-			case 'NoOp':
-				return _Utils_Tuple2(model, $author$project$Lib$Effect$None);
-			case 'WidgetMounted':
-				var succes = msg.a;
-				if (succes) {
-					return _Utils_Tuple2(
-						model,
-						$author$project$Lib$Effect$Shared(
-							$author$project$Shared$LogToServer('Widget Mounted.')));
-				} else {
-					var retried = model.retried;
-					var effect = (retried < 3) ? $author$project$Lib$Effect$Batch(
-						_List_fromArray(
-							[
-								$author$project$Lib$Effect$Shared(
-								$author$project$Shared$LogToServer('Sumup failed to mount, retrying.')),
-								$author$project$Lib$Effect$Cmd(
-								$author$project$Pages$Payment$showSumUpWidget(shared.currentCheckOut))
-							])) : $author$project$Lib$Effect$none;
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{retried: retried + 1}),
-						effect);
-				}
-			case 'SumUpBodyStatusOk':
-				var succes = msg.a;
-				return succes ? _Utils_Tuple2(
-					model,
-					$author$project$Lib$Effect$Shared($author$project$Shared$ConfirmOrder)) : _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{sumUpFailed: true}),
-					$author$project$Lib$Effect$none);
-			default:
-				var failure = msg.a;
+		if (msg.$ === 'NoOp') {
+			return _Utils_Tuple2(model, $author$project$Lib$Effect$None);
+		} else {
+			if (msg.a.$ === 'Ok') {
 				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{sumUpFailed: true}),
-					$author$project$Lib$Effect$Shared(
-						$author$project$Shared$LogToServer(failure.failureType + (' :  ' + failure.body))));
+					model,
+					$author$project$Lib$Effect$Cmd(
+						A2($elm$browser$Browser$Navigation$pushUrl, shared.navKey, '/payment-success/' + model.orderId)));
+			} else {
+				var err = msg.a.a;
+				return _Utils_Tuple2(model, $author$project$Lib$Effect$none);
+			}
 		}
 	});
-var $author$project$Pages$PaymentSuccess$MailSend = function (a) {
-	return {$: 'MailSend', a: a};
-};
-var $author$project$Api$SendMail$MailResult = function (success) {
-	return {success: success};
-};
-var $author$project$Api$SendMail$decoder = A3(
-	$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
-	'success',
-	$elm$json$Json$Decode$bool,
-	$elm$json$Json$Decode$succeed($author$project$Api$SendMail$MailResult));
-var $author$project$Api$SendMail$encoder = function (payload) {
-	return $elm$json$Json$Encode$object(
-		_List_fromArray(
-			[
-				_Utils_Tuple2(
-				'email',
-				$elm$json$Json$Encode$string(payload.email)),
-				_Utils_Tuple2(
-				'orderId',
-				$elm$json$Json$Encode$string(payload.orderId)),
-				_Utils_Tuple2(
-				'total',
-				$elm$json$Json$Encode$float(payload.total)),
-				_Utils_Tuple2(
-				'url',
-				$elm$json$Json$Encode$string(payload.url))
-			]));
-};
-var $author$project$Api$SendMail$dispatch = F3(
-	function (baseApiUrl, payload, msg) {
-		var jsonPayload = A2(
-			$elm$json$Json$Encode$encode,
-			0,
-			$author$project$Api$SendMail$encoder(payload));
-		var request = $elm$http$Http$request(
-			{
-				body: A2($elm$http$Http$stringBody, 'application/json', jsonPayload),
-				expect: A2($elm$http$Http$expectJson, msg, $author$project$Api$SendMail$decoder),
-				headers: _List_Nil,
-				method: 'POST',
-				timeout: $elm$core$Maybe$Nothing,
-				tracker: $elm$core$Maybe$Nothing,
-				url: baseApiUrl + 'send-mail'
-			});
-		return request;
-	});
-var $elm$core$List$sum = function (numbers) {
-	return A3($elm$core$List$foldl, $elm$core$Basics$add, 0, numbers);
-};
-var $author$project$Pages$PaymentSuccess$totalAmount = function (orderInfo) {
-	return $elm$core$List$sum(
-		A2(
-			$elm$core$List$map,
-			function (a) {
-				return a.price;
-			},
-			orderInfo.tickets));
-};
 var $author$project$Pages$PaymentSuccess$update = F3(
 	function (msg, shared, model) {
 		switch (msg.$) {
@@ -14913,17 +14674,7 @@ var $author$project$Pages$PaymentSuccess$update = F3(
 							{
 								orderInfo: $elm$core$Maybe$Just(orderInfo)
 							}),
-						$author$project$Lib$Effect$Cmd(
-							A3(
-								$author$project$Api$SendMail$dispatch,
-								shared.baseApiUrl,
-								{
-									email: orderInfo.email,
-									orderId: orderInfo.id,
-									total: $author$project$Pages$PaymentSuccess$totalAmount(orderInfo),
-									url: 'https://pequivents.netlify.app/tickets/' + (orderInfo.id + ('-' + orderInfo.code))
-								},
-								$author$project$Pages$PaymentSuccess$MailSend)));
+						$author$project$Lib$Effect$none);
 				} else {
 					var error = msg.a.a;
 					return _Utils_Tuple2(
@@ -17857,11 +17608,17 @@ var $author$project$Domain$Event$theEvent = {
 	date: 'Donderdag 9 Januari 2025',
 	extraInfo: 'Gratis parkeren.\nDrank en gerechtjes inbegrepen tot 21u30.',
 	id: $elm$core$Maybe$Nothing,
-	name: 'Event Ondernemend Mechelen',
+	name: 'Event Naam',
 	ticketTypes: _List_fromArray(
 		[
-			{description: 'Standaard', id: 'VVK', info: '', price: 60},
-			{description: 'Vip Tafel', id: 'VIP', info: 'Voor zes personen plus fles Champagne.\nSponsor logo getoond op afzonderlijke tafel en geprojecteerd op scherm.', price: 500}
+			{description: 'Standaard', id: 'VVK', info: _List_Nil, price: 60},
+			{
+			description: 'Vip Tafel',
+			id: 'VIP',
+			info: _List_fromArray(
+				['Voor zes personen plus fles Champagne.', 'Sponsor logo getoond op afzonderlijke tafel en geprojecteerd op scherm.']),
+			price: 500
+		}
 		]),
 	time: '18:30'
 };
@@ -18419,15 +18176,22 @@ var $author$project$Pages$Home$view = F2(
 							[
 								$rtfeldman$elm_css$Css$marginLeft(
 								$rtfeldman$elm_css$Css$em(1)),
-								$rtfeldman$elm_css$Css$whiteSpace($rtfeldman$elm_css$Css$pre),
 								$rtfeldman$elm_css$Css$fontSize(
 								$rtfeldman$elm_css$Css$em(0.85))
 							]),
 						_List_Nil,
-						_List_fromArray(
-							[
-								$rtfeldman$elm_css$Html$Styled$text(ticketType.info)
-							]))
+						A2(
+							$elm$core$List$map,
+							function (a) {
+								return A2(
+									$rtfeldman$elm_css$Html$Styled$div,
+									_List_Nil,
+									_List_fromArray(
+										[
+											$rtfeldman$elm_css$Html$Styled$text(a)
+										]));
+							},
+							ticketType.info))
 					]));
 		};
 		var maybeMargin = function () {
@@ -18556,36 +18320,7 @@ var $author$project$Pages$Home$view = F2(
 								[
 									$rtfeldman$elm_css$Html$Styled$text(evt.name)
 								])),
-							A2(
-							$rtfeldman$elm_css$Html$Styled$div,
-							_List_Nil,
-							_List_fromArray(
-								[
-									A4(
-									$rtfeldman$elm_css$Html$Styled$styled,
-									$rtfeldman$elm_css$Html$Styled$h4,
-									$author$project$Style$pageHeader,
-									_List_Nil,
-									_List_fromArray(
-										[
-											$rtfeldman$elm_css$Html$Styled$text(evt.date)
-										])),
-									A4(
-									$rtfeldman$elm_css$Html$Styled$styled,
-									$rtfeldman$elm_css$Html$Styled$div,
-									_List_fromArray(
-										[
-											$rtfeldman$elm_css$Css$marginLeft(
-											$rtfeldman$elm_css$Css$em(1)),
-											$rtfeldman$elm_css$Css$marginBottom(
-											$rtfeldman$elm_css$Css$em(1))
-										]),
-									_List_Nil,
-									_List_fromArray(
-										[
-											$rtfeldman$elm_css$Html$Styled$text(evt.time + ' uur')
-										]))
-								])),
+							dateTimeRow,
 							A4(
 							$rtfeldman$elm_css$Html$Styled$styled,
 							$rtfeldman$elm_css$Html$Styled$h2,
@@ -18661,7 +18396,8 @@ var $author$project$Pages$Home$view = F2(
 							A2($elm$core$List$map, ticketTypes, evt.ticketTypes)),
 							A2($rtfeldman$elm_css$Html$Styled$br, _List_Nil, _List_Nil),
 							A2($rtfeldman$elm_css$Html$Styled$br, _List_Nil, _List_Nil),
-							maybeMargin
+							maybeMargin,
+							maybeBottomButton
 						]))
 				]));
 	});
@@ -19182,13 +18918,11 @@ var $author$project$Pages$InvoiceInfo$view = F2(
 						]))
 				]));
 	});
-var $author$project$Pages$OrderTickets$AddFreeTicket = {$: 'AddFreeTicket'};
-var $author$project$Pages$OrderTickets$AddMemberTicket = {$: 'AddMemberTicket'};
-var $author$project$Pages$OrderTickets$AddNonMemberTicket = {$: 'AddNonMemberTicket'};
+var $author$project$Pages$OrderTickets$AddStandardTicket = {$: 'AddStandardTicket'};
+var $author$project$Pages$OrderTickets$AddVipTicket = {$: 'AddVipTicket'};
 var $author$project$Pages$OrderTickets$GotoPayment = {$: 'GotoPayment'};
-var $author$project$Pages$OrderTickets$RemoveFreeTicket = {$: 'RemoveFreeTicket'};
-var $author$project$Pages$OrderTickets$RemoveMemberTicket = {$: 'RemoveMemberTicket'};
-var $author$project$Pages$OrderTickets$RemoveNonMemberTicket = {$: 'RemoveNonMemberTicket'};
+var $author$project$Pages$OrderTickets$RemoveStandardTicket = {$: 'RemoveStandardTicket'};
+var $author$project$Pages$OrderTickets$RemoveVipTicket = {$: 'RemoveVipTicket'};
 var $author$project$Pages$OrderTickets$UpdateChristianName = function (a) {
 	return {$: 'UpdateChristianName', a: a};
 };
@@ -19198,14 +18932,10 @@ var $author$project$Pages$OrderTickets$UpdateConfirmEmail = function (a) {
 var $author$project$Pages$OrderTickets$UpdateEmail = function (a) {
 	return {$: 'UpdateEmail', a: a};
 };
-var $author$project$Pages$OrderTickets$UpdateFreeTicketCode = function (a) {
-	return {$: 'UpdateFreeTicketCode', a: a};
-};
 var $author$project$Pages$OrderTickets$UpdateLastName = function (a) {
 	return {$: 'UpdateLastName', a: a};
 };
 var $rtfeldman$elm_css$Css$center = $rtfeldman$elm_css$Css$prop1('center');
-var $rtfeldman$elm_css$Css$paddingRight = $rtfeldman$elm_css$Css$prop1('padding-right');
 var $author$project$Style$symbolButton = _List_fromArray(
 	[
 		$rtfeldman$elm_css$Css$backgroundColor(
@@ -19477,16 +19207,7 @@ var $author$project$Pages$OrderTickets$view = F2(
 								[
 									$rtfeldman$elm_css$Html$Styled$text(evt.name)
 								])),
-							A4(
-							$rtfeldman$elm_css$Html$Styled$styled,
-							$rtfeldman$elm_css$Html$Styled$h3,
-							$author$project$Style$pageHeader,
-							_List_Nil,
-							_List_fromArray(
-								[
-									$rtfeldman$elm_css$Html$Styled$text(
-									$author$project$Domain$Event$dateTimeString(evt))
-								])),
+							dateTimeRow,
 							A4(
 							$rtfeldman$elm_css$Html$Styled$styled,
 							$rtfeldman$elm_css$Html$Styled$h2,
@@ -19551,119 +19272,11 @@ var $author$project$Pages$OrderTickets$view = F2(
 							ticketTableStyle,
 							_List_fromArray(
 								[
-									A3(ticketForm, model.memberTicketInfo, $author$project$Pages$OrderTickets$AddMemberTicket, $author$project$Pages$OrderTickets$RemoveMemberTicket),
-									A3(ticketForm, model.nonMemberTicketInfo, $author$project$Pages$OrderTickets$AddNonMemberTicket, $author$project$Pages$OrderTickets$RemoveNonMemberTicket)
+									A3(ticketForm, model.standardTicketInfo, $author$project$Pages$OrderTickets$AddStandardTicket, $author$project$Pages$OrderTickets$RemoveStandardTicket),
+									A3(ticketForm, model.vipTicketInfo, $author$project$Pages$OrderTickets$AddVipTicket, $author$project$Pages$OrderTickets$RemoveVipTicket)
 								])),
-							A2(
-							$author$project$Lib$ViewHelpers$showIf,
-							model.freeTicketsAvailable > 0,
-							A4(
-								$rtfeldman$elm_css$Html$Styled$styled,
-								$rtfeldman$elm_css$Html$Styled$div,
-								_List_fromArray(
-									[
-										A2(
-										$rtfeldman$elm_css$Css$padding2,
-										$rtfeldman$elm_css$Css$em(0.5),
-										$rtfeldman$elm_css$Css$zero)
-									]),
-								_List_Nil,
-								_List_fromArray(
-									[
-										$rtfeldman$elm_css$Html$Styled$text('Voer uw code in voor gratis tickets (max ' + (maxFreeTickets + ')'))
-									]))),
-							A2(
-							$author$project$Lib$ViewHelpers$showIf,
-							model.freeTicketsAvailable > 0,
-							A2(
-								$author$project$UI$DivTable$renderBody,
-								ticketTableStyle,
-								_List_fromArray(
-									[
-										_List_fromArray(
-										[
-											_List_fromArray(
-											[
-												A4(
-												$rtfeldman$elm_css$Html$Styled$styled,
-												$rtfeldman$elm_css$Html$Styled$div,
-												_List_fromArray(
-													[
-														$rtfeldman$elm_css$Css$paddingRight(
-														$rtfeldman$elm_css$Css$em(0.5))
-													]),
-												_List_Nil,
-												A5(renderInput, 'Code', model.freeTicketCode, $author$project$Pages$OrderTickets$UpdateFreeTicketCode, model.freeTicketCodeMatches, 'Onbekende code.'))
-											]),
-											_List_fromArray(
-											[
-												A4(
-												$rtfeldman$elm_css$Html$Styled$styled,
-												$rtfeldman$elm_css$Html$Styled$button,
-												$author$project$Style$symbolButton,
-												_List_fromArray(
-													[
-														$rtfeldman$elm_css$Html$Styled$Events$onClick($author$project$Pages$OrderTickets$RemoveFreeTicket)
-													]),
-												_List_fromArray(
-													[
-														$rtfeldman$elm_css$Html$Styled$text('-')
-													]))
-											]),
-											_List_fromArray(
-											[
-												A4(
-												$rtfeldman$elm_css$Html$Styled$styled,
-												$rtfeldman$elm_css$Html$Styled$div,
-												_List_fromArray(
-													[
-														$rtfeldman$elm_css$Css$width(
-														$rtfeldman$elm_css$Css$em(1.5)),
-														$rtfeldman$elm_css$Css$textAlign($rtfeldman$elm_css$Css$center)
-													]),
-												_List_Nil,
-												_List_fromArray(
-													[
-														$rtfeldman$elm_css$Html$Styled$text(
-														$elm$core$String$fromInt(model.freeTicketInfo.numberOfTickets))
-													]))
-											]),
-											_List_fromArray(
-											[
-												A4(
-												$rtfeldman$elm_css$Html$Styled$styled,
-												$rtfeldman$elm_css$Html$Styled$button,
-												$author$project$Style$symbolButton,
-												_List_fromArray(
-													[
-														$rtfeldman$elm_css$Html$Styled$Events$onClick($author$project$Pages$OrderTickets$AddFreeTicket)
-													]),
-												_List_fromArray(
-													[
-														$rtfeldman$elm_css$Html$Styled$text('+')
-													]))
-											])
-										])
-									]))),
-							A2(
-							$author$project$Lib$ViewHelpers$showIf,
-							model.freeTicketsAvailable <= 0,
-							A4(
-								$rtfeldman$elm_css$Html$Styled$styled,
-								$rtfeldman$elm_css$Html$Styled$div,
-								_List_fromArray(
-									[
-										A2(
-										$rtfeldman$elm_css$Css$padding2,
-										$rtfeldman$elm_css$Css$em(0.5),
-										$rtfeldman$elm_css$Css$em(1))
-									]),
-								_List_Nil,
-								_List_fromArray(
-									[
-										$rtfeldman$elm_css$Html$Styled$text('De tickets met code zijn niet meer beschikbaar.')
-									]))),
-							maybeMargin
+							maybeMargin,
+							maybeBottomButton
 						]))
 				]));
 	});
@@ -19689,6 +19302,7 @@ var $author$project$Pages$OrderTicketsTemp$UpdateFreeTicketCode = function (a) {
 var $author$project$Pages$OrderTicketsTemp$UpdateLastName = function (a) {
 	return {$: 'UpdateLastName', a: a};
 };
+var $rtfeldman$elm_css$Css$paddingRight = $rtfeldman$elm_css$Css$prop1('padding-right');
 var $author$project$Pages$OrderTicketsTemp$view = F2(
 	function (shared, model) {
 		var totalString = '€' + A2(
@@ -20124,7 +19738,6 @@ var $author$project$Pages$OrderTicketsTemp$view = F2(
 						]))
 				]));
 	});
-var $rtfeldman$elm_css$Html$Styled$Attributes$id = $rtfeldman$elm_css$Html$Styled$Attributes$stringProperty('id');
 var $author$project$Pages$Payment$view = F2(
 	function (shared, model) {
 		var maybeMargin = function () {
@@ -20170,48 +19783,7 @@ var $author$project$Pages$Payment$view = F2(
 								[
 									$rtfeldman$elm_css$Html$Styled$text(evt.name)
 								])),
-							A2(
-							$author$project$Lib$ViewHelpers$showIf,
-							model.sumUpFailed,
-							A4(
-								$rtfeldman$elm_css$Html$Styled$styled,
-								$rtfeldman$elm_css$Html$Styled$div,
-								_Utils_ap(
-									$author$project$Style$validation,
-									_List_fromArray(
-										[
-											$rtfeldman$elm_css$Css$fontSize(
-											$rtfeldman$elm_css$Css$em(1.25)),
-											$rtfeldman$elm_css$Css$paddingLeft(
-											$rtfeldman$elm_css$Css$em(2))
-										])),
-								_List_Nil,
-								_List_fromArray(
-									[
-										$rtfeldman$elm_css$Html$Styled$text('Uw kaart informatie kon niet geverifiëerd worden. Gelieve de gegevens te controleren.')
-									]))),
-							A4(
-							$rtfeldman$elm_css$Html$Styled$styled,
-							$rtfeldman$elm_css$Html$Styled$div,
-							_List_fromArray(
-								[
-									$rtfeldman$elm_css$Css$fontSize(
-									$rtfeldman$elm_css$Css$em(1.25)),
-									$rtfeldman$elm_css$Css$paddingLeft(
-									$rtfeldman$elm_css$Css$em(2))
-								]),
-							_List_Nil,
-							_List_fromArray(
-								[
-									$rtfeldman$elm_css$Html$Styled$text('Opgelet SumUp ondersteunt enkel deze onderstaande kaarten.')
-								])),
-							A2(
-							$rtfeldman$elm_css$Html$Styled$div,
-							_List_fromArray(
-								[
-									$rtfeldman$elm_css$Html$Styled$Attributes$id('sumup-card')
-								]),
-							_List_Nil),
+							$rtfeldman$elm_css$Html$Styled$text('Verificatie in behandeling.'),
 							maybeMargin
 						]))
 				]));
@@ -20230,7 +19802,7 @@ var $author$project$Pages$PaymentSuccess$view = F2(
 		} else {
 			var orderInfo = _v0.a;
 			var ticketHref = '/tickets/' + (orderInfo.id + ('-' + orderInfo.code));
-			var maybeInvoiceInfoLink = ($author$project$Pages$PaymentSuccess$totalAmount(orderInfo) > 0) ? _List_fromArray(
+			var invoiceInfoLink = _List_fromArray(
 				[
 					A2(
 					$rtfeldman$elm_css$Html$Styled$div,
@@ -20263,7 +19835,7 @@ var $author$project$Pages$PaymentSuccess$view = F2(
 								]))
 						])),
 					A2($rtfeldman$elm_css$Html$Styled$br, _List_Nil, _List_Nil)
-				]) : _List_Nil;
+				]);
 			return A2(
 				$rtfeldman$elm_css$Html$Styled$div,
 				_List_Nil,
@@ -20305,50 +19877,48 @@ var $author$project$Pages$PaymentSuccess$view = F2(
 										$rtfeldman$elm_css$Css$em(1.5))
 									]),
 								_List_Nil,
-								_Utils_ap(
-									maybeInvoiceInfoLink,
-									_List_fromArray(
-										[
-											A2(
-											$rtfeldman$elm_css$Html$Styled$div,
-											_List_Nil,
-											_List_fromArray(
-												[
-													$rtfeldman$elm_css$Html$Styled$text('Hieronder vind u een link naar de aangekochte tickets. ' + 'U kan deze afdrukken, bewaren als pdf (via \'Print to Pdf\'), of u kan ook deze pagina rechtstreeks gebruiken als toegang op het event.')
-												])),
-											A2($rtfeldman$elm_css$Html$Styled$br, _List_Nil, _List_Nil),
-											A2(
-											$rtfeldman$elm_css$Html$Styled$div,
-											_List_Nil,
-											_List_fromArray(
-												[
-													$rtfeldman$elm_css$Html$Styled$text('Een kopie van deze informatie inclusief link naar afdrukbare pagina is naar ' + (orderInfo.email + ' verstuurd.'))
-												])),
-											A2($rtfeldman$elm_css$Html$Styled$br, _List_Nil, _List_Nil),
-											A2(
-											$rtfeldman$elm_css$Html$Styled$div,
-											_List_Nil,
-											_List_fromArray(
-												[
-													A4(
-													$rtfeldman$elm_css$Html$Styled$styled,
-													$rtfeldman$elm_css$Html$Styled$a,
-													_List_fromArray(
-														[
-															$author$project$Style$hyperLink,
-															$rtfeldman$elm_css$Css$fontSize(
-															$rtfeldman$elm_css$Css$em(1.25))
-														]),
-													_List_fromArray(
-														[
-															$rtfeldman$elm_css$Html$Styled$Attributes$href(ticketHref)
-														]),
-													_List_fromArray(
-														[
-															$rtfeldman$elm_css$Html$Styled$text('Tickets Weergeven')
-														]))
-												]))
-										])))
+								_List_fromArray(
+									[
+										A2(
+										$rtfeldman$elm_css$Html$Styled$div,
+										_List_Nil,
+										_List_fromArray(
+											[
+												$rtfeldman$elm_css$Html$Styled$text('Hieronder vind u een link naar de aangekochte tickets. ' + 'U kan deze afdrukken, bewaren als pdf (via \'Print to Pdf\'), of u kan ook deze pagina rechtstreeks gebruiken als toegang op het event.')
+											])),
+										A2($rtfeldman$elm_css$Html$Styled$br, _List_Nil, _List_Nil),
+										A2(
+										$rtfeldman$elm_css$Html$Styled$div,
+										_List_Nil,
+										_List_fromArray(
+											[
+												$rtfeldman$elm_css$Html$Styled$text('Een kopie van deze informatie inclusief link naar afdrukbare pagina is naar ' + (orderInfo.email + ' verstuurd.'))
+											])),
+										A2($rtfeldman$elm_css$Html$Styled$br, _List_Nil, _List_Nil),
+										A2(
+										$rtfeldman$elm_css$Html$Styled$div,
+										_List_Nil,
+										_List_fromArray(
+											[
+												A4(
+												$rtfeldman$elm_css$Html$Styled$styled,
+												$rtfeldman$elm_css$Html$Styled$a,
+												_List_fromArray(
+													[
+														$author$project$Style$hyperLink,
+														$rtfeldman$elm_css$Css$fontSize(
+														$rtfeldman$elm_css$Css$em(1.25))
+													]),
+												_List_fromArray(
+													[
+														$rtfeldman$elm_css$Html$Styled$Attributes$href(ticketHref)
+													]),
+												_List_fromArray(
+													[
+														$rtfeldman$elm_css$Html$Styled$text('Tickets Weergeven')
+													]))
+											]))
+									]))
 							]))
 					]));
 		}
@@ -21053,6 +20623,9 @@ var $pablohirafuji$elm_qrcode$QRCode$Matrix$rule1Score_ = F2(
 			}
 		}
 	});
+var $elm$core$List$sum = function (numbers) {
+	return A3($elm$core$List$foldl, $elm$core$Basics$add, 0, numbers);
+};
 var $pablohirafuji$elm_qrcode$QRCode$Matrix$rule1Score = A2(
 	$elm$core$Basics$composeR,
 	$elm$core$List$map(
@@ -25117,4 +24690,4 @@ var $author$project$App$main = $elm$browser$Browser$application(
 			};
 		}
 	});
-_Platform_export({'App':{'init':$author$project$App$main($elm$json$Json$Decode$string)({"versions":{"elm":"0.19.1"},"types":{"message":"App.Msg","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"},"Api.Helpers.ObjectId.Id":{"args":[],"type":"{ id : String.String }"},"Api.OrderInfoEntered.OrderInfo":{"args":[],"type":"{ christianName : String.String, lastName : String.String, email : String.String, ticketsInfo : List.List Api.OrderInfoEntered.TicketInfo }"},"Api.LogToServer.Response":{"args":[],"type":"{ success : Basics.Bool }"},"Api.OrderInfoEntered.TicketInfo":{"args":[],"type":"{ id : String.String, description : String.String, price : Basics.Float, numberOfTickets : Basics.Int }"},"Browser.Dom.Viewport":{"args":[],"type":"{ scene : { width : Basics.Float, height : Basics.Float }, viewport : { x : Basics.Float, y : Basics.Float, width : Basics.Float, height : Basics.Float } }"},"Api.SendMail.MailResult":{"args":[],"type":"{ success : Basics.Bool }"},"Api.GetOrderInfo.Order":{"args":[],"type":"{ id : String.String, code : String.String, christianName : String.String, lastName : String.String, email : String.String, tickets : List.List Api.GetOrderInfo.Ticket }"},"Api.GetFreeTicketsAvailable.Response":{"args":[],"type":"{ amount : Basics.Int }"},"Pages.Payment.SumUpFailure":{"args":[],"type":"{ failureType : String.String, body : String.String }"},"Api.GetOrderInfo.Ticket":{"args":[],"type":"{ id : String.String, description : String.String, price : Basics.Float }"}},"unions":{"App.Msg":{"args":[],"tags":{"SharedMsg":["Shared.Msg"],"HelmsmanMsg":["Helmsman.Msg"],"LinkClicked":["Browser.UrlRequest"],"UrlChanged":["Url.Url"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Helmsman.Msg":{"args":[],"tags":{"HomeMsg":["Pages.Home.Msg"],"OrderTicketsMsg":["Pages.OrderTickets.Msg"],"PaymentSuccessMsg":["Pages.PaymentSuccess.Msg"],"PaymentMsg":["Pages.Payment.Msg"],"TeesAndCeesMsg":["Pages.TeesAndCees.Msg"],"InvoiceInfoMsg":["Pages.InvoiceInfo.Msg"],"TicketsMsg":["Pages.Tickets.Msg"],"OrderTicketsTempMsg":["Pages.OrderTicketsTemp.Msg"]}},"Shared.Msg":{"args":[],"tags":{"GotViewport":["Browser.Dom.Viewport"],"OnResize":["Basics.Int","Basics.Int"],"Error":["Http.Error"],"OrderInfoEntered":["Api.OrderInfoEntered.OrderInfo","Basics.Float"],"OrderInfoEnteredSaved":["Result.Result Http.Error Api.Helpers.ObjectId.Id"],"CheckOutCreated":["Result.Result Http.Error Api.Helpers.ObjectId.Id"],"ConfirmOrder":[],"OrderConfirmed":["Result.Result Http.Error Api.Helpers.ObjectId.Id"],"LogToServer":["String.String"],"StuffLogged":["Result.Result Http.Error Api.LogToServer.Response"]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}},"Basics.Bool":{"args":[],"tags":{"True":[],"False":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String.String"],"Timeout":[],"NetworkError":[],"BadStatus":["Basics.Int"],"BadBody":["String.String"]}},"Basics.Float":{"args":[],"tags":{"Float":[]}},"List.List":{"args":["a"],"tags":{}},"Pages.Home.Msg":{"args":[],"tags":{"GotoTickets":[]}},"Pages.InvoiceInfo.Msg":{"args":[],"tags":{"UpdateCompanyName":["String.String"],"UpdateAddress":["String.String"],"UpdateVatNumber":["String.String"],"SaveInfo":[],"InvoiceInfoSaved":["Result.Result Http.Error Api.Helpers.ObjectId.Id"]}},"Pages.OrderTickets.Msg":{"args":[],"tags":{"NoOp":[],"FreeTicketsAvailableReceived":["Result.Result Http.Error Api.GetFreeTicketsAvailable.Response"],"UpdateChristianName":["String.String"],"UpdateLastName":["String.String"],"UpdateEmail":["String.String"],"UpdateConfirmEmail":["String.String"],"UpdateFreeTicketCode":["String.String"],"AddMemberTicket":[],"RemoveMemberTicket":[],"AddNonMemberTicket":[],"RemoveNonMemberTicket":[],"AddFreeTicket":[],"RemoveFreeTicket":[],"GotoPayment":[]}},"Pages.OrderTicketsTemp.Msg":{"args":[],"tags":{"NoOp":[],"FreeTicketsAvailableReceived":["Result.Result Http.Error Api.GetFreeTicketsAvailable.Response"],"UpdateChristianName":["String.String"],"UpdateLastName":["String.String"],"UpdateEmail":["String.String"],"UpdateConfirmEmail":["String.String"],"UpdateFreeTicketCode":["String.String"],"AddMemberTicket":[],"RemoveMemberTicket":[],"AddNonMemberTicket":[],"RemoveNonMemberTicket":[],"AddFreeTicket":[],"RemoveFreeTicket":[],"GotoPayment":[]}},"Pages.Payment.Msg":{"args":[],"tags":{"NoOp":[],"WidgetMounted":["Basics.Bool"],"SumUpBodyStatusOk":["Basics.Bool"],"SumUpFailed":["Pages.Payment.SumUpFailure"]}},"Pages.PaymentSuccess.Msg":{"args":[],"tags":{"NoOp":[],"OrderInfoLoaded":["Result.Result Http.Error Api.GetOrderInfo.Order"],"MailSend":["Result.Result Http.Error Api.SendMail.MailResult"]}},"Pages.TeesAndCees.Msg":{"args":[],"tags":{"Back":[]}},"Pages.Tickets.Msg":{"args":[],"tags":{"NoOp":[],"OrderInfoLoaded":["Result.Result Http.Error Api.GetOrderInfo.Order"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}}}})}});}(this));
+_Platform_export({'App':{'init':$author$project$App$main($elm$json$Json$Decode$string)({"versions":{"elm":"0.19.1"},"types":{"message":"App.Msg","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"},"Api.Helpers.ObjectId.Id":{"args":[],"type":"{ id : String.String }"},"Api.OrderInfoEntered.OrderInfo":{"args":[],"type":"{ christianName : String.String, lastName : String.String, email : String.String, ticketsInfo : List.List Api.OrderInfoEntered.TicketInfo }"},"Api.LogToServer.Response":{"args":[],"type":"{ success : Basics.Bool }"},"Api.OrderInfoEntered.TicketInfo":{"args":[],"type":"{ id : String.String, description : String.String, price : Basics.Float, numberOfTickets : Basics.Int }"},"Browser.Dom.Viewport":{"args":[],"type":"{ scene : { width : Basics.Float, height : Basics.Float }, viewport : { x : Basics.Float, y : Basics.Float, width : Basics.Float, height : Basics.Float } }"},"Api.SendMail.MailResult":{"args":[],"type":"{ success : Basics.Bool }"},"Api.GetOrderInfo.Order":{"args":[],"type":"{ id : String.String, code : String.String, christianName : String.String, lastName : String.String, email : String.String, tickets : List.List Api.GetOrderInfo.Ticket }"},"Api.GetFreeTicketsAvailable.Response":{"args":[],"type":"{ amount : Basics.Int }"},"Api.GetOrderInfo.Ticket":{"args":[],"type":"{ id : String.String, description : String.String, price : Basics.Float }"}},"unions":{"App.Msg":{"args":[],"tags":{"SharedMsg":["Shared.Msg"],"HelmsmanMsg":["Helmsman.Msg"],"LinkClicked":["Browser.UrlRequest"],"UrlChanged":["Url.Url"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Helmsman.Msg":{"args":[],"tags":{"HomeMsg":["Pages.Home.Msg"],"OrderTicketsMsg":["Pages.OrderTickets.Msg"],"PaymentSuccessMsg":["Pages.PaymentSuccess.Msg"],"PaymentMsg":["Pages.Payment.Msg"],"TeesAndCeesMsg":["Pages.TeesAndCees.Msg"],"InvoiceInfoMsg":["Pages.InvoiceInfo.Msg"],"TicketsMsg":["Pages.Tickets.Msg"],"OrderTicketsTempMsg":["Pages.OrderTicketsTemp.Msg"]}},"Shared.Msg":{"args":[],"tags":{"GotViewport":["Browser.Dom.Viewport"],"OnResize":["Basics.Int","Basics.Int"],"Error":["Http.Error"],"OrderInfoEntered":["Api.OrderInfoEntered.OrderInfo","Basics.Float"],"OrderInfoEnteredSaved":["Result.Result Http.Error Api.Helpers.ObjectId.Id"],"LogToServer":["String.String"],"StuffLogged":["Result.Result Http.Error Api.LogToServer.Response"]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}},"Basics.Bool":{"args":[],"tags":{"True":[],"False":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String.String"],"Timeout":[],"NetworkError":[],"BadStatus":["Basics.Int"],"BadBody":["String.String"]}},"Basics.Float":{"args":[],"tags":{"Float":[]}},"List.List":{"args":["a"],"tags":{}},"Pages.Home.Msg":{"args":[],"tags":{"GotoTickets":[]}},"Pages.InvoiceInfo.Msg":{"args":[],"tags":{"UpdateCompanyName":["String.String"],"UpdateAddress":["String.String"],"UpdateVatNumber":["String.String"],"SaveInfo":[],"InvoiceInfoSaved":["Result.Result Http.Error Api.Helpers.ObjectId.Id"]}},"Pages.OrderTickets.Msg":{"args":[],"tags":{"NoOp":[],"FreeTicketsAvailableReceived":["Result.Result Http.Error Api.GetFreeTicketsAvailable.Response"],"UpdateChristianName":["String.String"],"UpdateLastName":["String.String"],"UpdateEmail":["String.String"],"UpdateConfirmEmail":["String.String"],"AddStandardTicket":[],"RemoveStandardTicket":[],"AddVipTicket":[],"RemoveVipTicket":[],"GotoPayment":[]}},"Pages.OrderTicketsTemp.Msg":{"args":[],"tags":{"NoOp":[],"FreeTicketsAvailableReceived":["Result.Result Http.Error Api.GetFreeTicketsAvailable.Response"],"UpdateChristianName":["String.String"],"UpdateLastName":["String.String"],"UpdateEmail":["String.String"],"UpdateConfirmEmail":["String.String"],"UpdateFreeTicketCode":["String.String"],"AddMemberTicket":[],"RemoveMemberTicket":[],"AddNonMemberTicket":[],"RemoveNonMemberTicket":[],"AddFreeTicket":[],"RemoveFreeTicket":[],"GotoPayment":[]}},"Pages.Payment.Msg":{"args":[],"tags":{"NoOp":[],"OrderConfirmed":["Result.Result Http.Error Api.Helpers.ObjectId.Id"]}},"Pages.PaymentSuccess.Msg":{"args":[],"tags":{"NoOp":[],"OrderInfoLoaded":["Result.Result Http.Error Api.GetOrderInfo.Order"],"MailSend":["Result.Result Http.Error Api.SendMail.MailResult"]}},"Pages.TeesAndCees.Msg":{"args":[],"tags":{"Back":[]}},"Pages.Tickets.Msg":{"args":[],"tags":{"NoOp":[],"OrderInfoLoaded":["Result.Result Http.Error Api.GetOrderInfo.Order"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}}}})}});}(this));

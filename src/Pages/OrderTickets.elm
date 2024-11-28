@@ -38,11 +38,8 @@ type alias Model =
     , confirmEmail : String
     , confirmEmailExists : Bool
     , emailMatches : Bool
-    , memberTicketInfo : TicketInfo
-    , nonMemberTicketInfo : TicketInfo
-    , freeTicketInfo : TicketInfo
-    , freeTicketCode : String
-    , freeTicketCodeMatches : Bool
+    , standardTicketInfo : TicketInfo
+    , vipTicketInfo : TicketInfo
     , hasTickets : Bool
     , freeTicketsAvailable : Int
     }
@@ -61,8 +58,8 @@ type alias Model =
 --       , confirmEmail = "a@a.aa"
 --       , confirmEmailExists = True
 --       , emailMatches = True
---       , memberTicketInfo = { id = "LID", description = "Leden", price = 1, numberOfTickets = 0 }
---       , nonMemberTicketInfo = { id = "N-LID", description = "Niet-Leden", price = 60, numberOfTickets = 0 }
+--       , standardTicketInfo = { id = "LID", description = "Leden", price = 1, numberOfTickets = 0 }
+--       , vipTicketInfo = { id = "N-LID", description = "Niet-Leden", price = 60, numberOfTickets = 0 }
 --       , freeTicketInfo = { id = "GR", description = "Gratis", price = 0, numberOfTickets = 0 }
 --       , freeTicketCode = "MMOKT0724"
 --       , freeTicketCodeMatches = True
@@ -85,11 +82,8 @@ init shared =
       , confirmEmail = ""
       , confirmEmailExists = True
       , emailMatches = True
-      , memberTicketInfo = { id = "LID", description = "Leden", price = 40, numberOfTickets = 0 }
-      , nonMemberTicketInfo = { id = "N-LID", description = "Niet-Leden", price = 60, numberOfTickets = 0 }
-      , freeTicketInfo = { id = "GR", description = "Gratis", price = 0, numberOfTickets = 0 }
-      , freeTicketCode = ""
-      , freeTicketCodeMatches = True
+      , standardTicketInfo = { id = "VVK", description = "Standaard", price = 60, numberOfTickets = 0 }
+      , vipTicketInfo = { id = "VIP", description = "Vip Tafel", price = 500, numberOfTickets = 0 }
       , hasTickets = True
       , freeTicketsAvailable = 0
       }
@@ -101,10 +95,10 @@ totalAmount : Model -> Float
 totalAmount model =
     let
         memberTotal =
-            toFloat model.memberTicketInfo.numberOfTickets * model.memberTicketInfo.price
+            toFloat model.standardTicketInfo.numberOfTickets * model.standardTicketInfo.price
 
         nonMemberTotal =
-            toFloat model.nonMemberTicketInfo.numberOfTickets * model.nonMemberTicketInfo.price
+            toFloat model.vipTicketInfo.numberOfTickets * model.vipTicketInfo.price
     in
     memberTotal + nonMemberTotal
 
@@ -116,13 +110,10 @@ type Msg
     | UpdateLastName String
     | UpdateEmail String
     | UpdateConfirmEmail String
-    | UpdateFreeTicketCode String
-    | AddMemberTicket
-    | RemoveMemberTicket
-    | AddNonMemberTicket
-    | RemoveNonMemberTicket
-    | AddFreeTicket
-    | RemoveFreeTicket
+    | AddStandardTicket
+    | RemoveStandardTicket
+    | AddVipTicket
+    | RemoveVipTicket
     | GotoPayment
 
 
@@ -162,17 +153,11 @@ update msg _ model =
             , Effect.None
             )
 
-        UpdateFreeTicketCode str ->
-            ( { model | freeTicketCode = str, freeTicketCodeMatches = not <| String.isEmpty str }
-            , Effect.None
-            )
-
         GotoPayment ->
             let
                 totalNumberOfTickets =
-                    model.memberTicketInfo.numberOfTickets
-                        + model.nonMemberTicketInfo.numberOfTickets
-                        + model.freeTicketInfo.numberOfTickets
+                    model.standardTicketInfo.numberOfTickets
+                        + model.vipTicketInfo.numberOfTickets
 
                 updatedModel =
                     { model
@@ -207,7 +192,7 @@ update msg _ model =
                                 { christianName = model.christianName
                                 , lastName = model.lastName
                                 , email = model.email
-                                , ticketsInfo = [ model.memberTicketInfo, model.nonMemberTicketInfo, model.freeTicketInfo ]
+                                , ticketsInfo = [ model.standardTicketInfo, model.vipTicketInfo ]
                                 }
                                 (totalAmount model)
 
@@ -218,69 +203,39 @@ update msg _ model =
             , effect
             )
 
-        AddMemberTicket ->
+        AddStandardTicket ->
             let
                 info =
-                    model.memberTicketInfo
+                    model.standardTicketInfo
             in
-            ( { model | memberTicketInfo = { info | numberOfTickets = info.numberOfTickets + 1 }, hasTickets = True }
+            ( { model | standardTicketInfo = { info | numberOfTickets = info.numberOfTickets + 1 }, hasTickets = True }
             , Effect.None
             )
 
-        RemoveMemberTicket ->
+        RemoveStandardTicket ->
             let
                 info =
-                    model.memberTicketInfo
+                    model.standardTicketInfo
             in
-            ( { model | memberTicketInfo = { info | numberOfTickets = Basics.max 0 (info.numberOfTickets - 1) } }
+            ( { model | standardTicketInfo = { info | numberOfTickets = Basics.max 0 (info.numberOfTickets - 1) } }
             , Effect.None
             )
 
-        AddNonMemberTicket ->
+        AddVipTicket ->
             let
                 info =
-                    model.nonMemberTicketInfo
+                    model.vipTicketInfo
             in
-            ( { model | nonMemberTicketInfo = { info | numberOfTickets = info.numberOfTickets + 1 }, hasTickets = True }
+            ( { model | vipTicketInfo = { info | numberOfTickets = info.numberOfTickets + 1 }, hasTickets = True }
             , Effect.None
             )
 
-        RemoveNonMemberTicket ->
+        RemoveVipTicket ->
             let
                 info =
-                    model.nonMemberTicketInfo
+                    model.vipTicketInfo
             in
-            ( { model | nonMemberTicketInfo = { info | numberOfTickets = Basics.max 0 (info.numberOfTickets - 1) } }
-            , Effect.None
-            )
-
-        AddFreeTicket ->
-            let
-                info =
-                    model.freeTicketInfo
-
-                freeTicketCodeMatches =
-                    model.freeTicketCode == "MMOKT0724"
-
-                freeTicketMax =
-                    Basics.min model.freeTicketsAvailable 2
-            in
-            if freeTicketCodeMatches then
-                ( { model | freeTicketInfo = { info | numberOfTickets = Basics.min freeTicketMax (info.numberOfTickets + 1) }, hasTickets = True }
-                , Effect.None
-                )
-
-            else
-                ( { model | freeTicketCodeMatches = False }
-                , Effect.none
-                )
-
-        RemoveFreeTicket ->
-            let
-                info =
-                    model.freeTicketInfo
-            in
-            ( { model | freeTicketInfo = { info | numberOfTickets = Basics.max 0 (info.numberOfTickets - 1) } }
+            ( { model | vipTicketInfo = { info | numberOfTickets = Basics.max 0 (info.numberOfTickets - 1) } }
             , Effect.None
             )
 
@@ -373,7 +328,7 @@ view shared model =
         [ Banner.view shared.device
         , Html.styled Html.div Style.container [] <|
             [ Html.styled Html.h1 Style.pageHeader [] [ Html.text evt.name ]
-            , Html.styled Html.h3 Style.pageHeader [] [ Html.text (dateTimeString evt) ]
+            , dateTimeRow
             , Html.styled Html.h2 (Css.marginBottom (Css.em 0.375) :: Style.pageHeader) [] [ Html.text "Gegevens" ]
             , infoForm
             , Html.styled Html.h2 Style.pageHeader [] [ Html.text "Tickets" ]
@@ -386,24 +341,10 @@ view shared model =
             , UI.showIfNot model.hasTickets <|
                 Html.styled Html.div Style.validation [] [ Html.text "Gelieve minstens één ticket te selecteren." ]
             , DivTable.renderBody ticketTableStyle <|
-                [ ticketForm model.memberTicketInfo AddMemberTicket RemoveMemberTicket
-                , ticketForm model.nonMemberTicketInfo AddNonMemberTicket RemoveNonMemberTicket
+                [ ticketForm model.standardTicketInfo AddStandardTicket RemoveStandardTicket
+                , ticketForm model.vipTicketInfo AddVipTicket RemoveVipTicket
                 ]
-            , UI.showIf (model.freeTicketsAvailable > 0)
-                (Html.styled Html.div [ Css.padding2 (Css.em 0.5) Css.zero ] [] [ Html.text <| "Voer uw code in voor gratis tickets (max " ++ maxFreeTickets ++ ")" ])
-            , UI.showIf (model.freeTicketsAvailable > 0)
-                (DivTable.renderBody ticketTableStyle <|
-                    [ [ [ Html.styled Html.div [ Css.paddingRight (Css.em 0.5) ] [] <|
-                            renderInput "Code" model.freeTicketCode UpdateFreeTicketCode model.freeTicketCodeMatches "Onbekende code."
-                        ]
-                      , [ Html.styled Html.button Style.symbolButton [ onClick <| RemoveFreeTicket ] [ Html.text "-" ] ]
-                      , [ Html.styled Html.div [ Css.width (Css.em 1.5), Css.textAlign Css.center ] [] [ Html.text <| String.fromInt model.freeTicketInfo.numberOfTickets ] ]
-                      , [ Html.styled Html.button Style.symbolButton [ onClick <| AddFreeTicket ] [ Html.text "+" ] ]
-                      ]
-                    ]
-                )
-            , UI.showIf (model.freeTicketsAvailable <= 0)
-                (Html.styled Html.div [ Css.padding2 (Css.em 0.5) (Css.em 1) ] [] [ Html.text "De tickets met code zijn niet meer beschikbaar." ])
             , maybeMargin
+            , maybeBottomButton
             ]
         ]

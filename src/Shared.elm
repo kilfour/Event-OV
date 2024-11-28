@@ -3,7 +3,6 @@ module Shared exposing (..)
 import Api.CreateCheckOut as CreateCheckOut
 import Api.Helpers.ObjectId exposing (Id)
 import Api.LogToServer
-import Api.OrderConfirmed as OrderConfirmed
 import Api.OrderInfoEntered as OrderInfoEntered
 import Browser.Dom
 import Browser.Events
@@ -34,9 +33,7 @@ type alias Model =
     , navKey : Nav.Key
     , device : Device
     , error : Maybe Http.Error
-    , currentOrder : String
     , currentOrderAmount : Float
-    , currentCheckOut : String
     , paid : Bool
     }
 
@@ -47,9 +44,7 @@ init baseApiUrl navKey =
       , navKey = navKey
       , device = Desktop
       , error = Nothing
-      , currentOrder = ""
       , currentOrderAmount = 0
-      , currentCheckOut = ""
       , paid = False
       }
     , Cmd.batch [ Task.perform GotViewport Browser.Dom.getViewport ]
@@ -67,9 +62,6 @@ type Msg
     | Error Http.Error
     | OrderInfoEntered OrderInfoEntered.OrderInfo Float
     | OrderInfoEnteredSaved (Result Http.Error Id)
-    | CheckOutCreated (Result Http.Error Id)
-    | ConfirmOrder
-    | OrderConfirmed (Result Http.Error Id)
     | LogToServer String
     | StuffLogged (Result Http.Error Api.LogToServer.Response)
 
@@ -92,35 +84,13 @@ update msg model =
             )
 
         OrderInfoEnteredSaved (Ok objectId) ->
-            let
-                cmd =
-                    if model.currentOrderAmount == 0 then
-                        OrderConfirmed.dispatch model.baseApiUrl objectId.id OrderConfirmed
-
-                    else
-                        CreateCheckOut.dispatch model.baseApiUrl objectId.id model.currentOrderAmount CheckOutCreated
-            in
-            ( { model | currentOrder = objectId.id }
-            , cmd
+            ( model
+              --, CreateCheckOut.dispatch model.baseApiUrl objectId.id model.currentOrderAmount CheckOutCreated
+            , Nav.pushUrl model.navKey <| "/payment/" ++ objectId.id
             )
 
         OrderInfoEnteredSaved (Err error) ->
             ( { model | error = Just error }, Cmd.none )
-
-        CheckOutCreated (Ok objectId) ->
-            ( { model | currentCheckOut = objectId.id }, Nav.pushUrl model.navKey "/payment/" )
-
-        CheckOutCreated (Err err) ->
-            ( { model | error = Just err }, Cmd.none )
-
-        ConfirmOrder ->
-            ( model, OrderConfirmed.dispatch model.baseApiUrl model.currentOrder OrderConfirmed )
-
-        OrderConfirmed (Ok _) ->
-            ( { model | paid = True }, Nav.pushUrl model.navKey "/payment-success/" )
-
-        OrderConfirmed (Err err) ->
-            ( { model | error = Just err }, Cmd.none )
 
         LogToServer info ->
             ( model, Api.LogToServer.dispatch model.baseApiUrl info StuffLogged )

@@ -85,7 +85,7 @@ update msg shared model =
                     if isValid then
                         let
                             info =
-                                { orderId = shared.currentOrder
+                                { orderId = "TODO"
                                 , companyName = model.companyName
                                 , vatNumber = model.vatNumber
                                 , address = model.address
