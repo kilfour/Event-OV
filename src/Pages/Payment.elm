@@ -1,4 +1,4 @@
-port module Pages.Payment exposing (..)
+module Pages.Payment exposing (..)
 
 import Browser.Navigation as Nav
 import Css
@@ -11,18 +11,6 @@ import Lib.ViewHelpers as UI
 import Pages.ViewParts.Banner as Banner
 import Shared exposing (Device(..), Msg(..))
 import Style
-
-
-port showSumUpWidget : String -> Cmd msg
-
-
-port widgetMounted : (Bool -> msg) -> Sub msg
-
-
-port sumUpFailure : (SumUpFailure -> msg) -> Sub msg
-
-
-port sumUpBodyStatusOk : (Bool -> msg) -> Sub msg
 
 
 type alias SumUpFailure =
@@ -46,17 +34,13 @@ init shared =
 
     else
         ( { sumUpFailed = False, retried = 0 }
-        , showSumUpWidget shared.currentCheckOut
+        , Cmd.none
         )
 
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-    Sub.batch
-        [ widgetMounted WidgetMounted
-        , sumUpBodyStatusOk SumUpBodyStatusOk
-        , sumUpFailure SumUpFailed
-        ]
+    Sub.none
 
 
 type Msg
@@ -90,7 +74,7 @@ update msg shared model =
                         if retried < 3 then
                             Effect.Batch <|
                                 [ Effect.Shared <| Shared.LogToServer "Sumup failed to mount, retrying."
-                                , Effect.Cmd <| showSumUpWidget shared.currentCheckOut
+                                , Effect.none
                                 ]
 
                         else
