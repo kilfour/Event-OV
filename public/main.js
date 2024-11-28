@@ -13725,7 +13725,18 @@ var $author$project$Pages$Home$view = F2(
 								$rtfeldman$elm_css$Css$em(0.85))
 							]),
 						_List_Nil,
-						A2($elm$core$List$map, $rtfeldman$elm_css$Html$Styled$text, ticketType.bf))
+						A2(
+							$elm$core$List$map,
+							function (a) {
+								return A2(
+									$rtfeldman$elm_css$Html$Styled$div,
+									_List_Nil,
+									_List_fromArray(
+										[
+											$rtfeldman$elm_css$Html$Styled$text(a)
+										]));
+							},
+							ticketType.bf))
 					]));
 		};
 		var maybeMargin = function () {
