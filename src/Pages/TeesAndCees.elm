@@ -25,7 +25,7 @@ Welkom bij Pequivents (de "Website"). Deze Algemene Voorwaarden zijn van toepass
 
 ## 2. Definities
 
-- **"Wij," "Ons," "Onze"** verwijst naar [Uw Bedrijfsnaam], de eigenaar en exploitant van de Website.
+- **"Wij," "Ons," "Onze"** verwijst naar Cook & Taste, de eigenaar en exploitant van de Website.
 - **"U," "Uw"** verwijst naar de persoon of entiteit die toegang heeft tot of gebruik maakt van de Website.
 - **"Evenement"** verwijst naar het evenement waarvoor tickets worden verkocht via de Website.
 - **"Ticket"** verwijst naar de licentie om een Evenement bij te wonen, gekocht via de Website.
@@ -86,7 +86,7 @@ U stemt ermee in om alle regels en voorschriften van het Evenement na te leven, 
 
 ### 7.1 Website Inhoud
 
-Alle inhoud op de Website, inclusief tekst, afbeeldingen, logo's en afbeeldingen, is eigendom van [Uw Bedrijfsnaam] of haar licentiegevers en is beschermd door intellectuele eigendomswetten.
+Alle inhoud op de Website, inclusief tekst, afbeeldingen, logo's en afbeeldingen, is eigendom van Cook & Taste of haar licentiegevers en is beschermd door intellectuele eigendomswetten.
 
 ### 7.2 Beperkte Licentie
 
@@ -98,15 +98,15 @@ De Website en alle via de Website verkochte tickets worden geleverd "zoals ze zi
 
 ## 9. Beperking van Aansprakelijkheid
 
-Voor zover maximaal toegestaan door de wet, zullen [Uw Bedrijfsnaam] en haar gelieerde ondernemingen niet aansprakelijk zijn voor enige indirecte, incidentele, speciale, gevolg- of bestraffende schade voortvloeiend uit of gerelateerd aan uw gebruik van de Website of uw deelname aan een Evenement.
+Voor zover maximaal toegestaan door de wet, zullen Cook & Taste en haar gelieerde ondernemingen niet aansprakelijk zijn voor enige indirecte, incidentele, speciale, gevolg- of bestraffende schade voortvloeiend uit of gerelateerd aan uw gebruik van de Website of uw deelname aan een Evenement.
 
 ## 10. Vrijwaring
 
-U stemt ermee in [Uw Bedrijfsnaam] en haar gelieerde ondernemingen te vrijwaren en schadeloos te stellen van enige claims, verliezen, schade, aansprakelijkheden, inclusief juridische kosten, voortvloeiend uit uw gebruik van de Website of schending van deze Voorwaarden.
+U stemt ermee in Cook & Taste en haar gelieerde ondernemingen te vrijwaren en schadeloos te stellen van enige claims, verliezen, schade, aansprakelijkheden, inclusief juridische kosten, voortvloeiend uit uw gebruik van de Website of schending van deze Voorwaarden.
 
 ## 11. Toepasselijk Recht
 
-Deze Voorwaarden en eventuele geschillen voortvloeiend uit uw gebruik van de Website worden beheerst door en geïnterpreteerd in overeenstemming met de wetten van [Uw Jurisdictie], zonder rekening te houden met conflicten van rechtsprincipes.
+Deze Voorwaarden en eventuele geschillen voortvloeiend uit uw gebruik van de Website worden beheerst door en geïnterpreteerd in overeenstemming met de wetten van de europese unie, zonder rekening te houden met conflicten van rechtsprincipes.
 
 ## 12. Wijzigingen in de Voorwaarden
 
@@ -116,6 +116,11 @@ We behouden ons het recht voor om deze Voorwaarden op elk moment te wijzigen. Wi
 
 Als u vragen heeft over deze Voorwaarden, kunt u contact met ons opnemen via: kilfour@gmail.com
 
+Cook & Taste BV
+Hemelshoek 235 B-2590 Berlaar (Belgium)
+BTW BE 0800.315.029
+Tel +32 3 366 21 00 
+GSM +32 498 10 38 88 
 """
 
 
