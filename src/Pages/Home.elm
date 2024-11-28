@@ -33,8 +33,7 @@ update msg shared model =
     case msg of
         GotoTickets ->
             ( model
-              --, Effect.Cmd <| Nav.pushUrl shared.navKey "/order-tickets/"
-            , Effect.Cmd <| Nav.load "https://www.google.com/search?q=301&sourceid=chrome&ie=UTF-8"
+            , Effect.Cmd <| Nav.pushUrl shared.navKey "/order-tickets/"
             )
 
 
