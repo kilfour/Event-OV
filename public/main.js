@@ -13908,7 +13908,7 @@ var $author$project$Pages$Home$update = F3(
 		return _Utils_Tuple2(
 			model,
 			$author$project$Lib$Effect$Cmd(
-				$elm$browser$Browser$Navigation$load('https://www.google.com')));
+				$elm$browser$Browser$Navigation$load('https://www.google.com/search?q=301&sourceid=chrome&ie=UTF-8')));
 	});
 var $author$project$Shared$Error = function (a) {
 	return {$: 'Error', a: a};
