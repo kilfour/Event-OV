@@ -34,12 +34,7 @@ update msg shared model =
         GotoTickets ->
             ( model
             , Effect.Cmd <| Nav.pushUrl shared.navKey "/order-tickets/"
-              --, Effect.Cmd <| Nav.load "https://www.mollie.com/checkout/select-method/EGdmU7d9Wq"
             )
-
-
-
--- https://www.mollie.com/ https://www.mollie.com/ 301!
 
 
 view : Shared.Model -> Model -> Html Msg

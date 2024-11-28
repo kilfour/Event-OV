@@ -42,6 +42,7 @@ type alias Model =
     , vipTicketInfo : TicketInfo
     , hasTickets : Bool
     , freeTicketsAvailable : Int
+    , connecting : Bool
     }
 
 
@@ -86,6 +87,7 @@ init shared =
       , vipTicketInfo = { id = "VIP", description = "Vip Tafel", price = 500, numberOfTickets = 0 }
       , hasTickets = True
       , freeTicketsAvailable = 0
+      , connecting = False
       }
     , Cmd.none
     )
@@ -199,7 +201,7 @@ update msg _ model =
                     else
                         Effect.None
             in
-            ( updatedModel
+            ( { updatedModel | connecting = isValid }
             , effect
             )
 
@@ -325,7 +327,12 @@ view shared model =
             String.fromInt <| Basics.min model.freeTicketsAvailable 2
     in
     Html.div [] <|
-        [ Banner.view shared.device
+        [ if model.connecting then
+            Html.div [ class "loading-state" ] [ Html.div [ class "loading" ] [] ]
+
+          else
+            Html.text ""
+        , Banner.view shared.device
         , Html.styled Html.div Style.container [] <|
             [ Html.styled Html.h1 Style.pageHeader [] [ Html.text evt.name ]
             , dateTimeRow
