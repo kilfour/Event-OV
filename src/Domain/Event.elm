@@ -15,7 +15,7 @@ type alias Event =
 
 
 type alias TicketType =
-    { id : String, description : String, price : Float, info : String }
+    { id : String, description : String, price : Float, info : List String }
 
 
 dateTimeString : { a | date : String, time : String } -> String
@@ -43,7 +43,14 @@ theEvent =
     , time = "18:30"
     , extraInfo = "Gratis parkeren.\nDrank en gerechtjes inbegrepen tot 21u30."
     , ticketTypes =
-        [ { id = "VVK", description = "Standaard", price = 60, info = "" }
-        , { id = "VIP", description = "Vip Tafel", price = 500, info = "Voor zes personen plus fles Champagne.\nSponsor logo getoond op afzonderlijke tafel en geprojecteerd op scherm." }
+        [ { id = "VVK", description = "Standaard", price = 60, info = [] }
+        , { id = "VIP"
+          , description = "Vip Tafel"
+          , price = 500
+          , info =
+                [ "Voor zes personen plus fles Champagne."
+                , "Sponsor logo getoond op afzonderlijke tafel en geprojecteerd op scherm."
+                ]
+          }
         ]
     }

@@ -75,7 +75,8 @@ view shared _ =
         ticketTypes ticketType =
             Html.div []
                 [ Html.div [] [ Html.text <| ticketType.description ++ " - " ++ Round.round 2 ticketType.price ++ " €" ]
-                , Html.styled Html.div [ Css.marginLeft (Css.em 1), Css.whiteSpace Css.pre, Css.fontSize (Css.em 0.85) ] [] [ Html.text <| ticketType.info ]
+                , Html.styled Html.div [ Css.marginLeft (Css.em 1), Css.fontSize (Css.em 0.85) ] [] <|
+                    List.map Html.text ticketType.info
                 ]
     in
     Html.div []
