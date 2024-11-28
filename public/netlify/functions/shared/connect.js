@@ -26,7 +26,7 @@ exports.query = function (q, getData) {
         })
         .catch((err) => {
             console.error(
-                'Error: [%s] %s: %s',
+                'Error: %s: %s',
                 err.name,
                 err.message
             );
