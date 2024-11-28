@@ -13667,7 +13667,6 @@ var $author$project$Shared$getDevice = F2(
 	function (width, height) {
 		return (_Utils_cmp(width, height) < 0) ? $author$project$Shared$Phone : $author$project$Shared$Desktop;
 	});
-var $elm$browser$Browser$Navigation$load = _Browser_load;
 var $elm$core$Debug$log = _Debug_log;
 var $elm$core$Basics$round = _Basics_round;
 var $author$project$Shared$update = F2(
@@ -13732,9 +13731,7 @@ var $author$project$Shared$update = F2(
 				if (msg.a.$ === 'Ok') {
 					var url = msg.a.a;
 					var _v1 = A2($elm$core$Debug$log, 'url', url);
-					return _Utils_Tuple2(
-						model,
-						$elm$browser$Browser$Navigation$load(url));
+					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 				} else {
 					var err = msg.a.a;
 					return _Utils_Tuple2(
@@ -13801,6 +13798,7 @@ var $author$project$App$applyEffect = F2(
 						$elm$core$Platform$Cmd$map($author$project$App$SharedMsg),
 						cmd))));
 	});
+var $elm$browser$Browser$Navigation$load = _Browser_load;
 var $elm$browser$Browser$Navigation$pushUrl = _Browser_pushUrl;
 var $elm$url$Url$addPort = F2(
 	function (maybePort, starter) {

@@ -97,8 +97,9 @@ update msg model =
                 _ =
                     Debug.log "url" url
             in
-            ( model, Nav.load url )
+            ( model, Cmd.none )
 
+        -- Nav.load url )
         CheckOutCreated (Err err) ->
             ( { model | error = Just err }, Cmd.none )
 
