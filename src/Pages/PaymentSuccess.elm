@@ -49,15 +49,14 @@ update msg shared model =
 
         OrderInfoLoaded (Ok orderInfo) ->
             ( { model | orderInfo = Just orderInfo }
-            , Effect.none
-              -- , Effect.Cmd <|
-              --     SendMail.dispatch shared.baseApiUrl
-              --         { email = orderInfo.email
-              --         , orderId = orderInfo.id
-              --         , total = totalAmount orderInfo
-              --         , url = "https://pequivents.netlify.app/tickets/" ++ orderInfo.id ++ "-" ++ orderInfo.code
-              --         }
-              --         MailSend
+            , Effect.Cmd <|
+                SendMail.dispatch shared.baseApiUrl
+                    { email = orderInfo.email
+                    , orderId = orderInfo.id
+                    , total = totalAmount orderInfo
+                    , url = "https://pequivents.netlify.app/tickets/" ++ orderInfo.id ++ "-" ++ orderInfo.code
+                    }
+                    MailSend
             )
 
         OrderInfoLoaded (Err error) ->
