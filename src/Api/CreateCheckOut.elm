@@ -3,13 +3,14 @@ module Api.CreateCheckOut exposing (..)
 import Api.Helpers.ObjectId exposing (..)
 import Http
 import Json.Encode
+import Round
 
 
 encoder : String -> Float -> Json.Encode.Value
 encoder orderId amount =
     Json.Encode.object
         [ ( "orderId", Json.Encode.string orderId )
-        , ( "amount", Json.Encode.float amount )
+        , ( "amount", Json.Encode.string (Round.round 2 amount) )
         ]
 
 

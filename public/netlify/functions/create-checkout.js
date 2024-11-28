@@ -11,7 +11,7 @@ exports.handler = async function (event, context) {
         const payment = await mollieClient.payments.create({
             amount: {
                 currency: 'EUR',
-                value: String(data.amount), // You must send the correct number of decimals, thus we enforce the use of strings
+                value: data.amount, // You must send the correct number of decimals, thus we enforce the use of strings
             },
             description: 'EVENT OM 09/10/25',
             redirectUrl: 'https://pequivents.netlify.app/payment/' + data.orderId + '/',
