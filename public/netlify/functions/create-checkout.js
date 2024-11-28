@@ -13,7 +13,7 @@ exports.handler = async function (event, context) {
                 currency: 'EUR',
                 value: data.amount, // You must send the correct number of decimals, thus we enforce the use of strings
             },
-            description: 'BestelNr: ' + data.orderId,
+            description: data.orderId,
             redirectUrl: 'https://pequivents.netlify.app/payment/' + data.orderId,
             // webhookUrl: 'https://webshop.example.org/payments/webhook/',
 
