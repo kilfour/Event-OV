@@ -13257,12 +13257,319 @@ var $author$project$Lib$Effect$toCmd = F2(
 			}
 		}
 	});
+var $author$project$Shared$CheckOutCreated = function (a) {
+	return {$: 'CheckOutCreated', a: a};
+};
 var $author$project$Shared$OrderInfoEnteredSaved = function (a) {
 	return {$: 'OrderInfoEnteredSaved', a: a};
 };
 var $author$project$Shared$StuffLogged = function (a) {
 	return {$: 'StuffLogged', a: a};
 };
+var $elm$core$Basics$abs = function (n) {
+	return (n < 0) ? (-n) : n;
+};
+var $elm$core$List$any = F2(
+	function (isOkay, list) {
+		any:
+		while (true) {
+			if (!list.b) {
+				return false;
+			} else {
+				var x = list.a;
+				var xs = list.b;
+				if (isOkay(x)) {
+					return true;
+				} else {
+					var $temp$isOkay = isOkay,
+						$temp$list = xs;
+					isOkay = $temp$isOkay;
+					list = $temp$list;
+					continue any;
+				}
+			}
+		}
+	});
+var $elm$core$String$foldr = _String_foldr;
+var $elm$core$String$toList = function (string) {
+	return A3($elm$core$String$foldr, $elm$core$List$cons, _List_Nil, string);
+};
+var $myrho$elm_round$Round$addSign = F2(
+	function (signed, str) {
+		var isNotZero = A2(
+			$elm$core$List$any,
+			function (c) {
+				return (!_Utils_eq(
+					c,
+					_Utils_chr('0'))) && (!_Utils_eq(
+					c,
+					_Utils_chr('.')));
+			},
+			$elm$core$String$toList(str));
+		return _Utils_ap(
+			(signed && isNotZero) ? '-' : '',
+			str);
+	});
+var $elm$core$Char$fromCode = _Char_fromCode;
+var $myrho$elm_round$Round$increaseNum = function (_v0) {
+	var head = _v0.a;
+	var tail = _v0.b;
+	if (_Utils_eq(
+		head,
+		_Utils_chr('9'))) {
+		var _v1 = $elm$core$String$uncons(tail);
+		if (_v1.$ === 'Nothing') {
+			return '01';
+		} else {
+			var headtail = _v1.a;
+			return A2(
+				$elm$core$String$cons,
+				_Utils_chr('0'),
+				$myrho$elm_round$Round$increaseNum(headtail));
+		}
+	} else {
+		var c = $elm$core$Char$toCode(head);
+		return ((c >= 48) && (c < 57)) ? A2(
+			$elm$core$String$cons,
+			$elm$core$Char$fromCode(c + 1),
+			tail) : '0';
+	}
+};
+var $elm$core$Basics$isInfinite = _Basics_isInfinite;
+var $elm$core$Basics$isNaN = _Basics_isNaN;
+var $elm$core$Maybe$map = F2(
+	function (f, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return $elm$core$Maybe$Just(
+				f(value));
+		} else {
+			return $elm$core$Maybe$Nothing;
+		}
+	});
+var $elm$core$String$fromChar = function (_char) {
+	return A2($elm$core$String$cons, _char, '');
+};
+var $elm$core$Bitwise$shiftRightBy = _Bitwise_shiftRightBy;
+var $elm$core$String$repeatHelp = F3(
+	function (n, chunk, result) {
+		return (n <= 0) ? result : A3(
+			$elm$core$String$repeatHelp,
+			n >> 1,
+			_Utils_ap(chunk, chunk),
+			(!(n & 1)) ? result : _Utils_ap(result, chunk));
+	});
+var $elm$core$String$repeat = F2(
+	function (n, chunk) {
+		return A3($elm$core$String$repeatHelp, n, chunk, '');
+	});
+var $elm$core$String$padRight = F3(
+	function (n, _char, string) {
+		return _Utils_ap(
+			string,
+			A2(
+				$elm$core$String$repeat,
+				n - $elm$core$String$length(string),
+				$elm$core$String$fromChar(_char)));
+	});
+var $elm$core$String$reverse = _String_reverse;
+var $myrho$elm_round$Round$splitComma = function (str) {
+	var _v0 = A2($elm$core$String$split, '.', str);
+	if (_v0.b) {
+		if (_v0.b.b) {
+			var before = _v0.a;
+			var _v1 = _v0.b;
+			var after = _v1.a;
+			return _Utils_Tuple2(before, after);
+		} else {
+			var before = _v0.a;
+			return _Utils_Tuple2(before, '0');
+		}
+	} else {
+		return _Utils_Tuple2('0', '0');
+	}
+};
+var $elm$core$Tuple$mapFirst = F2(
+	function (func, _v0) {
+		var x = _v0.a;
+		var y = _v0.b;
+		return _Utils_Tuple2(
+			func(x),
+			y);
+	});
+var $myrho$elm_round$Round$toDecimal = function (fl) {
+	var _v0 = A2(
+		$elm$core$String$split,
+		'e',
+		$elm$core$String$fromFloat(
+			$elm$core$Basics$abs(fl)));
+	if (_v0.b) {
+		if (_v0.b.b) {
+			var num = _v0.a;
+			var _v1 = _v0.b;
+			var exp = _v1.a;
+			var e = A2(
+				$elm$core$Maybe$withDefault,
+				0,
+				$elm$core$String$toInt(
+					A2($elm$core$String$startsWith, '+', exp) ? A2($elm$core$String$dropLeft, 1, exp) : exp));
+			var _v2 = $myrho$elm_round$Round$splitComma(num);
+			var before = _v2.a;
+			var after = _v2.b;
+			var total = _Utils_ap(before, after);
+			var zeroed = (e < 0) ? A2(
+				$elm$core$Maybe$withDefault,
+				'0',
+				A2(
+					$elm$core$Maybe$map,
+					function (_v3) {
+						var a = _v3.a;
+						var b = _v3.b;
+						return a + ('.' + b);
+					},
+					A2(
+						$elm$core$Maybe$map,
+						$elm$core$Tuple$mapFirst($elm$core$String$fromChar),
+						$elm$core$String$uncons(
+							_Utils_ap(
+								A2(
+									$elm$core$String$repeat,
+									$elm$core$Basics$abs(e),
+									'0'),
+								total))))) : A3(
+				$elm$core$String$padRight,
+				e + 1,
+				_Utils_chr('0'),
+				total);
+			return _Utils_ap(
+				(fl < 0) ? '-' : '',
+				zeroed);
+		} else {
+			var num = _v0.a;
+			return _Utils_ap(
+				(fl < 0) ? '-' : '',
+				num);
+		}
+	} else {
+		return '';
+	}
+};
+var $myrho$elm_round$Round$roundFun = F3(
+	function (functor, s, fl) {
+		if ($elm$core$Basics$isInfinite(fl) || $elm$core$Basics$isNaN(fl)) {
+			return $elm$core$String$fromFloat(fl);
+		} else {
+			var signed = fl < 0;
+			var _v0 = $myrho$elm_round$Round$splitComma(
+				$myrho$elm_round$Round$toDecimal(
+					$elm$core$Basics$abs(fl)));
+			var before = _v0.a;
+			var after = _v0.b;
+			var r = $elm$core$String$length(before) + s;
+			var normalized = _Utils_ap(
+				A2($elm$core$String$repeat, (-r) + 1, '0'),
+				A3(
+					$elm$core$String$padRight,
+					r,
+					_Utils_chr('0'),
+					_Utils_ap(before, after)));
+			var totalLen = $elm$core$String$length(normalized);
+			var roundDigitIndex = A2($elm$core$Basics$max, 1, r);
+			var increase = A2(
+				functor,
+				signed,
+				A3($elm$core$String$slice, roundDigitIndex, totalLen, normalized));
+			var remains = A3($elm$core$String$slice, 0, roundDigitIndex, normalized);
+			var num = increase ? $elm$core$String$reverse(
+				A2(
+					$elm$core$Maybe$withDefault,
+					'1',
+					A2(
+						$elm$core$Maybe$map,
+						$myrho$elm_round$Round$increaseNum,
+						$elm$core$String$uncons(
+							$elm$core$String$reverse(remains))))) : remains;
+			var numLen = $elm$core$String$length(num);
+			var numZeroed = (num === '0') ? num : ((s <= 0) ? _Utils_ap(
+				num,
+				A2(
+					$elm$core$String$repeat,
+					$elm$core$Basics$abs(s),
+					'0')) : ((_Utils_cmp(
+				s,
+				$elm$core$String$length(after)) < 0) ? (A3($elm$core$String$slice, 0, numLen - s, num) + ('.' + A3($elm$core$String$slice, numLen - s, numLen, num))) : _Utils_ap(
+				before + '.',
+				A3(
+					$elm$core$String$padRight,
+					s,
+					_Utils_chr('0'),
+					after))));
+			return A2($myrho$elm_round$Round$addSign, signed, numZeroed);
+		}
+	});
+var $myrho$elm_round$Round$round = $myrho$elm_round$Round$roundFun(
+	F2(
+		function (signed, str) {
+			var _v0 = $elm$core$String$uncons(str);
+			if (_v0.$ === 'Nothing') {
+				return false;
+			} else {
+				if ('5' === _v0.a.a.valueOf()) {
+					if (_v0.a.b === '') {
+						var _v1 = _v0.a;
+						return !signed;
+					} else {
+						var _v2 = _v0.a;
+						return true;
+					}
+				} else {
+					var _v3 = _v0.a;
+					var _int = _v3.a;
+					return function (i) {
+						return ((i > 53) && signed) || ((i >= 53) && (!signed));
+					}(
+						$elm$core$Char$toCode(_int));
+				}
+			}
+		}));
+var $author$project$Api$CreateCheckOut$encoder = F2(
+	function (orderId, amount) {
+		return $elm$json$Json$Encode$object(
+			_List_fromArray(
+				[
+					_Utils_Tuple2(
+					'orderId',
+					$elm$json$Json$Encode$string(orderId)),
+					_Utils_Tuple2(
+					'amount',
+					$elm$json$Json$Encode$string(
+						A2($myrho$elm_round$Round$round, 2, amount)))
+				]));
+	});
+var $elm$http$Http$expectString = function (toMsg) {
+	return A2(
+		$elm$http$Http$expectStringResponse,
+		toMsg,
+		$elm$http$Http$resolve($elm$core$Result$Ok));
+};
+var $author$project$Api$CreateCheckOut$dispatch = F4(
+	function (baseApiUrl, id, amount, msg) {
+		var jsonPayload = A2(
+			$elm$json$Json$Encode$encode,
+			0,
+			A2($author$project$Api$CreateCheckOut$encoder, id, amount));
+		var request = $elm$http$Http$request(
+			{
+				body: A2($elm$http$Http$stringBody, 'application/json', jsonPayload),
+				expect: $elm$http$Http$expectString(msg),
+				headers: _List_Nil,
+				method: 'POST',
+				timeout: $elm$core$Maybe$Nothing,
+				tracker: $elm$core$Maybe$Nothing,
+				url: baseApiUrl + 'create-checkout'
+			});
+		return request;
+	});
 var $author$project$Api$LogToServer$requestEncoder = function (message) {
 	return $elm$json$Json$Encode$object(
 		_List_fromArray(
@@ -13360,7 +13667,7 @@ var $author$project$Shared$getDevice = F2(
 	function (width, height) {
 		return (_Utils_cmp(width, height) < 0) ? $author$project$Shared$Phone : $author$project$Shared$Desktop;
 	});
-var $elm$browser$Browser$Navigation$pushUrl = _Browser_pushUrl;
+var $elm$browser$Browser$Navigation$load = _Browser_load;
 var $elm$core$Basics$round = _Basics_round;
 var $author$project$Shared$update = F2(
 	function (msg, model) {
@@ -13409,7 +13716,7 @@ var $author$project$Shared$update = F2(
 					var objectId = msg.a.a;
 					return _Utils_Tuple2(
 						model,
-						A2($elm$browser$Browser$Navigation$pushUrl, model.navKey, '/payment/' + objectId.id));
+						A4($author$project$Api$CreateCheckOut$dispatch, model.baseApiUrl, objectId.id, model.currentOrderAmount, $author$project$Shared$CheckOutCreated));
 				} else {
 					var error = msg.a.a;
 					return _Utils_Tuple2(
@@ -13417,6 +13724,22 @@ var $author$project$Shared$update = F2(
 							model,
 							{
 								error: $elm$core$Maybe$Just(error)
+							}),
+						$elm$core$Platform$Cmd$none);
+				}
+			case 'CheckOutCreated':
+				if (msg.a.$ === 'Ok') {
+					var url = msg.a.a;
+					return _Utils_Tuple2(
+						model,
+						$elm$browser$Browser$Navigation$load(url));
+				} else {
+					var err = msg.a.a;
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{
+								error: $elm$core$Maybe$Just(err)
 							}),
 						$elm$core$Platform$Cmd$none);
 				}
@@ -13476,7 +13799,7 @@ var $author$project$App$applyEffect = F2(
 						$elm$core$Platform$Cmd$map($author$project$App$SharedMsg),
 						cmd))));
 	});
-var $elm$browser$Browser$Navigation$load = _Browser_load;
+var $elm$browser$Browser$Navigation$pushUrl = _Browser_pushUrl;
 var $elm$url$Url$addPort = F2(
 	function (maybePort, starter) {
 		if (maybePort.$ === 'Nothing') {
@@ -13585,7 +13908,7 @@ var $author$project$Pages$Home$update = F3(
 		return _Utils_Tuple2(
 			model,
 			$author$project$Lib$Effect$Cmd(
-				A2($elm$browser$Browser$Navigation$pushUrl, shared.navKey, '/order-tickets/')));
+				$elm$browser$Browser$Navigation$load('https:/www.google.com')));
 	});
 var $author$project$Shared$Error = function (a) {
 	return {$: 'Error', a: a};
@@ -13747,9 +14070,6 @@ var $elm$parser$Parser$Advanced$end = function (x) {
 		});
 };
 var $elm$parser$Parser$end = $elm$parser$Parser$Advanced$end($elm$parser$Parser$ExpectingEnd);
-var $elm$core$String$fromChar = function (_char) {
-	return A2($elm$core$String$cons, _char, '');
-};
 var $elm$parser$Parser$Advanced$map2 = F3(
 	function (func, _v0, _v1) {
 		var parseA = _v0.a;
@@ -15094,27 +15414,6 @@ var $rtfeldman$elm_css$Css$Internal$lengthConverter = F3(
 		};
 	});
 var $rtfeldman$elm_css$Css$px = A2($rtfeldman$elm_css$Css$Internal$lengthConverter, $rtfeldman$elm_css$Css$PxUnits, 'px');
-var $elm$core$List$any = F2(
-	function (isOkay, list) {
-		any:
-		while (true) {
-			if (!list.b) {
-				return false;
-			} else {
-				var x = list.a;
-				var xs = list.b;
-				if (isOkay(x)) {
-					return true;
-				} else {
-					var $temp$isOkay = isOkay,
-						$temp$list = xs;
-					isOkay = $temp$isOkay;
-					list = $temp$list;
-					continue any;
-				}
-			}
-		}
-	});
 var $elm$core$List$all = F2(
 	function (isOkay, list) {
 		return !A2(
@@ -15231,16 +15530,6 @@ var $rtfeldman$elm_css$Css$Structure$compactStylesheet = function (_v0) {
 		namespaces: namespaces
 	};
 };
-var $elm$core$Maybe$map = F2(
-	function (f, maybe) {
-		if (maybe.$ === 'Just') {
-			var value = maybe.a;
-			return $elm$core$Maybe$Just(
-				f(value));
-		} else {
-			return $elm$core$Maybe$Nothing;
-		}
-	});
 var $rtfeldman$elm_css$Css$Structure$Output$charsetToString = function (charset) {
 	return A2(
 		$elm$core$Maybe$withDefault,
@@ -16597,10 +16886,6 @@ var $rtfeldman$elm_css$Css$erroneousHex = function (str) {
 		value: $rtfeldman$elm_css$Css$withPrecedingHash(str)
 	};
 };
-var $elm$core$String$foldr = _String_foldr;
-var $elm$core$String$toList = function (string) {
-	return A3($elm$core$String$foldr, $elm$core$List$cons, _List_Nil, string);
-};
 var $elm$core$Basics$pow = _Basics_pow;
 var $rtfeldman$elm_hex$Hex$fromStringHelp = F3(
 	function (position, chars, accumulated) {
@@ -17375,234 +17660,6 @@ var $author$project$Style$pageHeader = _List_fromArray(
 		$rtfeldman$elm_css$Css$hex('222')),
 		$rtfeldman$elm_css$Css$fontWeight($rtfeldman$elm_css$Css$normal)
 	]);
-var $elm$core$Basics$abs = function (n) {
-	return (n < 0) ? (-n) : n;
-};
-var $myrho$elm_round$Round$addSign = F2(
-	function (signed, str) {
-		var isNotZero = A2(
-			$elm$core$List$any,
-			function (c) {
-				return (!_Utils_eq(
-					c,
-					_Utils_chr('0'))) && (!_Utils_eq(
-					c,
-					_Utils_chr('.')));
-			},
-			$elm$core$String$toList(str));
-		return _Utils_ap(
-			(signed && isNotZero) ? '-' : '',
-			str);
-	});
-var $elm$core$Char$fromCode = _Char_fromCode;
-var $myrho$elm_round$Round$increaseNum = function (_v0) {
-	var head = _v0.a;
-	var tail = _v0.b;
-	if (_Utils_eq(
-		head,
-		_Utils_chr('9'))) {
-		var _v1 = $elm$core$String$uncons(tail);
-		if (_v1.$ === 'Nothing') {
-			return '01';
-		} else {
-			var headtail = _v1.a;
-			return A2(
-				$elm$core$String$cons,
-				_Utils_chr('0'),
-				$myrho$elm_round$Round$increaseNum(headtail));
-		}
-	} else {
-		var c = $elm$core$Char$toCode(head);
-		return ((c >= 48) && (c < 57)) ? A2(
-			$elm$core$String$cons,
-			$elm$core$Char$fromCode(c + 1),
-			tail) : '0';
-	}
-};
-var $elm$core$Basics$isInfinite = _Basics_isInfinite;
-var $elm$core$Basics$isNaN = _Basics_isNaN;
-var $elm$core$Bitwise$shiftRightBy = _Bitwise_shiftRightBy;
-var $elm$core$String$repeatHelp = F3(
-	function (n, chunk, result) {
-		return (n <= 0) ? result : A3(
-			$elm$core$String$repeatHelp,
-			n >> 1,
-			_Utils_ap(chunk, chunk),
-			(!(n & 1)) ? result : _Utils_ap(result, chunk));
-	});
-var $elm$core$String$repeat = F2(
-	function (n, chunk) {
-		return A3($elm$core$String$repeatHelp, n, chunk, '');
-	});
-var $elm$core$String$padRight = F3(
-	function (n, _char, string) {
-		return _Utils_ap(
-			string,
-			A2(
-				$elm$core$String$repeat,
-				n - $elm$core$String$length(string),
-				$elm$core$String$fromChar(_char)));
-	});
-var $elm$core$String$reverse = _String_reverse;
-var $myrho$elm_round$Round$splitComma = function (str) {
-	var _v0 = A2($elm$core$String$split, '.', str);
-	if (_v0.b) {
-		if (_v0.b.b) {
-			var before = _v0.a;
-			var _v1 = _v0.b;
-			var after = _v1.a;
-			return _Utils_Tuple2(before, after);
-		} else {
-			var before = _v0.a;
-			return _Utils_Tuple2(before, '0');
-		}
-	} else {
-		return _Utils_Tuple2('0', '0');
-	}
-};
-var $elm$core$Tuple$mapFirst = F2(
-	function (func, _v0) {
-		var x = _v0.a;
-		var y = _v0.b;
-		return _Utils_Tuple2(
-			func(x),
-			y);
-	});
-var $myrho$elm_round$Round$toDecimal = function (fl) {
-	var _v0 = A2(
-		$elm$core$String$split,
-		'e',
-		$elm$core$String$fromFloat(
-			$elm$core$Basics$abs(fl)));
-	if (_v0.b) {
-		if (_v0.b.b) {
-			var num = _v0.a;
-			var _v1 = _v0.b;
-			var exp = _v1.a;
-			var e = A2(
-				$elm$core$Maybe$withDefault,
-				0,
-				$elm$core$String$toInt(
-					A2($elm$core$String$startsWith, '+', exp) ? A2($elm$core$String$dropLeft, 1, exp) : exp));
-			var _v2 = $myrho$elm_round$Round$splitComma(num);
-			var before = _v2.a;
-			var after = _v2.b;
-			var total = _Utils_ap(before, after);
-			var zeroed = (e < 0) ? A2(
-				$elm$core$Maybe$withDefault,
-				'0',
-				A2(
-					$elm$core$Maybe$map,
-					function (_v3) {
-						var a = _v3.a;
-						var b = _v3.b;
-						return a + ('.' + b);
-					},
-					A2(
-						$elm$core$Maybe$map,
-						$elm$core$Tuple$mapFirst($elm$core$String$fromChar),
-						$elm$core$String$uncons(
-							_Utils_ap(
-								A2(
-									$elm$core$String$repeat,
-									$elm$core$Basics$abs(e),
-									'0'),
-								total))))) : A3(
-				$elm$core$String$padRight,
-				e + 1,
-				_Utils_chr('0'),
-				total);
-			return _Utils_ap(
-				(fl < 0) ? '-' : '',
-				zeroed);
-		} else {
-			var num = _v0.a;
-			return _Utils_ap(
-				(fl < 0) ? '-' : '',
-				num);
-		}
-	} else {
-		return '';
-	}
-};
-var $myrho$elm_round$Round$roundFun = F3(
-	function (functor, s, fl) {
-		if ($elm$core$Basics$isInfinite(fl) || $elm$core$Basics$isNaN(fl)) {
-			return $elm$core$String$fromFloat(fl);
-		} else {
-			var signed = fl < 0;
-			var _v0 = $myrho$elm_round$Round$splitComma(
-				$myrho$elm_round$Round$toDecimal(
-					$elm$core$Basics$abs(fl)));
-			var before = _v0.a;
-			var after = _v0.b;
-			var r = $elm$core$String$length(before) + s;
-			var normalized = _Utils_ap(
-				A2($elm$core$String$repeat, (-r) + 1, '0'),
-				A3(
-					$elm$core$String$padRight,
-					r,
-					_Utils_chr('0'),
-					_Utils_ap(before, after)));
-			var totalLen = $elm$core$String$length(normalized);
-			var roundDigitIndex = A2($elm$core$Basics$max, 1, r);
-			var increase = A2(
-				functor,
-				signed,
-				A3($elm$core$String$slice, roundDigitIndex, totalLen, normalized));
-			var remains = A3($elm$core$String$slice, 0, roundDigitIndex, normalized);
-			var num = increase ? $elm$core$String$reverse(
-				A2(
-					$elm$core$Maybe$withDefault,
-					'1',
-					A2(
-						$elm$core$Maybe$map,
-						$myrho$elm_round$Round$increaseNum,
-						$elm$core$String$uncons(
-							$elm$core$String$reverse(remains))))) : remains;
-			var numLen = $elm$core$String$length(num);
-			var numZeroed = (num === '0') ? num : ((s <= 0) ? _Utils_ap(
-				num,
-				A2(
-					$elm$core$String$repeat,
-					$elm$core$Basics$abs(s),
-					'0')) : ((_Utils_cmp(
-				s,
-				$elm$core$String$length(after)) < 0) ? (A3($elm$core$String$slice, 0, numLen - s, num) + ('.' + A3($elm$core$String$slice, numLen - s, numLen, num))) : _Utils_ap(
-				before + '.',
-				A3(
-					$elm$core$String$padRight,
-					s,
-					_Utils_chr('0'),
-					after))));
-			return A2($myrho$elm_round$Round$addSign, signed, numZeroed);
-		}
-	});
-var $myrho$elm_round$Round$round = $myrho$elm_round$Round$roundFun(
-	F2(
-		function (signed, str) {
-			var _v0 = $elm$core$String$uncons(str);
-			if (_v0.$ === 'Nothing') {
-				return false;
-			} else {
-				if ('5' === _v0.a.a.valueOf()) {
-					if (_v0.a.b === '') {
-						var _v1 = _v0.a;
-						return !signed;
-					} else {
-						var _v2 = _v0.a;
-						return true;
-					}
-				} else {
-					var _v3 = _v0.a;
-					var _int = _v3.a;
-					return function (i) {
-						return ((i > 53) && signed) || ((i >= 53) && (!signed));
-					}(
-						$elm$core$Char$toCode(_int));
-				}
-			}
-		}));
 var $author$project$Domain$Event$theEvent = {
 	address: 'Maneblusser City\nNora Tilleylaan 28\n2800 Mechelen',
 	date: 'Donderdag 9 Januari 2025',
@@ -24690,4 +24747,4 @@ var $author$project$App$main = $elm$browser$Browser$application(
 			};
 		}
 	});
-_Platform_export({'App':{'init':$author$project$App$main($elm$json$Json$Decode$string)({"versions":{"elm":"0.19.1"},"types":{"message":"App.Msg","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"},"Api.Helpers.ObjectId.Id":{"args":[],"type":"{ id : String.String }"},"Api.OrderInfoEntered.OrderInfo":{"args":[],"type":"{ christianName : String.String, lastName : String.String, email : String.String, ticketsInfo : List.List Api.OrderInfoEntered.TicketInfo }"},"Api.LogToServer.Response":{"args":[],"type":"{ success : Basics.Bool }"},"Api.OrderInfoEntered.TicketInfo":{"args":[],"type":"{ id : String.String, description : String.String, price : Basics.Float, numberOfTickets : Basics.Int }"},"Browser.Dom.Viewport":{"args":[],"type":"{ scene : { width : Basics.Float, height : Basics.Float }, viewport : { x : Basics.Float, y : Basics.Float, width : Basics.Float, height : Basics.Float } }"},"Api.SendMail.MailResult":{"args":[],"type":"{ success : Basics.Bool }"},"Api.GetOrderInfo.Order":{"args":[],"type":"{ id : String.String, code : String.String, christianName : String.String, lastName : String.String, email : String.String, tickets : List.List Api.GetOrderInfo.Ticket }"},"Api.GetFreeTicketsAvailable.Response":{"args":[],"type":"{ amount : Basics.Int }"},"Api.GetOrderInfo.Ticket":{"args":[],"type":"{ id : String.String, description : String.String, price : Basics.Float }"}},"unions":{"App.Msg":{"args":[],"tags":{"SharedMsg":["Shared.Msg"],"HelmsmanMsg":["Helmsman.Msg"],"LinkClicked":["Browser.UrlRequest"],"UrlChanged":["Url.Url"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Helmsman.Msg":{"args":[],"tags":{"HomeMsg":["Pages.Home.Msg"],"OrderTicketsMsg":["Pages.OrderTickets.Msg"],"PaymentSuccessMsg":["Pages.PaymentSuccess.Msg"],"PaymentMsg":["Pages.Payment.Msg"],"TeesAndCeesMsg":["Pages.TeesAndCees.Msg"],"InvoiceInfoMsg":["Pages.InvoiceInfo.Msg"],"TicketsMsg":["Pages.Tickets.Msg"],"OrderTicketsTempMsg":["Pages.OrderTicketsTemp.Msg"]}},"Shared.Msg":{"args":[],"tags":{"GotViewport":["Browser.Dom.Viewport"],"OnResize":["Basics.Int","Basics.Int"],"Error":["Http.Error"],"OrderInfoEntered":["Api.OrderInfoEntered.OrderInfo","Basics.Float"],"OrderInfoEnteredSaved":["Result.Result Http.Error Api.Helpers.ObjectId.Id"],"LogToServer":["String.String"],"StuffLogged":["Result.Result Http.Error Api.LogToServer.Response"]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}},"Basics.Bool":{"args":[],"tags":{"True":[],"False":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String.String"],"Timeout":[],"NetworkError":[],"BadStatus":["Basics.Int"],"BadBody":["String.String"]}},"Basics.Float":{"args":[],"tags":{"Float":[]}},"List.List":{"args":["a"],"tags":{}},"Pages.Home.Msg":{"args":[],"tags":{"GotoTickets":[]}},"Pages.InvoiceInfo.Msg":{"args":[],"tags":{"UpdateCompanyName":["String.String"],"UpdateAddress":["String.String"],"UpdateVatNumber":["String.String"],"SaveInfo":[],"InvoiceInfoSaved":["Result.Result Http.Error Api.Helpers.ObjectId.Id"]}},"Pages.OrderTickets.Msg":{"args":[],"tags":{"NoOp":[],"FreeTicketsAvailableReceived":["Result.Result Http.Error Api.GetFreeTicketsAvailable.Response"],"UpdateChristianName":["String.String"],"UpdateLastName":["String.String"],"UpdateEmail":["String.String"],"UpdateConfirmEmail":["String.String"],"AddStandardTicket":[],"RemoveStandardTicket":[],"AddVipTicket":[],"RemoveVipTicket":[],"GotoPayment":[]}},"Pages.OrderTicketsTemp.Msg":{"args":[],"tags":{"NoOp":[],"FreeTicketsAvailableReceived":["Result.Result Http.Error Api.GetFreeTicketsAvailable.Response"],"UpdateChristianName":["String.String"],"UpdateLastName":["String.String"],"UpdateEmail":["String.String"],"UpdateConfirmEmail":["String.String"],"UpdateFreeTicketCode":["String.String"],"AddMemberTicket":[],"RemoveMemberTicket":[],"AddNonMemberTicket":[],"RemoveNonMemberTicket":[],"AddFreeTicket":[],"RemoveFreeTicket":[],"GotoPayment":[]}},"Pages.Payment.Msg":{"args":[],"tags":{"NoOp":[],"OrderConfirmed":["Result.Result Http.Error Api.Helpers.ObjectId.Id"]}},"Pages.PaymentSuccess.Msg":{"args":[],"tags":{"NoOp":[],"OrderInfoLoaded":["Result.Result Http.Error Api.GetOrderInfo.Order"],"MailSend":["Result.Result Http.Error Api.SendMail.MailResult"]}},"Pages.TeesAndCees.Msg":{"args":[],"tags":{"Back":[]}},"Pages.Tickets.Msg":{"args":[],"tags":{"NoOp":[],"OrderInfoLoaded":["Result.Result Http.Error Api.GetOrderInfo.Order"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}}}})}});}(this));
+_Platform_export({'App':{'init':$author$project$App$main($elm$json$Json$Decode$string)({"versions":{"elm":"0.19.1"},"types":{"message":"App.Msg","aliases":{"Url.Url":{"args":[],"type":"{ protocol : Url.Protocol, host : String.String, port_ : Maybe.Maybe Basics.Int, path : String.String, query : Maybe.Maybe String.String, fragment : Maybe.Maybe String.String }"},"Api.Helpers.ObjectId.Id":{"args":[],"type":"{ id : String.String }"},"Api.OrderInfoEntered.OrderInfo":{"args":[],"type":"{ christianName : String.String, lastName : String.String, email : String.String, ticketsInfo : List.List Api.OrderInfoEntered.TicketInfo }"},"Api.LogToServer.Response":{"args":[],"type":"{ success : Basics.Bool }"},"Api.OrderInfoEntered.TicketInfo":{"args":[],"type":"{ id : String.String, description : String.String, price : Basics.Float, numberOfTickets : Basics.Int }"},"Browser.Dom.Viewport":{"args":[],"type":"{ scene : { width : Basics.Float, height : Basics.Float }, viewport : { x : Basics.Float, y : Basics.Float, width : Basics.Float, height : Basics.Float } }"},"Api.SendMail.MailResult":{"args":[],"type":"{ success : Basics.Bool }"},"Api.GetOrderInfo.Order":{"args":[],"type":"{ id : String.String, code : String.String, christianName : String.String, lastName : String.String, email : String.String, tickets : List.List Api.GetOrderInfo.Ticket }"},"Api.GetFreeTicketsAvailable.Response":{"args":[],"type":"{ amount : Basics.Int }"},"Api.GetOrderInfo.Ticket":{"args":[],"type":"{ id : String.String, description : String.String, price : Basics.Float }"}},"unions":{"App.Msg":{"args":[],"tags":{"SharedMsg":["Shared.Msg"],"HelmsmanMsg":["Helmsman.Msg"],"LinkClicked":["Browser.UrlRequest"],"UrlChanged":["Url.Url"]}},"Basics.Int":{"args":[],"tags":{"Int":[]}},"Maybe.Maybe":{"args":["a"],"tags":{"Just":["a"],"Nothing":[]}},"Helmsman.Msg":{"args":[],"tags":{"HomeMsg":["Pages.Home.Msg"],"OrderTicketsMsg":["Pages.OrderTickets.Msg"],"PaymentSuccessMsg":["Pages.PaymentSuccess.Msg"],"PaymentMsg":["Pages.Payment.Msg"],"TeesAndCeesMsg":["Pages.TeesAndCees.Msg"],"InvoiceInfoMsg":["Pages.InvoiceInfo.Msg"],"TicketsMsg":["Pages.Tickets.Msg"],"OrderTicketsTempMsg":["Pages.OrderTicketsTemp.Msg"]}},"Shared.Msg":{"args":[],"tags":{"GotViewport":["Browser.Dom.Viewport"],"OnResize":["Basics.Int","Basics.Int"],"Error":["Http.Error"],"OrderInfoEntered":["Api.OrderInfoEntered.OrderInfo","Basics.Float"],"OrderInfoEnteredSaved":["Result.Result Http.Error Api.Helpers.ObjectId.Id"],"CheckOutCreated":["Result.Result Http.Error String.String"],"LogToServer":["String.String"],"StuffLogged":["Result.Result Http.Error Api.LogToServer.Response"]}},"Url.Protocol":{"args":[],"tags":{"Http":[],"Https":[]}},"String.String":{"args":[],"tags":{"String":[]}},"Browser.UrlRequest":{"args":[],"tags":{"Internal":["Url.Url"],"External":["String.String"]}},"Basics.Bool":{"args":[],"tags":{"True":[],"False":[]}},"Http.Error":{"args":[],"tags":{"BadUrl":["String.String"],"Timeout":[],"NetworkError":[],"BadStatus":["Basics.Int"],"BadBody":["String.String"]}},"Basics.Float":{"args":[],"tags":{"Float":[]}},"List.List":{"args":["a"],"tags":{}},"Pages.Home.Msg":{"args":[],"tags":{"GotoTickets":[]}},"Pages.InvoiceInfo.Msg":{"args":[],"tags":{"UpdateCompanyName":["String.String"],"UpdateAddress":["String.String"],"UpdateVatNumber":["String.String"],"SaveInfo":[],"InvoiceInfoSaved":["Result.Result Http.Error Api.Helpers.ObjectId.Id"]}},"Pages.OrderTickets.Msg":{"args":[],"tags":{"NoOp":[],"FreeTicketsAvailableReceived":["Result.Result Http.Error Api.GetFreeTicketsAvailable.Response"],"UpdateChristianName":["String.String"],"UpdateLastName":["String.String"],"UpdateEmail":["String.String"],"UpdateConfirmEmail":["String.String"],"AddStandardTicket":[],"RemoveStandardTicket":[],"AddVipTicket":[],"RemoveVipTicket":[],"GotoPayment":[]}},"Pages.OrderTicketsTemp.Msg":{"args":[],"tags":{"NoOp":[],"FreeTicketsAvailableReceived":["Result.Result Http.Error Api.GetFreeTicketsAvailable.Response"],"UpdateChristianName":["String.String"],"UpdateLastName":["String.String"],"UpdateEmail":["String.String"],"UpdateConfirmEmail":["String.String"],"UpdateFreeTicketCode":["String.String"],"AddMemberTicket":[],"RemoveMemberTicket":[],"AddNonMemberTicket":[],"RemoveNonMemberTicket":[],"AddFreeTicket":[],"RemoveFreeTicket":[],"GotoPayment":[]}},"Pages.Payment.Msg":{"args":[],"tags":{"NoOp":[],"OrderConfirmed":["Result.Result Http.Error Api.Helpers.ObjectId.Id"]}},"Pages.PaymentSuccess.Msg":{"args":[],"tags":{"NoOp":[],"OrderInfoLoaded":["Result.Result Http.Error Api.GetOrderInfo.Order"],"MailSend":["Result.Result Http.Error Api.SendMail.MailResult"]}},"Pages.TeesAndCees.Msg":{"args":[],"tags":{"Back":[]}},"Pages.Tickets.Msg":{"args":[],"tags":{"NoOp":[],"OrderInfoLoaded":["Result.Result Http.Error Api.GetOrderInfo.Order"]}},"Result.Result":{"args":["error","value"],"tags":{"Ok":["value"],"Err":["error"]}}}}})}});}(this));
