@@ -13908,7 +13908,7 @@ var $author$project$Pages$Home$update = F3(
 		return _Utils_Tuple2(
 			model,
 			$author$project$Lib$Effect$Cmd(
-				A2($elm$browser$Browser$Navigation$pushUrl, shared.navKey, '/order-tickets/')));
+				$elm$browser$Browser$Navigation$load('https:/www.google.com')));
 	});
 var $author$project$Shared$Error = function (a) {
 	return {$: 'Error', a: a};
