@@ -23,7 +23,7 @@ exports.handler = async function (event, context) {
         console.log(url);
         return {
             statusCode: 200,
-            body: JSON.stringify(url)
+            body: url
         }
     } catch (err) {
         console.error(
