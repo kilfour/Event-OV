@@ -16,19 +16,13 @@ import Shared exposing (Device(..), Msg(..))
 import Style
 
 
-type alias SumUpFailure =
-    { failureType : String
-    , body : String
-    }
-
-
 type alias Model =
-    { orderId : String }
+    { orderId : String, url : String }
 
 
 init : Shared.Model -> String -> ( Model, Cmd Msg )
 init shared orderId =
-    ( { orderId = orderId }
+    ( { orderId = orderId, url = "" }
     , OrderConfirmed.dispatch shared.baseApiUrl orderId OrderConfirmed
     )
 
@@ -52,8 +46,9 @@ update msg shared model =
             )
 
         OrderConfirmed (Ok _) ->
-            ( model, Effect.Cmd <| Nav.pushUrl shared.navKey ("/payment-success/" ++ model.orderId) )
+            ( model, Effect.none )
 
+        --Effect.Cmd <| Nav.pushUrl shared.navKey ("/payment-success/" ++ model.orderId) )
         OrderConfirmed (Err err) ->
             ( model, Effect.none )
 
@@ -76,7 +71,14 @@ view shared model =
         [ Banner.view shared.device
         , Html.styled Html.div Style.container [] <|
             [ Html.styled Html.h1 Style.pageHeader [] [ Html.text evt.name ]
-            , Html.text "Verificatie in behandeling."
+            , if String.isEmpty model.url then
+                Html.text "Verificatie in behandeling."
+
+              else
+                Html.div []
+                    [ Html.styled Html.a [ Style.hyperLink ] [ href model.url ] [ Html.text "Naar Betalings Site" ]
+                    , Html.text "Na succesvolle betaling wordt u terug naar deze site omgeleid."
+                    ]
             , maybeMargin
             ]
         ]

@@ -20,7 +20,6 @@ exports.handler = async function (event, context) {
         });
         //console.log(payment);
         var url = payment.getCheckoutUrl();
-        url = 'https://www.google.com/search?q=test&sourceid=chrome&ie=UTF-8';
         //console.log(url);
         return {
             statusCode: 200,

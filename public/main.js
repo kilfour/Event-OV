@@ -1857,9 +1857,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.fc,
-		impl.fP,
-		impl.fG,
+		impl.fb,
+		impl.fO,
+		impl.fF,
 		function() { return function() {} }
 	);
 });
@@ -3943,11 +3943,11 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.fc,
-		impl.fP,
-		impl.fG,
+		impl.fb,
+		impl.fO,
+		impl.fF,
 		function(sendToApp, initialModel) {
-			var view = impl.fS;
+			var view = impl.fR;
 			/**/
 			var domNode = args['node'];
 			//*/
@@ -3979,12 +3979,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.fc,
-		impl.fP,
-		impl.fG,
+		impl.fb,
+		impl.fO,
+		impl.fF,
 		function(sendToApp, initialModel) {
 			var divertHrefToApp = impl.cI && impl.cI(sendToApp)
-			var view = impl.fS;
+			var view = impl.fR;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -3997,7 +3997,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.fM) && (_VirtualDom_doc.title = title = doc.fM);
+				(title !== doc.fL) && (_VirtualDom_doc.title = title = doc.fL);
 			});
 		}
 	);
@@ -4053,8 +4053,8 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.fo;
-	var onUrlRequest = impl.fp;
+	var onUrlChange = impl.fn;
+	var onUrlRequest = impl.fo;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
@@ -4084,13 +4084,13 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		fc: function(flags)
+		fb: function(flags)
 		{
-			return A3(impl.fc, flags, _Browser_getUrl(), key);
+			return A3(impl.fb, flags, _Browser_getUrl(), key);
 		},
-		fS: impl.fS,
-		fP: impl.fP,
-		fG: impl.fG
+		fR: impl.fR,
+		fO: impl.fO,
+		fF: impl.fF
 	});
 }
 
@@ -4156,17 +4156,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { e7: 'hidden', eD: 'visibilitychange' }
+		? { e6: 'hidden', eD: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { e7: 'mozHidden', eD: 'mozvisibilitychange' }
+		? { e6: 'mozHidden', eD: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { e7: 'msHidden', eD: 'msvisibilitychange' }
+		? { e6: 'msHidden', eD: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { e7: 'webkitHidden', eD: 'webkitvisibilitychange' }
-		: { e7: 'hidden', eD: 'visibilitychange' };
+		? { e6: 'webkitHidden', eD: 'webkitvisibilitychange' }
+		: { e6: 'hidden', eD: 'visibilitychange' };
 }
 
 
@@ -4251,8 +4251,8 @@ function _Browser_getViewport()
 		em: {
 			ep: _Browser_window.pageXOffset,
 			eq: _Browser_window.pageYOffset,
-			fV: _Browser_doc.documentElement.clientWidth,
-			e5: _Browser_doc.documentElement.clientHeight
+			fU: _Browser_doc.documentElement.clientWidth,
+			e4: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4262,8 +4262,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		fV: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		e5: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		fU: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		e4: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4287,14 +4287,14 @@ function _Browser_getViewportOf(id)
 	{
 		return {
 			d7: {
-				fV: node.scrollWidth,
-				e5: node.scrollHeight
+				fU: node.scrollWidth,
+				e4: node.scrollHeight
 			},
 			em: {
 				ep: node.scrollLeft,
 				eq: node.scrollTop,
-				fV: node.clientWidth,
-				e5: node.clientHeight
+				fU: node.clientWidth,
+				e4: node.clientHeight
 			}
 		};
 	});
@@ -4328,14 +4328,14 @@ function _Browser_getElement(id)
 			em: {
 				ep: x,
 				eq: y,
-				fV: _Browser_doc.documentElement.clientWidth,
-				e5: _Browser_doc.documentElement.clientHeight
+				fU: _Browser_doc.documentElement.clientWidth,
+				e4: _Browser_doc.documentElement.clientHeight
 			},
 			eU: {
 				ep: x + rect.left,
 				eq: y + rect.top,
-				fV: rect.width,
-				e5: rect.height
+				fU: rect.width,
+				e4: rect.height
 			}
 		};
 	});
@@ -4387,12 +4387,12 @@ var _Http_toTask = F3(function(router, toTask, request)
 		xhr.addEventListener('error', function() { done($elm$http$Http$NetworkError_); });
 		xhr.addEventListener('timeout', function() { done($elm$http$Http$Timeout_); });
 		xhr.addEventListener('load', function() { done(_Http_toResponse(request.eX.b, xhr)); });
-		$elm$core$Maybe$isJust(request.fO) && _Http_track(router, xhr, request.fO.a);
+		$elm$core$Maybe$isJust(request.fN) && _Http_track(router, xhr, request.fN.a);
 
 		try {
-			xhr.open(request.fj, request.fR, true);
+			xhr.open(request.fi, request.fQ, true);
 		} catch (e) {
-			return done($elm$http$Http$BadUrl_(request.fR));
+			return done($elm$http$Http$BadUrl_(request.fQ));
 		}
 
 		_Http_configureRequest(xhr, request);
@@ -4409,11 +4409,11 @@ var _Http_toTask = F3(function(router, toTask, request)
 
 function _Http_configureRequest(xhr, request)
 {
-	for (var headers = request.e4; headers.b; headers = headers.b) // WHILE_CONS
+	for (var headers = request.e3; headers.b; headers = headers.b) // WHILE_CONS
 	{
 		xhr.setRequestHeader(headers.a.a, headers.a.b);
 	}
-	xhr.timeout = request.fL.a || 0;
+	xhr.timeout = request.fK.a || 0;
 	xhr.responseType = request.eX.d;
 	xhr.withCredentials = request.eu;
 }
@@ -4436,10 +4436,10 @@ function _Http_toResponse(toBody, xhr)
 function _Http_toMetadata(xhr)
 {
 	return {
-		fR: xhr.responseURL,
-		fD: xhr.status,
-		fE: xhr.statusText,
-		e4: _Http_parseHeaders(xhr.getAllResponseHeaders())
+		fQ: xhr.responseURL,
+		fC: xhr.status,
+		fD: xhr.statusText,
+		e3: _Http_parseHeaders(xhr.getAllResponseHeaders())
 	};
 }
 
@@ -4534,14 +4534,14 @@ function _Http_track(router, xhr, tracker)
 	xhr.upload.addEventListener('progress', function(event) {
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2($elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, $elm$http$Http$Sending({
-			fA: event.loaded,
+			fz: event.loaded,
 			d9: event.total
 		}))));
 	});
 	xhr.addEventListener('progress', function(event) {
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2($elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, $elm$http$Http$Receiving({
-			fu: event.loaded,
+			ft: event.loaded,
 			d9: event.lengthComputable ? $elm$core$Maybe$Just(event.total) : $elm$core$Maybe$Nothing
 		}))));
 	});
@@ -4817,15 +4817,15 @@ function _Markdown_formatOptions(options)
 		return code;
 	}
 
-	var gfm = options.e1.a;
+	var gfm = options.e0.a;
 
 	return {
 		highlight: toHighlight,
 		gfm: gfm,
-		tables: gfm && gfm.fI,
+		tables: gfm && gfm.fH,
 		breaks: gfm && gfm.eB,
-		sanitize: options.fx,
-		smartypants: options.fC
+		sanitize: options.fw,
+		smartypants: options.fB
 	};
 }
 
@@ -5015,7 +5015,7 @@ var _Regex_never = /.^/;
 var _Regex_fromStringWith = F2(function(options, string)
 {
 	var flags = 'g';
-	if (options.fl) { flags += 'm'; }
+	if (options.fk) { flags += 'm'; }
 	if (options.eC) { flags += 'i'; }
 
 	try
@@ -5961,10 +5961,10 @@ var $author$project$Pages$OrderTickets$init = function (shared) {
 			a8: true,
 			bF: 0,
 			aj: true,
-			ff: '',
+			fe: '',
 			aS: true,
-			E: {eP: 'Standaard', dv: 'VVK', dM: 0, fs: 60},
-			F: {eP: 'Vip Tafel', dv: 'VIP', dM: 0, fs: 500}
+			E: {eP: 'Standaard', dv: 'VVK', dM: 0, fr: 60},
+			F: {eP: 'Vip Tafel', dv: 'VIP', dM: 0, fr: 500}
 		},
 		$elm$core$Platform$Cmd$none);
 };
@@ -5982,13 +5982,13 @@ var $author$project$Pages$OrderTicketsTemp$init = function (shared) {
 			a8: true,
 			bb: '',
 			bc: true,
-			N: {eP: 'Gratis', dv: 'GR', dM: 0, fs: 0},
+			N: {eP: 'Gratis', dv: 'GR', dM: 0, fr: 0},
 			bF: $author$project$Pages$OrderTicketsTemp$freeTicketsAvailable,
 			aj: true,
-			ff: '',
+			fe: '',
 			aS: true,
-			Q: {eP: 'Leden', dv: 'LID', dM: 0, fs: 40},
-			S: {eP: 'Niet-Leden', dv: 'N-LID', dM: 0, fs: 60}
+			Q: {eP: 'Leden', dv: 'LID', dM: 0, fr: 40},
+			S: {eP: 'Niet-Leden', dv: 'N-LID', dM: 0, fr: 60}
 		},
 		$elm$core$Platform$Cmd$none);
 };
@@ -6587,7 +6587,7 @@ var $elm$http$Http$resolve = F2(
 			case 3:
 				var metadata = response.a;
 				return $elm$core$Result$Err(
-					$elm$http$Http$BadStatus(metadata.fD));
+					$elm$http$Http$BadStatus(metadata.fC));
 			default:
 				var body = response.b;
 				return A2(
@@ -6699,7 +6699,7 @@ var $elm$http$Http$updateReqs = F3(
 					return A2(
 						$elm$core$Task$andThen,
 						function (pid) {
-							var _v4 = req.fO;
+							var _v4 = req.fN;
 							if (_v4.$ === 1) {
 								return A3($elm$http$Http$updateReqs, router, otherCmds, reqs);
 							} else {
@@ -6789,11 +6789,11 @@ var $elm$http$Http$cmdMap = F2(
 					eu: r.eu,
 					eA: r.eA,
 					eX: A2(_Http_mapExpect, func, r.eX),
-					e4: r.e4,
-					fj: r.fj,
-					fL: r.fL,
-					fO: r.fO,
-					fR: r.fR
+					e3: r.e3,
+					fi: r.fi,
+					fK: r.fK,
+					fN: r.fN,
+					fQ: r.fQ
 				});
 		}
 	});
@@ -6816,7 +6816,7 @@ var $elm$http$Http$subscription = _Platform_leaf('Http');
 var $elm$http$Http$request = function (r) {
 	return $elm$http$Http$command(
 		$elm$http$Http$Request(
-			{eu: false, eA: r.eA, eX: r.eX, e4: r.e4, fj: r.fj, fL: r.fL, fO: r.fO, fR: r.fR}));
+			{eu: false, eA: r.eA, eX: r.eX, e3: r.e3, fi: r.fi, fK: r.fK, fN: r.fN, fQ: r.fQ}));
 };
 var $elm$http$Http$stringBody = _Http_pair;
 var $author$project$Api$OrderConfirmed$dispatch = F3(
@@ -6829,18 +6829,18 @@ var $author$project$Api$OrderConfirmed$dispatch = F3(
 			{
 				eA: A2($elm$http$Http$stringBody, 'application/json', jsonPayload),
 				eX: A2($elm$http$Http$expectJson, msg, $author$project$Api$Helpers$ObjectId$objectIdDecoder),
-				e4: _List_Nil,
-				fj: 'POST',
-				fL: $elm$core$Maybe$Nothing,
-				fO: $elm$core$Maybe$Nothing,
-				fR: baseApiUrl + 'confirm-order'
+				e3: _List_Nil,
+				fi: 'POST',
+				fK: $elm$core$Maybe$Nothing,
+				fN: $elm$core$Maybe$Nothing,
+				fQ: baseApiUrl + 'confirm-order'
 			});
 		return request;
 	});
 var $author$project$Pages$Payment$init = F2(
 	function (shared, orderId) {
 		return _Utils_Tuple2(
-			{dP: orderId},
+			{dP: orderId, fQ: ''},
 			A3($author$project$Api$OrderConfirmed$dispatch, shared.ez, orderId, $author$project$Pages$Payment$OrderConfirmed));
 	});
 var $author$project$Pages$PaymentSuccess$OrderInfoLoaded = function (a) {
@@ -6848,12 +6848,12 @@ var $author$project$Pages$PaymentSuccess$OrderInfoLoaded = function (a) {
 };
 var $author$project$Api$GetOrderInfo$Order = F6(
 	function (id, code, christianName, lastName, email, tickets) {
-		return {eE: christianName, eG: code, eV: email, dv: id, ff: lastName, fK: tickets};
+		return {eE: christianName, eG: code, eV: email, dv: id, fe: lastName, fJ: tickets};
 	});
 var $elm$json$Json$Decode$list = _Json_decodeList;
 var $author$project$Api$GetOrderInfo$Ticket = F3(
 	function (id, description, price) {
-		return {eP: description, dv: id, fs: price};
+		return {eP: description, dv: id, fr: price};
 	});
 var $elm$json$Json$Decode$float = _Json_decodeFloat;
 var $author$project$Api$GetOrderInfo$ticketDecoder = A3(
@@ -6904,11 +6904,11 @@ var $author$project$Api$GetOrderInfo$dispatch = F3(
 			{
 				eA: A2($elm$http$Http$stringBody, 'application/json', jsonPayload),
 				eX: A2($elm$http$Http$expectJson, msg, $author$project$Api$GetOrderInfo$decoder),
-				e4: _List_Nil,
-				fj: 'POST',
-				fL: $elm$core$Maybe$Nothing,
-				fO: $elm$core$Maybe$Nothing,
-				fR: baseApiUrl + 'get-order-info'
+				e3: _List_Nil,
+				fi: 'POST',
+				fK: $elm$core$Maybe$Nothing,
+				fN: $elm$core$Maybe$Nothing,
+				fQ: baseApiUrl + 'get-order-info'
 			});
 		return request;
 	});
@@ -7411,7 +7411,7 @@ var $elm$browser$Browser$Dom$getViewport = _Browser_withWindow(_Browser_getViewp
 var $author$project$Shared$init = F2(
 	function (baseApiUrl, navKey) {
 		return _Utils_Tuple2(
-			{ez: baseApiUrl, aJ: 0, eQ: 1, eW: $elm$core$Maybe$Nothing, fm: navKey, bW: false},
+			{ez: baseApiUrl, aJ: 0, eQ: 1, eW: $elm$core$Maybe$Nothing, fl: navKey, bW: false},
 			$elm$core$Platform$Cmd$batch(
 				_List_fromArray(
 					[
@@ -8920,11 +8920,11 @@ var $author$project$Api$CreateCheckOut$dispatch = F4(
 			{
 				eA: A2($elm$http$Http$stringBody, 'application/json', jsonPayload),
 				eX: $elm$http$Http$expectString(msg),
-				e4: _List_Nil,
-				fj: 'POST',
-				fL: $elm$core$Maybe$Nothing,
-				fO: $elm$core$Maybe$Nothing,
-				fR: baseApiUrl + 'create-checkout'
+				e3: _List_Nil,
+				fi: 'POST',
+				fK: $elm$core$Maybe$Nothing,
+				fN: $elm$core$Maybe$Nothing,
+				fQ: baseApiUrl + 'create-checkout'
 			});
 		return request;
 	});
@@ -8938,7 +8938,7 @@ var $author$project$Api$LogToServer$requestEncoder = function (message) {
 			]));
 };
 var $author$project$Api$LogToServer$Response = function (success) {
-	return {fH: success};
+	return {fG: success};
 };
 var $elm$json$Json$Decode$bool = _Json_decodeBool;
 var $author$project$Api$LogToServer$responseDecoder = A3(
@@ -8956,11 +8956,11 @@ var $author$project$Api$LogToServer$dispatch = F3(
 			{
 				eA: A2($elm$http$Http$stringBody, 'application/json', jsonPayload),
 				eX: A2($elm$http$Http$expectJson, msg, $author$project$Api$LogToServer$responseDecoder),
-				e4: _List_Nil,
-				fj: 'POST',
-				fL: $elm$core$Maybe$Nothing,
-				fO: $elm$core$Maybe$Nothing,
-				fR: baseApiUrl + 'log-to-server'
+				e3: _List_Nil,
+				fi: 'POST',
+				fK: $elm$core$Maybe$Nothing,
+				fN: $elm$core$Maybe$Nothing,
+				fQ: baseApiUrl + 'log-to-server'
 			});
 		return request;
 	});
@@ -8987,7 +8987,7 @@ var $author$project$Api$OrderInfoEntered$ticketEncoder = function (ticketInfo) {
 				$elm$json$Json$Encode$string(ticketInfo.eP)),
 				_Utils_Tuple2(
 				'price',
-				$elm$json$Json$Encode$float(ticketInfo.fs)),
+				$elm$json$Json$Encode$float(ticketInfo.fr)),
 				_Utils_Tuple2(
 				'numberOfTickets',
 				$elm$json$Json$Encode$int(ticketInfo.dM))
@@ -9002,7 +9002,7 @@ var $author$project$Api$OrderInfoEntered$encoder = function (orderInfo) {
 				$elm$json$Json$Encode$string(orderInfo.eE)),
 				_Utils_Tuple2(
 				'lastName',
-				$elm$json$Json$Encode$string(orderInfo.ff)),
+				$elm$json$Json$Encode$string(orderInfo.fe)),
 				_Utils_Tuple2(
 				'email',
 				$elm$json$Json$Encode$string(orderInfo.eV)),
@@ -9021,11 +9021,11 @@ var $author$project$Api$OrderInfoEntered$dispatch = F3(
 			{
 				eA: A2($elm$http$Http$stringBody, 'application/json', jsonPayload),
 				eX: A2($elm$http$Http$expectJson, msg, $author$project$Api$Helpers$ObjectId$objectIdDecoder),
-				e4: _List_Nil,
-				fj: 'POST',
-				fL: $elm$core$Maybe$Nothing,
-				fO: $elm$core$Maybe$Nothing,
-				fR: baseApiUrl + 'order-info-entered'
+				e3: _List_Nil,
+				fi: 'POST',
+				fK: $elm$core$Maybe$Nothing,
+				fN: $elm$core$Maybe$Nothing,
+				fQ: baseApiUrl + 'order-info-entered'
 			});
 		return request;
 	});
@@ -9047,8 +9047,8 @@ var $author$project$Shared$update = F2(
 						{
 							eQ: A2(
 								$author$project$Shared$getDevice,
-								$elm$core$Basics$round(viewport.em.fV),
-								$elm$core$Basics$round(viewport.em.e5))
+								$elm$core$Basics$round(viewport.em.fU),
+								$elm$core$Basics$round(viewport.em.e4))
 						}),
 					$elm$core$Platform$Cmd$none);
 			case 1:
@@ -9275,7 +9275,7 @@ var $author$project$Pages$Home$update = F3(
 		return _Utils_Tuple2(
 			model,
 			$author$project$Lib$Effect$Cmd(
-				A2($elm$browser$Browser$Navigation$pushUrl, shared.fm, '/order-tickets/')));
+				A2($elm$browser$Browser$Navigation$pushUrl, shared.fl, '/order-tickets/')));
 	});
 var $author$project$Shared$Error = function (a) {
 	return {$: 2, a: a};
@@ -9311,11 +9311,11 @@ var $author$project$Api$SaveInvoiceInfo$dispatch = F3(
 			{
 				eA: A2($elm$http$Http$stringBody, 'application/json', jsonPayload),
 				eX: A2($elm$http$Http$expectJson, msg, $author$project$Api$Helpers$ObjectId$objectIdDecoder),
-				e4: _List_Nil,
-				fj: 'POST',
-				fL: $elm$core$Maybe$Nothing,
-				fO: $elm$core$Maybe$Nothing,
-				fR: baseApiUrl + 'save-invoice-info'
+				e3: _List_Nil,
+				fi: 'POST',
+				fK: $elm$core$Maybe$Nothing,
+				fN: $elm$core$Maybe$Nothing,
+				fQ: baseApiUrl + 'save-invoice-info'
 			});
 		return request;
 	});
@@ -9954,8 +9954,8 @@ var $bellroy$elm_email$Email$fromString = function (string) {
 	}
 };
 var $author$project$Pages$OrderTickets$totalAmount = function (model) {
-	var nonMemberTotal = model.F.dM * model.F.fs;
-	var memberTotal = model.E.dM * model.E.fs;
+	var nonMemberTotal = model.F.dM * model.F.fr;
+	var memberTotal = model.E.dM * model.E.fr;
 	return memberTotal + nonMemberTotal;
 };
 var $author$project$Pages$OrderTickets$update = F3(
@@ -9994,7 +9994,7 @@ var $author$project$Pages$OrderTickets$update = F3(
 					_Utils_update(
 						model,
 						{
-							ff: str,
+							fe: str,
 							aS: !$elm$core$String$isEmpty(str)
 						}),
 					$author$project$Lib$Effect$None);
@@ -10037,7 +10037,7 @@ var $author$project$Pages$OrderTickets$update = F3(
 						}(),
 						a8: _Utils_eq(model.eV, model.aH),
 						aj: totalNumberOfTickets > 0,
-						aS: !$elm$core$String$isEmpty(model.ff)
+						aS: !$elm$core$String$isEmpty(model.fe)
 					});
 				var isValid = updatedModel.aE && (updatedModel.aS && (updatedModel.aL && (updatedModel.aM && (updatedModel.aI && (updatedModel.a8 && updatedModel.aj)))));
 				var effect = isValid ? $author$project$Lib$Effect$Shared(
@@ -10046,7 +10046,7 @@ var $author$project$Pages$OrderTickets$update = F3(
 						{
 							eE: model.eE,
 							eV: model.eV,
-							ff: model.ff,
+							fe: model.fe,
 							eg: _List_fromArray(
 								[model.E, model.F])
 						},
@@ -10147,7 +10147,7 @@ var $author$project$Pages$OrderTicketsTemp$update = F3(
 					_Utils_update(
 						model,
 						{
-							ff: str,
+							fe: str,
 							aS: !$elm$core$String$isEmpty(str)
 						}),
 					$author$project$Lib$Effect$None);
@@ -10200,7 +10200,7 @@ var $author$project$Pages$OrderTicketsTemp$update = F3(
 						}(),
 						a8: _Utils_eq(model.eV, model.aH),
 						aj: totalNumberOfTickets > 0,
-						aS: !$elm$core$String$isEmpty(model.ff)
+						aS: !$elm$core$String$isEmpty(model.fe)
 					});
 				var isValid = updatedModel.aE && (updatedModel.aS && (updatedModel.aL && (updatedModel.aM && (updatedModel.aI && (updatedModel.a8 && updatedModel.aj)))));
 				var effect = isValid ? $author$project$Lib$Effect$Shared(
@@ -10209,7 +10209,7 @@ var $author$project$Pages$OrderTicketsTemp$update = F3(
 						{
 							eE: model.eE,
 							eV: model.eV,
-							ff: model.ff,
+							fe: model.fe,
 							eg: _List_fromArray(
 								[model.Q, model.S, model.N])
 						},
@@ -10306,10 +10306,7 @@ var $author$project$Pages$Payment$update = F3(
 			return _Utils_Tuple2(model, $author$project$Lib$Effect$None);
 		} else {
 			if (!msg.a.$) {
-				return _Utils_Tuple2(
-					model,
-					$author$project$Lib$Effect$Cmd(
-						A2($elm$browser$Browser$Navigation$pushUrl, shared.fm, '/payment-success/' + model.dP)));
+				return _Utils_Tuple2(model, $author$project$Lib$Effect$none);
 			} else {
 				var err = msg.a.a;
 				return _Utils_Tuple2(model, $author$project$Lib$Effect$none);
@@ -10359,7 +10356,7 @@ var $author$project$Pages$TeesAndCees$update = F3(
 		return _Utils_Tuple2(
 			model,
 			$author$project$Lib$Effect$Cmd(
-				A2($elm$browser$Browser$Navigation$back, shared.fm, 1)));
+				A2($elm$browser$Browser$Navigation$back, shared.fl, 1)));
 	});
 var $author$project$Pages$Tickets$update = F3(
 	function (msg, _v0, model) {
@@ -10533,7 +10530,7 @@ var $author$project$App$update = F2(
 						model,
 						A2(
 							$elm$browser$Browser$Navigation$pushUrl,
-							model.B.fm,
+							model.B.fl,
 							$elm$url$Url$toString(url)));
 				} else {
 					var href = urlRequest.a;
@@ -12562,7 +12559,7 @@ var $rtfeldman$elm_css$Css$hex = function (str) {
 };
 var $author$project$Style$theme = {
 	cd: $rtfeldman$elm_css$Css$hex('fff'),
-	e$: _List_fromArray(
+	e_: _List_fromArray(
 		['Roboto']),
 	aQ: $rtfeldman$elm_css$Css$hex('49586d'),
 	bX: $rtfeldman$elm_css$Css$hex('999'),
@@ -12584,7 +12581,7 @@ var $rtfeldman$elm_css$Css$VwUnits = 0;
 var $rtfeldman$elm_css$Css$vw = A2($rtfeldman$elm_css$Css$Internal$lengthConverter, 0, 'vw');
 var $rtfeldman$elm_css$Css$whiteSpace = $rtfeldman$elm_css$Css$prop1('white-space');
 var $rtfeldman$elm_css$Css$UnitlessInteger = 0;
-var $rtfeldman$elm_css$Css$zero = {bg: 0, aT: 0, Z: 0, aU: 0, aV: 0, ak: 0, al: 0, fn: 0, aa: 0, bV: 0, a1: '', bs: 0, U: '0'};
+var $rtfeldman$elm_css$Css$zero = {bg: 0, aT: 0, Z: 0, aU: 0, aV: 0, ak: 0, al: 0, fm: 0, aa: 0, bV: 0, a1: '', bs: 0, U: '0'};
 var $author$project$Style$address = _List_fromArray(
 	[
 		A2(
@@ -12597,7 +12594,7 @@ var $author$project$Style$address = _List_fromArray(
 		$rtfeldman$elm_css$Css$whiteSpace($rtfeldman$elm_css$Css$pre)
 	]);
 var $rtfeldman$elm_css$Html$Styled$br = $rtfeldman$elm_css$Html$Styled$node('br');
-var $rtfeldman$elm_css$Css$auto = {et: 0, d: 0, aN: 0, bL: 0, fe: 0, aT: 0, Z: 0, P: 0, aX: 0, K: 0, b2: 0, a0: 0, C: 0, U: 'auto'};
+var $rtfeldman$elm_css$Css$auto = {et: 0, d: 0, aN: 0, bL: 0, fd: 0, aT: 0, Z: 0, P: 0, aX: 0, K: 0, b2: 0, a0: 0, C: 0, U: 'auto'};
 var $rtfeldman$elm_css$Css$maxWidth = $rtfeldman$elm_css$Css$prop1('max-width');
 var $rtfeldman$elm_css$Css$width = $rtfeldman$elm_css$Css$prop1('width');
 var $author$project$Style$container = _List_fromArray(
@@ -12668,7 +12665,7 @@ var $rtfeldman$elm_css$Css$pseudoClass = function (_class) {
 var $rtfeldman$elm_css$Css$hover = $rtfeldman$elm_css$Css$pseudoClass('hover');
 var $rtfeldman$elm_css$Css$inset = {w: 0, U: 'inset'};
 var $rtfeldman$elm_css$Css$margin = $rtfeldman$elm_css$Css$prop1('margin');
-var $rtfeldman$elm_css$Css$none = {aA: 0, c1: 0, w: 0, d: 0, l: 0, e8: 0, dz: 0, cw: 0, aV: 0, ak: 0, P: 0, f: 0, e: 0, cA: 0, bV: 0, fr: 0, K: 0, b_: 0, fy: 0, a_: 0, au: 0, C: 0, j: 0, fQ: 0, U: 'none'};
+var $rtfeldman$elm_css$Css$none = {aA: 0, c1: 0, w: 0, d: 0, l: 0, e7: 0, dz: 0, cw: 0, aV: 0, ak: 0, P: 0, f: 0, e: 0, cA: 0, bV: 0, fq: 0, K: 0, b_: 0, fx: 0, a_: 0, au: 0, C: 0, j: 0, fP: 0, U: 'none'};
 var $rtfeldman$elm_css$Css$prop4 = F5(
 	function (key, argA, argB, argC, argD) {
 		return A2($rtfeldman$elm_css$Css$property, key, argA.U + (' ' + (argB.U + (' ' + (argC.U + (' ' + argD.U))))));
@@ -12995,13 +12992,13 @@ var $author$project$Domain$Event$theEvent = {
 	bQ: 'Event Naam',
 	b3: _List_fromArray(
 		[
-			{eP: 'Standaard', dv: 'VVK', be: _List_Nil, fs: 60},
+			{eP: 'Standaard', dv: 'VVK', be: _List_Nil, fr: 60},
 			{
 			eP: 'Vip Tafel',
 			dv: 'VIP',
 			be: _List_fromArray(
 				['Voor zes personen plus fles Champagne.', 'Sponsor logo getoond op afzonderlijke tafel en geprojecteerd op scherm.']),
-			fs: 500
+			fr: 500
 		}
 		]),
 	bn: '18:30'
@@ -13024,7 +13021,7 @@ var $rtfeldman$elm_css$Css$int = function (val) {
 		bL: 0,
 		al: 0,
 		P: 0,
-		fn: 0,
+		fm: 0,
 		bR: 0,
 		aa: val,
 		a1: '',
@@ -13554,7 +13551,7 @@ var $author$project$Pages$Home$view = F2(
 						_List_fromArray(
 							[
 								$rtfeldman$elm_css$Html$Styled$text(
-								ticketType.eP + (' - ' + (A2($myrho$elm_round$Round$round, 2, ticketType.fs) + ' €')))
+								ticketType.eP + (' - ' + (A2($myrho$elm_round$Round$round, 2, ticketType.fr) + ' €')))
 							])),
 						A4(
 						$rtfeldman$elm_css$Html$Styled$styled,
@@ -14372,7 +14369,7 @@ var $author$project$Pages$OrderTickets$view = F2(
 						_List_fromArray(
 						[
 							$rtfeldman$elm_css$Html$Styled$text(
-							ticketInfo.eP + (' - €' + A2($myrho$elm_round$Round$round, 2, ticketInfo.fs)))
+							ticketInfo.eP + (' - €' + A2($myrho$elm_round$Round$round, 2, ticketInfo.fr)))
 						]),
 						_List_fromArray(
 						[
@@ -14518,7 +14515,7 @@ var $author$project$Pages$OrderTickets$view = F2(
 					]),
 				$author$project$UI$DivTable$emptyStyle));
 		var infoForm = function () {
-			var lastNameInput = A5(renderInput, 'Achternaam', model.ff, $author$project$Pages$OrderTickets$UpdateLastName, model.aS, 'Achternaam is verplicht.');
+			var lastNameInput = A5(renderInput, 'Achternaam', model.fe, $author$project$Pages$OrderTickets$UpdateLastName, model.aS, 'Achternaam is verplicht.');
 			var emailInput = A5(renderInput, 'E-mailadres', model.eV, $author$project$Pages$OrderTickets$UpdateEmail, model.aL && model.aM, 'Geef een geldig e-mailadres.');
 			var confirmEmailInput = A5(renderInput, 'E-mail Bevestigen', model.aH, $author$project$Pages$OrderTickets$UpdateConfirmEmail, model.aI && model.a8, 'E-mailadressen komen niet overeen.');
 			var christianNameInput = A5(renderInput, 'Voornaam', model.eE, $author$project$Pages$OrderTickets$UpdateChristianName, model.aE, 'Voornaam is verplicht.');
@@ -14721,7 +14718,7 @@ var $author$project$Pages$OrderTicketsTemp$view = F2(
 						_List_fromArray(
 						[
 							$rtfeldman$elm_css$Html$Styled$text(
-							ticketInfo.eP + (' - €' + A2($myrho$elm_round$Round$round, 2, ticketInfo.fs)))
+							ticketInfo.eP + (' - €' + A2($myrho$elm_round$Round$round, 2, ticketInfo.fr)))
 						]),
 						_List_fromArray(
 						[
@@ -14867,7 +14864,7 @@ var $author$project$Pages$OrderTicketsTemp$view = F2(
 					]),
 				$author$project$UI$DivTable$emptyStyle));
 		var infoForm = function () {
-			var lastNameInput = A5(renderInput, 'Achternaam', model.ff, $author$project$Pages$OrderTicketsTemp$UpdateLastName, model.aS, 'Achternaam is verplicht.');
+			var lastNameInput = A5(renderInput, 'Achternaam', model.fe, $author$project$Pages$OrderTicketsTemp$UpdateLastName, model.aS, 'Achternaam is verplicht.');
 			var emailInput = A5(renderInput, 'E-mailadres', model.eV, $author$project$Pages$OrderTicketsTemp$UpdateEmail, model.aL && model.aM, 'Geef een geldig e-mailadres.');
 			var confirmEmailInput = A5(renderInput, 'E-mail Bevestigen', model.aH, $author$project$Pages$OrderTicketsTemp$UpdateConfirmEmail, model.aI && model.a8, 'E-mailadressen komen niet overeen.');
 			var christianNameInput = A5(renderInput, 'Voornaam', model.eE, $author$project$Pages$OrderTicketsTemp$UpdateChristianName, model.aE, 'Voornaam is verplicht.');
@@ -15171,7 +15168,26 @@ var $author$project$Pages$Payment$view = F2(
 								[
 									$rtfeldman$elm_css$Html$Styled$text(evt.bQ)
 								])),
-							$rtfeldman$elm_css$Html$Styled$text('Verificatie in behandeling.'),
+							$elm$core$String$isEmpty(model.fQ) ? $rtfeldman$elm_css$Html$Styled$text('Verificatie in behandeling.') : A2(
+							$rtfeldman$elm_css$Html$Styled$div,
+							_List_Nil,
+							_List_fromArray(
+								[
+									A4(
+									$rtfeldman$elm_css$Html$Styled$styled,
+									$rtfeldman$elm_css$Html$Styled$a,
+									_List_fromArray(
+										[$author$project$Style$hyperLink]),
+									_List_fromArray(
+										[
+											$rtfeldman$elm_css$Html$Styled$Attributes$href(model.fQ)
+										]),
+									_List_fromArray(
+										[
+											$rtfeldman$elm_css$Html$Styled$text('Naar Betalings Site')
+										])),
+									$rtfeldman$elm_css$Html$Styled$text('Na succesvolle betaling wordt u terug naar deze site omgeleid.')
+								])),
 							maybeMargin
 						]))
 				]));
@@ -15316,10 +15332,10 @@ var $rtfeldman$elm_css$VirtualDom$Styled$unstyledNode = $rtfeldman$elm_css$Virtu
 var $rtfeldman$elm_css$Html$Styled$fromUnstyled = $rtfeldman$elm_css$VirtualDom$Styled$unstyledNode;
 var $elm_explorations$markdown$Markdown$defaultOptions = {
 	dd: $elm$core$Maybe$Nothing,
-	e1: $elm$core$Maybe$Just(
-		{eB: false, fI: false}),
-	fx: true,
-	fC: false
+	e0: $elm$core$Maybe$Just(
+		{eB: false, fH: false}),
+	fw: true,
+	fB: false
 };
 var $elm_explorations$markdown$Markdown$toHtmlWith = _Markdown_toHtml;
 var $elm_explorations$markdown$Markdown$toHtml = $elm_explorations$markdown$Markdown$toHtmlWith($elm_explorations$markdown$Markdown$defaultOptions);
@@ -16572,7 +16588,7 @@ var $pablohirafuji$elm_qrcode$QRCode$Matrix$timingPattern = F2(
 	});
 var $pablohirafuji$elm_qrcode$QRCode$Matrix$apply = function (_v0) {
 	var ecLevel = _v0.a.df;
-	var groupInfo = _v0.a.e2;
+	var groupInfo = _v0.a.e1;
 	var bytes = _v0.b;
 	var version = groupInfo.cP;
 	var size = ((version - 1) * 4) + 21;
@@ -16832,7 +16848,7 @@ var $pablohirafuji$elm_qrcode$QRCode$Encode$charCountIndicatorLength = F2(
 	});
 var $pablohirafuji$elm_qrcode$QRCode$Encode$charCountIndicator = F2(
 	function (_v0, bits) {
-		var groupInfo = _v0.e2;
+		var groupInfo = _v0.e1;
 		var inputStr = _v0.cv;
 		var mode = _v0.bO;
 		var length = A2($pablohirafuji$elm_qrcode$QRCode$Encode$charCountIndicatorLength, mode, groupInfo.cP);
@@ -16858,11 +16874,11 @@ var $pablohirafuji$elm_qrcode$QRCode$Encode$addInfoAndFinalBits = function (_v0)
 		model,
 		A2(
 			$pablohirafuji$elm_qrcode$QRCode$Encode$addFiller,
-			model.e2.bx,
+			model.e1.bx,
 			$pablohirafuji$elm_qrcode$QRCode$Encode$bitsToBytes(
 				A3(
 					$pablohirafuji$elm_qrcode$QRCode$Encode$addTerminator,
-					model.e2.bx,
+					model.e1.bx,
 					model.cf,
 					A2(
 						$elm$core$List$cons,
@@ -17651,20 +17667,20 @@ var $pablohirafuji$elm_qrcode$QRCode$Encode$getErrorCorrection = function (_v0) 
 		function (c) {
 			return _Utils_Tuple3(model, dataBlocks, c);
 		},
-		A2($pablohirafuji$elm_qrcode$QRCode$ErrorCorrection$get, model.e2.eT, dataBlocks));
+		A2($pablohirafuji$elm_qrcode$QRCode$ErrorCorrection$get, model.e1.eT, dataBlocks));
 };
 var $pablohirafuji$elm_qrcode$QRCode$Encode$Alphanumeric = 1;
 var $pablohirafuji$elm_qrcode$QRCode$Encode$Byte = 2;
 var $pablohirafuji$elm_qrcode$QRCode$Encode$Numeric = 0;
 var $elm$regex$Regex$Match = F4(
 	function (match, index, number, submatches) {
-		return {fb: index, fh: match, fn: number, fF: submatches};
+		return {fa: index, fg: match, fm: number, fE: submatches};
 	});
 var $elm$regex$Regex$contains = _Regex_contains;
 var $elm$regex$Regex$fromStringWith = _Regex_fromStringWith;
 var $pablohirafuji$elm_qrcode$QRCode$Encode$Alphanumeric$onlyAlphanumeric = A2(
 	$elm$regex$Regex$fromStringWith,
-	{eC: false, fl: false},
+	{eC: false, fk: false},
 	'^[0-9A-Z $%*+\\-.\\/:]+$');
 var $pablohirafuji$elm_qrcode$QRCode$Encode$Alphanumeric$isValid = function (input) {
 	return A2(
@@ -17679,7 +17695,7 @@ var $pablohirafuji$elm_qrcode$QRCode$Encode$Alphanumeric$isValid = function (inp
 };
 var $pablohirafuji$elm_qrcode$QRCode$Encode$Byte$only8Bit = A2(
 	$elm$regex$Regex$fromStringWith,
-	{eC: false, fl: false},
+	{eC: false, fk: false},
 	'^[\\u0000-\\u00ff]+$');
 var $pablohirafuji$elm_qrcode$QRCode$Encode$Byte$isValid = function (input) {
 	return A2(
@@ -17694,7 +17710,7 @@ var $pablohirafuji$elm_qrcode$QRCode$Encode$Byte$isValid = function (input) {
 };
 var $pablohirafuji$elm_qrcode$QRCode$Encode$Numeric$onlyNumber = A2(
 	$elm$regex$Regex$fromStringWith,
-	{eC: false, fl: false},
+	{eC: false, fk: false},
 	'^[0-9]+$');
 var $pablohirafuji$elm_qrcode$QRCode$Encode$Numeric$isValid = function (input) {
 	return A2(
@@ -17739,7 +17755,7 @@ var $pablohirafuji$elm_qrcode$QRCode$GroupInfo$newGroupInfo = F4(
 			bx: A2($pablohirafuji$elm_qrcode$QRCode$GroupInfo$byteCapacity, group1, maybeGroup2) * 8,
 			eT: ecPerBlock,
 			ds: group1,
-			fi: maybeGroup2,
+			fh: maybeGroup2,
 			cP: version
 		};
 	});
@@ -18877,7 +18893,7 @@ var $pablohirafuji$elm_qrcode$QRCode$Encode$versionToModel = F5(
 		return {
 			cf: partialBitsCount + A2($pablohirafuji$elm_qrcode$QRCode$Encode$charCountIndicatorLength, mode, groupInfo.cP),
 			df: ecLevel,
-			e2: groupInfo,
+			e1: groupInfo,
 			cv: inputStr,
 			bO: mode
 		};
@@ -18934,9 +18950,9 @@ var $pablohirafuji$elm_qrcode$QRCode$Encode$breakList = F3(
 	});
 var $pablohirafuji$elm_qrcode$QRCode$Encode$toBlocks = function (_v0) {
 	var model = _v0.a;
-	var groupInfo = model.e2;
+	var groupInfo = model.e1;
 	var byteList = _v0.b;
-	var _v1 = groupInfo.fi;
+	var _v1 = groupInfo.fh;
 	if (!_v1.$) {
 		var group2 = _v1.a;
 		return A2(
@@ -19004,7 +19020,7 @@ var $pablohirafuji$elm_qrcode$QRCode$fromStringWith = F2(
 					return A2(
 						$elm$core$Result$map,
 						function (matrix) {
-							return {bj: matrix, cP: encodeModel.e2.cP};
+							return {bj: matrix, cP: encodeModel.e1.cP};
 						},
 						$pablohirafuji$elm_qrcode$QRCode$Matrix$apply(
 							_Utils_Tuple2(encodeModel, encodedData)));
@@ -19022,7 +19038,7 @@ var $pablohirafuji$elm_qrcode$QRCode$Render$Svg$appendLastRect = function (_v0) 
 	var rowLines = _v0.b;
 	return A2(
 		$elm$core$List$cons,
-		'h' + $elm$core$String$fromInt(lastRect.fV * $pablohirafuji$elm_qrcode$QRCode$Render$Svg$moduleSize),
+		'h' + $elm$core$String$fromInt(lastRect.fU * $pablohirafuji$elm_qrcode$QRCode$Render$Svg$moduleSize),
 		rowLines);
 };
 var $elm$core$String$concat = function (strings) {
@@ -19042,15 +19058,15 @@ var $pablohirafuji$elm_qrcode$QRCode$Render$Svg$toRowLines = F2(
 		return isDark ? ((!lastRect.ar) ? _Utils_Tuple2(
 			_Utils_update(
 				lastRect,
-				{fV: lastRect.fV + 1}),
+				{fU: lastRect.fU + 1}),
 			rowLines) : _Utils_Tuple2(
-			{ar: 0, fV: 1},
+			{ar: 0, fU: 1},
 			A2(
 				$elm$core$List$cons,
 				$elm$core$String$concat(
 					_List_fromArray(
 						[
-							(lastRect.fV > 0) ? ('h' + $elm$core$String$fromInt(lastRect.fV * $pablohirafuji$elm_qrcode$QRCode$Render$Svg$moduleSize)) : '',
+							(lastRect.fU > 0) ? ('h' + $elm$core$String$fromInt(lastRect.fU * $pablohirafuji$elm_qrcode$QRCode$Render$Svg$moduleSize)) : '',
 							'm',
 							$elm$core$String$fromInt(lastRect.ar * $pablohirafuji$elm_qrcode$QRCode$Render$Svg$moduleSize),
 							' 0'
@@ -19119,7 +19135,7 @@ var $pablohirafuji$elm_qrcode$QRCode$Render$Svg$viewBase = F3(
 											$elm$core$List$foldl,
 											$pablohirafuji$elm_qrcode$QRCode$Render$Svg$toRowLines,
 											_Utils_Tuple2(
-												{ar: 0, fV: 0},
+												{ar: 0, fU: 0},
 												_List_Nil)),
 										A2($elm$core$Basics$composeR, $pablohirafuji$elm_qrcode$QRCode$Render$Svg$appendLastRect, $elm$core$List$reverse)),
 									matrix)))))));
@@ -19682,7 +19698,7 @@ var $author$project$Pages$Tickets$ticketView = F5(
 												_List_fromArray(
 													[
 														$rtfeldman$elm_css$Html$Styled$text(
-														ticket.eP + (' - €' + A2($myrho$elm_round$Round$round, 2, ticket.fs)))
+														ticket.eP + (' - €' + A2($myrho$elm_round$Round$round, 2, ticket.fr)))
 													]))
 											]),
 											_List_fromArray(
@@ -19851,7 +19867,7 @@ var $author$project$Pages$Tickets$ticketView = F5(
 												_List_fromArray(
 													[
 														$rtfeldman$elm_css$Html$Styled$text(
-														ticket.eP + (' - €' + A2($myrho$elm_round$Round$round, 2, ticket.fs)))
+														ticket.eP + (' - €' + A2($myrho$elm_round$Round$round, 2, ticket.fr)))
 													]))
 											]),
 											_List_fromArray(
@@ -19912,7 +19928,7 @@ var $author$project$Pages$Tickets$view = F2(
 						$rtfeldman$elm_css$Html$Styled$div,
 						$author$project$Style$container,
 						_List_Nil,
-						A4($author$project$Pages$Tickets$ticketsView, shared.eQ, orderInfo.eE + (' ' + orderInfo.ff), orderInfo.dv, orderInfo.fK))
+						A4($author$project$Pages$Tickets$ticketsView, shared.eQ, orderInfo.eE + (' ' + orderInfo.fe), orderInfo.dv, orderInfo.fJ))
 					]));
 		}
 	});
@@ -19997,7 +20013,7 @@ var $author$project$App$view = function (model) {
 		}();
 		return _List_fromArray(
 			[
-				$rtfeldman$elm_css$Css$fontFamilies($author$project$Style$theme.e$),
+				$rtfeldman$elm_css$Css$fontFamilies($author$project$Style$theme.e_),
 				$rtfeldman$elm_css$Css$fontSize(fontSize),
 				$rtfeldman$elm_css$Css$fontWeight($rtfeldman$elm_css$Css$normal)
 			]);
@@ -20024,10 +20040,10 @@ var $author$project$App$view = function (model) {
 };
 var $author$project$App$main = $elm$browser$Browser$application(
 	{
-		fc: $author$project$App$init,
-		fo: $author$project$App$UrlChanged,
-		fp: $author$project$App$LinkClicked,
-		fG: function (m) {
+		fb: $author$project$App$init,
+		fn: $author$project$App$UrlChanged,
+		fo: $author$project$App$LinkClicked,
+		fF: function (m) {
 			return $elm$core$Platform$Sub$batch(
 				_List_fromArray(
 					[
@@ -20041,15 +20057,15 @@ var $author$project$App$main = $elm$browser$Browser$application(
 						$author$project$Helmsman$subscriptions(m.aR))
 					]));
 		},
-		fP: $author$project$App$update,
-		fS: function (model) {
+		fO: $author$project$App$update,
+		fR: function (model) {
 			return {
 				eA: _List_fromArray(
 					[
 						$rtfeldman$elm_css$Html$Styled$toUnstyled(
 						$author$project$App$view(model))
 					]),
-				fM: 'Events'
+				fL: 'Events'
 			};
 		}
 	});
