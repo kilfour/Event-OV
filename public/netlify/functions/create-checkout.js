@@ -14,12 +14,13 @@ exports.handler = async function (event, context) {
                 value: data.amount, // You must send the correct number of decimals, thus we enforce the use of strings
             },
             description: 'EVENT OM 09/10/25',
-            redirectUrl: 'https://pequivents.netlify.app/payment/' + data.orderId + '/',
+            redirectUrl: 'https://pequivents.netlify.app/payment/' + data.orderId,
             // webhookUrl: 'https://webshop.example.org/payments/webhook/',
 
         });
         //console.log(payment);
-        var url = payment.getCheckoutUrl()
+        var url = payment.getCheckoutUrl();
+        url = 'https://www.google.com/search?q=test&sourceid=chrome&ie=UTF-8';
         //console.log(url);
         return {
             statusCode: 200,

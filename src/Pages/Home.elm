@@ -37,6 +37,10 @@ update msg shared model =
             )
 
 
+
+-- https://www.mollie.com/ https://www.mollie.com/ 301!
+
+
 view : Shared.Model -> Model -> Html Msg
 view shared _ =
     let
