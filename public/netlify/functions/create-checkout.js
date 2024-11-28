@@ -19,9 +19,11 @@ exports.handler = async function (event, context) {
 
         });
         console.log(payment);
+        var url = payment.getCheckoutUrl()
+        console.log(url);
         return {
             statusCode: 200,
-            body: JSON.stringify(payment.getCheckoutUrl())
+            body: JSON.stringify(url)
         }
     } catch (err) {
         console.error(
