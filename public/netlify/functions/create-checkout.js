@@ -24,6 +24,11 @@ exports.handler = async function (event, context) {
             body: JSON.stringify(payment.getCheckoutUrl())
         }
     } catch (err) {
+        console.error(
+            'Error: %s: %s',
+            err.name,
+            err.message
+        );
         return {
             statusCode: 500,
             body: JSON.stringify({
