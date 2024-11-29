@@ -9,7 +9,7 @@ type alias Event =
     , address : String
     , date : String
     , time : String
-    , extraInfo : String
+    , extraInfo : List String
     , ticketTypes : List TicketType
     }
 
@@ -37,19 +37,24 @@ ticketsString evt =
 theEvent : Event
 theEvent =
     { id = Nothing
-    , name = "Event Naam"
+    , name = "Nieuwjaarsdrink 2025"
     , address = "Maneblusser City\nNora Tilleylaan 28\n2800 Mechelen"
     , date = "Donderdag 9 Januari 2025"
     , time = "18:30"
-    , extraInfo = "Gratis parkeren.\nDrank en gerechtjes inbegrepen tot 21u30."
+    , extraInfo =
+        [ "Gratis parkeren."
+        , "Keynote spreker Rik Moons : 'Domme vragen bestaan wel'."
+        , "Catering verzorgd door Cook & Taste."
+        ]
     , ticketTypes =
-        [ { id = "VVK", description = "Standaard", price = 60, info = [] }
+        [ { id = "VVK", description = "Standaard", price = 60, info = [ "Drank en gerechtjes inbegrepen tot 21u30." ] }
         , { id = "VIP"
           , description = "Vip Tafel"
           , price = 500
           , info =
                 [ "Voor zes personen plus fles Champagne."
                 , "Sponsor logo getoond op afzonderlijke tafel en geprojecteerd op scherm."
+                , "Drank en gerechtjes inbegrepen tot 21u30."
                 ]
           }
         ]

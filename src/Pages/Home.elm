@@ -87,7 +87,8 @@ view shared _ =
             , Html.styled Html.h2 Style.pageHeader [] [ Html.text "Locatie" ]
             , Html.styled Html.div (Style.address ++ [ Css.marginLeft (Css.em 1), Css.marginBottom (Css.em 1) ]) [] [ Html.text evt.address ]
             , Html.styled Html.h2 Style.pageHeader [] [ Html.text "Extra Info" ]
-            , Html.styled Html.div (Style.address ++ [ Css.marginLeft (Css.em 1), Css.marginBottom (Css.em 1) ]) [] [ Html.text evt.extraInfo ]
+            , Html.styled Html.div [ Css.marginLeft (Css.em 1), Css.marginBottom (Css.em 1) ] [] <|
+                List.map (\a -> Html.div [] [ Html.text a ]) evt.extraInfo
             , Html.styled Html.h2 Style.pageHeader [] [ Html.text "Tickets" ]
             , Html.styled Html.div [ Css.marginLeft (Css.em 1), Css.marginBottom (Css.em 1) ] [] <|
                 List.map ticketTypes evt.ticketTypes
