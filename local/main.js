@@ -11317,6 +11317,7 @@ var $author$project$Pages$OrderTickets$init = function (shared) {
 			christianNameExists: true,
 			confirmEmail: '',
 			confirmEmailExists: true,
+			connecting: false,
 			email: '',
 			emailExists: true,
 			emailIsValid: true,
@@ -11724,7 +11725,7 @@ var $author$project$Pages$PaymentSuccess$init = F2(
 			$author$project$Pages$PaymentSuccess$emptyModel,
 			A3($author$project$Api$GetOrderInfo$dispatch, shared.baseApiUrl, orderId, $author$project$Pages$PaymentSuccess$OrderInfoLoaded));
 	});
-var $author$project$Pages$TeesAndCees$init = '# Algemene Voorwaarden\r\n\r\n## 1. Inleiding\r\n\r\nWelkom bij Pequivents (de "Website"). Deze Algemene Voorwaarden zijn van toepassing op uw gebruik van de Website en de aankoop van tickets via de Website. Door toegang te krijgen tot of gebruik te maken van de Website, gaat u akkoord met deze Voorwaarden. Als u niet akkoord gaat met deze Voorwaarden, mag u de Website niet gebruiken.\r\n\r\n## 2. Definities\r\n\r\n- **"Wij," "Ons," "Onze"** verwijst naar [Uw Bedrijfsnaam], de eigenaar en exploitant van de Website.\r\n- **"U," "Uw"** verwijst naar de persoon of entiteit die toegang heeft tot of gebruik maakt van de Website.\r\n- **"Evenement"** verwijst naar het evenement waarvoor tickets worden verkocht via de Website.\r\n- **"Ticket"** verwijst naar de licentie om een Evenement bij te wonen, gekocht via de Website.\r\n\r\n## 3. Gebruik van de Website\r\n\r\n### 3.1 Geschiktheid\r\n\r\nDoor gebruik te maken van de Website, verklaart u dat u ten minste 18 jaar oud bent of de toestemming van een wettelijke voogd heeft.\r\n\r\n### 3.2 Account Aanmaken\r\n\r\nOm tickets te kopen, moet u mogelijk een account aanmaken op de Website. U stemt ermee in om nauwkeurige en volledige informatie te verstrekken tijdens de registratie en om uw accountinformatie up-to-date te houden.\r\n\r\n### 3.3 Verboden Activiteiten\r\n\r\nU stemt ermee in de Website niet te gebruiken voor enig onwettig doel of op een manier die ons, andere gebruikers of de Evenementorganisatoren zou kunnen schaden. Dit omvat, maar is niet beperkt tot, het doorverkopen van tickets, het gebruik van bots om tickets te kopen, of het deelnemen aan frauduleuze activiteiten.\r\n\r\n## 4. Ticket Aankoop\r\n\r\n### 4.1 Prijzen en Beschikbaarheid\r\n\r\nTicketprijzen zijn zoals vermeld op de Website. We behouden ons het recht voor om prijzen op elk moment zonder voorafgaande kennisgeving te wijzigen. Tickets zijn onder voorbehoud van beschikbaarheid, en we garanderen niet dat tickets op elk moment beschikbaar zullen zijn voor aankoop.\r\n\r\n### 4.2 Betaling\r\n\r\nAlle ticketaankopen moeten volledig worden betaald op het moment van aankoop. We accepteren betaalmethoden zoals vermeld op de Website. Door betalingsinformatie te verstrekken, verklaart en garandeert u dat u wettelijk recht hebt om de betaalmethode te gebruiken.\r\n\r\n### 4.3 Orderbevestiging\r\n\r\nZodra uw bestelling succesvol is geplaatst, ontvangt u een orderbevestiging via e-mail. Controleer uw spam- of ongewenste e-mailmap als u de bevestiging niet ontvangt.\r\n\r\n### 4.4 Ticketlevering\r\n\r\nTickets worden elektronisch geleverd naar het e-mailadres dat tijdens de aankoop is opgegeven of beschikbaar gesteld voor download in uw accountdashboard.\r\n\r\n## 5. Restituties en Ruilingen\r\n\r\n### 5.1 Geen Restituties\r\n\r\nAlle ticketverkopen zijn definitief, en we bieden geen restituties of ruilingen aan, tenzij het Evenement wordt geannuleerd, uitgesteld of verplaatst door de Evenementorganisator.\r\n\r\n### 5.2 Annulering van het Evenement\r\n\r\nIn geval van annulering, uitstel, of significante wijziging van het Evenement, zullen we proberen u zo snel mogelijk op de hoogte te stellen. Restituties of ruilingen voor geannuleerde of verplaatste Evenementen worden aangeboden in overeenstemming met het beleid van de Evenementorganisator.\r\n\r\n## 6. Toegang tot het Evenement\r\n\r\n### 6.1 Toelatingsvereisten\r\n\r\nU moet een geldig ticket tonen om toegang te krijgen tot het Evenement. De Evenementorganisator behoudt zich het recht voor om elke persoon zonder restitutie de toegang te weigeren.\r\n\r\n### 6.2 Gedrag op het Evenement\r\n\r\nU stemt ermee in om alle regels en voorschriften van het Evenement na te leven, inclusief die met betrekking tot gedrag, veiligheid en beveiliging. Het niet naleven van deze regels kan resulteren in uw verwijdering van het Evenement zonder restitutie.\r\n\r\n## 7. Intellectueel Eigendom\r\n\r\n### 7.1 Website Inhoud\r\n\r\nAlle inhoud op de Website, inclusief tekst, afbeeldingen, logo\'s en afbeeldingen, is eigendom van [Uw Bedrijfsnaam] of haar licentiegevers en is beschermd door intellectuele eigendomswetten.\r\n\r\n### 7.2 Beperkte Licentie\r\n\r\nU krijgt een beperkte, niet-exclusieve, niet-overdraagbare licentie om toegang te krijgen tot en gebruik te maken van de Website voor persoonlijke, niet-commerciële doeleinden.\r\n\r\n## 8. Afwijzing van Garanties\r\n\r\nDe Website en alle via de Website verkochte tickets worden geleverd "zoals ze zijn" en "zoals beschikbaar" zonder enige vorm van garanties, expliciet of impliciet. We garanderen niet dat de Website foutloos, veilig of vrij van virussen zal zijn.\r\n\r\n## 9. Beperking van Aansprakelijkheid\r\n\r\nVoor zover maximaal toegestaan door de wet, zullen [Uw Bedrijfsnaam] en haar gelieerde ondernemingen niet aansprakelijk zijn voor enige indirecte, incidentele, speciale, gevolg- of bestraffende schade voortvloeiend uit of gerelateerd aan uw gebruik van de Website of uw deelname aan een Evenement.\r\n\r\n## 10. Vrijwaring\r\n\r\nU stemt ermee in [Uw Bedrijfsnaam] en haar gelieerde ondernemingen te vrijwaren en schadeloos te stellen van enige claims, verliezen, schade, aansprakelijkheden, inclusief juridische kosten, voortvloeiend uit uw gebruik van de Website of schending van deze Voorwaarden.\r\n\r\n## 11. Toepasselijk Recht\r\n\r\nDeze Voorwaarden en eventuele geschillen voortvloeiend uit uw gebruik van de Website worden beheerst door en geïnterpreteerd in overeenstemming met de wetten van [Uw Jurisdictie], zonder rekening te houden met conflicten van rechtsprincipes.\r\n\r\n## 12. Wijzigingen in de Voorwaarden\r\n\r\nWe behouden ons het recht voor om deze Voorwaarden op elk moment te wijzigen. Wijzigingen worden onmiddellijk van kracht na plaatsing op de Website. Uw voortgezet gebruik van de Website na plaatsing van wijzigingen houdt in dat u akkoord gaat met de gewijzigde Voorwaarden.\r\n\r\n## 13. Contactinformatie\r\n\r\nAls u vragen heeft over deze Voorwaarden, kunt u contact met ons opnemen via: kilfour@gmail.com\r\n\r\n';
+var $author$project$Pages$TeesAndCees$init = '# Algemene Voorwaarden\r\n\r\n## 1. Inleiding\r\n\r\nWelkom bij Pequivents (de "Website"). Deze Algemene Voorwaarden zijn van toepassing op uw gebruik van de Website en de aankoop van tickets via de Website. Door toegang te krijgen tot of gebruik te maken van de Website, gaat u akkoord met deze Voorwaarden. Als u niet akkoord gaat met deze Voorwaarden, mag u de Website niet gebruiken.\r\n\r\n## 2. Definities\r\n\r\n- **"Wij," "Ons," "Onze"** verwijst naar Cook & Taste, de eigenaar en exploitant van de Website.\r\n- **"U," "Uw"** verwijst naar de persoon of entiteit die toegang heeft tot of gebruik maakt van de Website.\r\n- **"Evenement"** verwijst naar het evenement waarvoor tickets worden verkocht via de Website.\r\n- **"Ticket"** verwijst naar de licentie om een Evenement bij te wonen, gekocht via de Website.\r\n\r\n## 3. Gebruik van de Website\r\n\r\n### 3.1 Geschiktheid\r\n\r\nDoor gebruik te maken van de Website, verklaart u dat u ten minste 18 jaar oud bent of de toestemming van een wettelijke voogd heeft.\r\n\r\n### 3.2 Account Aanmaken\r\n\r\nOm tickets te kopen, moet u mogelijk een account aanmaken op de Website. U stemt ermee in om nauwkeurige en volledige informatie te verstrekken tijdens de registratie en om uw accountinformatie up-to-date te houden.\r\n\r\n### 3.3 Verboden Activiteiten\r\n\r\nU stemt ermee in de Website niet te gebruiken voor enig onwettig doel of op een manier die ons, andere gebruikers of de Evenementorganisatoren zou kunnen schaden. Dit omvat, maar is niet beperkt tot, het doorverkopen van tickets, het gebruik van bots om tickets te kopen, of het deelnemen aan frauduleuze activiteiten.\r\n\r\n## 4. Ticket Aankoop\r\n\r\n### 4.1 Prijzen en Beschikbaarheid\r\n\r\nTicketprijzen zijn zoals vermeld op de Website. We behouden ons het recht voor om prijzen op elk moment zonder voorafgaande kennisgeving te wijzigen. Tickets zijn onder voorbehoud van beschikbaarheid, en we garanderen niet dat tickets op elk moment beschikbaar zullen zijn voor aankoop.\r\n\r\n### 4.2 Betaling\r\n\r\nAlle ticketaankopen moeten volledig worden betaald op het moment van aankoop. We accepteren betaalmethoden zoals vermeld op de Website. Door betalingsinformatie te verstrekken, verklaart en garandeert u dat u wettelijk recht hebt om de betaalmethode te gebruiken.\r\n\r\n### 4.3 Orderbevestiging\r\n\r\nZodra uw bestelling succesvol is geplaatst, ontvangt u een orderbevestiging via e-mail. Controleer uw spam- of ongewenste e-mailmap als u de bevestiging niet ontvangt.\r\n\r\n### 4.4 Ticketlevering\r\n\r\nTickets worden elektronisch geleverd naar het e-mailadres dat tijdens de aankoop is opgegeven of beschikbaar gesteld voor download in uw accountdashboard.\r\n\r\n## 5. Restituties en Ruilingen\r\n\r\n### 5.1 Geen Restituties\r\n\r\nAlle ticketverkopen zijn definitief, en we bieden geen restituties of ruilingen aan, tenzij het Evenement wordt geannuleerd, uitgesteld of verplaatst door de Evenementorganisator.\r\n\r\n### 5.2 Annulering van het Evenement\r\n\r\nIn geval van annulering, uitstel, of significante wijziging van het Evenement, zullen we proberen u zo snel mogelijk op de hoogte te stellen. Restituties of ruilingen voor geannuleerde of verplaatste Evenementen worden aangeboden in overeenstemming met het beleid van de Evenementorganisator.\r\n\r\n## 6. Toegang tot het Evenement\r\n\r\n### 6.1 Toelatingsvereisten\r\n\r\nU moet een geldig ticket tonen om toegang te krijgen tot het Evenement. De Evenementorganisator behoudt zich het recht voor om elke persoon zonder restitutie de toegang te weigeren.\r\n\r\n### 6.2 Gedrag op het Evenement\r\n\r\nU stemt ermee in om alle regels en voorschriften van het Evenement na te leven, inclusief die met betrekking tot gedrag, veiligheid en beveiliging. Het niet naleven van deze regels kan resulteren in uw verwijdering van het Evenement zonder restitutie.\r\n\r\n## 7. Intellectueel Eigendom\r\n\r\n### 7.1 Website Inhoud\r\n\r\nAlle inhoud op de Website, inclusief tekst, afbeeldingen, logo\'s en afbeeldingen, is eigendom van Cook & Taste of haar licentiegevers en is beschermd door intellectuele eigendomswetten.\r\n\r\n### 7.2 Beperkte Licentie\r\n\r\nU krijgt een beperkte, niet-exclusieve, niet-overdraagbare licentie om toegang te krijgen tot en gebruik te maken van de Website voor persoonlijke, niet-commerciële doeleinden.\r\n\r\n## 8. Afwijzing van Garanties\r\n\r\nDe Website en alle via de Website verkochte tickets worden geleverd "zoals ze zijn" en "zoals beschikbaar" zonder enige vorm van garanties, expliciet of impliciet. We garanderen niet dat de Website foutloos, veilig of vrij van virussen zal zijn.\r\n\r\n## 9. Beperking van Aansprakelijkheid\r\n\r\nVoor zover maximaal toegestaan door de wet, zullen Cook & Taste en haar gelieerde ondernemingen niet aansprakelijk zijn voor enige indirecte, incidentele, speciale, gevolg- of bestraffende schade voortvloeiend uit of gerelateerd aan uw gebruik van de Website of uw deelname aan een Evenement.\r\n\r\n## 10. Vrijwaring\r\n\r\nU stemt ermee in Cook & Taste en haar gelieerde ondernemingen te vrijwaren en schadeloos te stellen van enige claims, verliezen, schade, aansprakelijkheden, inclusief juridische kosten, voortvloeiend uit uw gebruik van de Website of schending van deze Voorwaarden.\r\n\r\n## 11. Toepasselijk Recht\r\n\r\nDeze Voorwaarden en eventuele geschillen voortvloeiend uit uw gebruik van de Website worden beheerst door en geïnterpreteerd in overeenstemming met de wetten van de europese unie, zonder rekening te houden met conflicten van rechtsprincipes.\r\n\r\n## 12. Wijzigingen in de Voorwaarden\r\n\r\nWe behouden ons het recht voor om deze Voorwaarden op elk moment te wijzigen. Wijzigingen worden onmiddellijk van kracht na plaatsing op de Website. Uw voortgezet gebruik van de Website na plaatsing van wijzigingen houdt in dat u akkoord gaat met de gewijzigde Voorwaarden.\r\n\r\n## 13. Contactinformatie\r\n\r\nAls u vragen heeft over deze Voorwaarden, kunt u contact met ons opnemen via: kilfour@gmail.com\r\n\r\nCook & Taste BV\r\nHemelshoek 235 B-2590 Berlaar (Belgium)\r\nBTW BE 0800.315.029\r\nTel +32 3 366 21 00 \r\nGSM +32 498 10 38 88 \r\n';
 var $author$project$Pages$Tickets$OrderInfoLoaded = function (a) {
 	return {$: 'OrderInfoLoaded', a: a};
 };
@@ -13908,7 +13909,7 @@ var $author$project$Pages$Home$update = F3(
 		return _Utils_Tuple2(
 			model,
 			$author$project$Lib$Effect$Cmd(
-				$elm$browser$Browser$Navigation$load('https:/www.google.com')));
+				A2($elm$browser$Browser$Navigation$pushUrl, shared.navKey, '/order-tickets/')));
 	});
 var $author$project$Shared$Error = function (a) {
 	return {$: 'Error', a: a};
@@ -14715,7 +14716,11 @@ var $author$project$Pages$OrderTickets$update = F3(
 								[model.standardTicketInfo, model.vipTicketInfo])
 						},
 						$author$project$Pages$OrderTickets$totalAmount(model))) : $author$project$Lib$Effect$None;
-				return _Utils_Tuple2(updatedModel, effect);
+				return _Utils_Tuple2(
+					_Utils_update(
+						updatedModel,
+						{connecting: isValid}),
+					effect);
 			case 'AddStandardTicket':
 				var info = model.standardTicketInfo;
 				return _Utils_Tuple2(
@@ -14980,6 +14985,65 @@ var $author$project$Pages$Payment$update = F3(
 			}
 		}
 	});
+var $author$project$Pages$PaymentSuccess$MailSend = function (a) {
+	return {$: 'MailSend', a: a};
+};
+var $author$project$Api$SendMail$MailResult = function (success) {
+	return {success: success};
+};
+var $author$project$Api$SendMail$decoder = A3(
+	$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
+	'success',
+	$elm$json$Json$Decode$bool,
+	$elm$json$Json$Decode$succeed($author$project$Api$SendMail$MailResult));
+var $author$project$Api$SendMail$encoder = function (payload) {
+	return $elm$json$Json$Encode$object(
+		_List_fromArray(
+			[
+				_Utils_Tuple2(
+				'email',
+				$elm$json$Json$Encode$string(payload.email)),
+				_Utils_Tuple2(
+				'orderId',
+				$elm$json$Json$Encode$string(payload.orderId)),
+				_Utils_Tuple2(
+				'total',
+				$elm$json$Json$Encode$float(payload.total)),
+				_Utils_Tuple2(
+				'url',
+				$elm$json$Json$Encode$string(payload.url))
+			]));
+};
+var $author$project$Api$SendMail$dispatch = F3(
+	function (baseApiUrl, payload, msg) {
+		var jsonPayload = A2(
+			$elm$json$Json$Encode$encode,
+			0,
+			$author$project$Api$SendMail$encoder(payload));
+		var request = $elm$http$Http$request(
+			{
+				body: A2($elm$http$Http$stringBody, 'application/json', jsonPayload),
+				expect: A2($elm$http$Http$expectJson, msg, $author$project$Api$SendMail$decoder),
+				headers: _List_Nil,
+				method: 'POST',
+				timeout: $elm$core$Maybe$Nothing,
+				tracker: $elm$core$Maybe$Nothing,
+				url: baseApiUrl + 'send-mail'
+			});
+		return request;
+	});
+var $elm$core$List$sum = function (numbers) {
+	return A3($elm$core$List$foldl, $elm$core$Basics$add, 0, numbers);
+};
+var $author$project$Pages$PaymentSuccess$totalAmount = function (orderInfo) {
+	return $elm$core$List$sum(
+		A2(
+			$elm$core$List$map,
+			function (a) {
+				return a.price;
+			},
+			orderInfo.tickets));
+};
 var $author$project$Pages$PaymentSuccess$update = F3(
 	function (msg, shared, model) {
 		switch (msg.$) {
@@ -14994,7 +15058,17 @@ var $author$project$Pages$PaymentSuccess$update = F3(
 							{
 								orderInfo: $elm$core$Maybe$Just(orderInfo)
 							}),
-						$author$project$Lib$Effect$none);
+						$author$project$Lib$Effect$Cmd(
+							A3(
+								$author$project$Api$SendMail$dispatch,
+								shared.baseApiUrl,
+								{
+									email: orderInfo.email,
+									orderId: orderInfo.id,
+									total: $author$project$Pages$PaymentSuccess$totalAmount(orderInfo),
+									url: 'https://pequivents.netlify.app/tickets/' + (orderInfo.id + ('-' + orderInfo.code))
+								},
+								$author$project$Pages$PaymentSuccess$MailSend)));
 				} else {
 					var error = msg.a.a;
 					return _Utils_Tuple2(
@@ -17265,7 +17339,6 @@ var $author$project$Style$address = _List_fromArray(
 		$rtfeldman$elm_css$Css$fontWeight($rtfeldman$elm_css$Css$normal),
 		$rtfeldman$elm_css$Css$whiteSpace($rtfeldman$elm_css$Css$pre)
 	]);
-var $rtfeldman$elm_css$Html$Styled$br = $rtfeldman$elm_css$Html$Styled$node('br');
 var $rtfeldman$elm_css$Css$auto = {alignItemsOrAuto: $rtfeldman$elm_css$Css$Structure$Compatible, cursor: $rtfeldman$elm_css$Css$Structure$Compatible, flexBasis: $rtfeldman$elm_css$Css$Structure$Compatible, intOrAuto: $rtfeldman$elm_css$Css$Structure$Compatible, justifyContentOrAuto: $rtfeldman$elm_css$Css$Structure$Compatible, lengthOrAuto: $rtfeldman$elm_css$Css$Structure$Compatible, lengthOrAutoOrCoverOrContain: $rtfeldman$elm_css$Css$Structure$Compatible, lengthOrNumberOrAutoOrNoneOrContent: $rtfeldman$elm_css$Css$Structure$Compatible, overflow: $rtfeldman$elm_css$Css$Structure$Compatible, pointerEvents: $rtfeldman$elm_css$Css$Structure$Compatible, tableLayout: $rtfeldman$elm_css$Css$Structure$Compatible, textRendering: $rtfeldman$elm_css$Css$Structure$Compatible, touchAction: $rtfeldman$elm_css$Css$Structure$Compatible, value: 'auto'};
 var $rtfeldman$elm_css$Css$maxWidth = $rtfeldman$elm_css$Css$prop1('max-width');
 var $rtfeldman$elm_css$Css$width = $rtfeldman$elm_css$Css$prop1('width');
@@ -17663,17 +17736,24 @@ var $author$project$Style$pageHeader = _List_fromArray(
 var $author$project$Domain$Event$theEvent = {
 	address: 'Maneblusser City\nNora Tilleylaan 28\n2800 Mechelen',
 	date: 'Donderdag 9 Januari 2025',
-	extraInfo: 'Gratis parkeren.\nDrank en gerechtjes inbegrepen tot 21u30.',
+	extraInfo: _List_fromArray(
+		['Gratis parkeren.', 'Keynote spreker Rik Moons : \'Domme vragen bestaan wel\'.', 'Catering verzorgd door Cook & Taste.']),
 	id: $elm$core$Maybe$Nothing,
-	name: 'Event Naam',
+	name: 'Nieuwjaarsdrink 2025',
 	ticketTypes: _List_fromArray(
 		[
-			{description: 'Standaard', id: 'VVK', info: _List_Nil, price: 60},
+			{
+			description: 'Standaard',
+			id: 'VVK',
+			info: _List_fromArray(
+				['Drank en gerechtjes inbegrepen tot 21u30.']),
+			price: 60
+		},
 			{
 			description: 'Vip Tafel',
 			id: 'VIP',
 			info: _List_fromArray(
-				['Voor zes personen plus fles Champagne.', 'Sponsor logo getoond op afzonderlijke tafel en geprojecteerd op scherm.']),
+				['Voor zes personen plus fles Champagne.', 'Sponsor logo getoond op afzonderlijke tafel en geprojecteerd op scherm.', 'Drank en gerechtjes inbegrepen tot 21u30.']),
 			price: 500
 		}
 		]),
@@ -18411,32 +18491,6 @@ var $author$project$Pages$Home$view = F2(
 							_List_Nil,
 							_List_fromArray(
 								[
-									$rtfeldman$elm_css$Html$Styled$text('Extra Info')
-								])),
-							A4(
-							$rtfeldman$elm_css$Html$Styled$styled,
-							$rtfeldman$elm_css$Html$Styled$div,
-							_Utils_ap(
-								$author$project$Style$address,
-								_List_fromArray(
-									[
-										$rtfeldman$elm_css$Css$marginLeft(
-										$rtfeldman$elm_css$Css$em(1)),
-										$rtfeldman$elm_css$Css$marginBottom(
-										$rtfeldman$elm_css$Css$em(1))
-									])),
-							_List_Nil,
-							_List_fromArray(
-								[
-									$rtfeldman$elm_css$Html$Styled$text(evt.extraInfo)
-								])),
-							A4(
-							$rtfeldman$elm_css$Html$Styled$styled,
-							$rtfeldman$elm_css$Html$Styled$h2,
-							$author$project$Style$pageHeader,
-							_List_Nil,
-							_List_fromArray(
-								[
 									$rtfeldman$elm_css$Html$Styled$text('Tickets')
 								])),
 							A4(
@@ -18451,8 +18505,38 @@ var $author$project$Pages$Home$view = F2(
 								]),
 							_List_Nil,
 							A2($elm$core$List$map, ticketTypes, evt.ticketTypes)),
-							A2($rtfeldman$elm_css$Html$Styled$br, _List_Nil, _List_Nil),
-							A2($rtfeldman$elm_css$Html$Styled$br, _List_Nil, _List_Nil),
+							A4(
+							$rtfeldman$elm_css$Html$Styled$styled,
+							$rtfeldman$elm_css$Html$Styled$h2,
+							$author$project$Style$pageHeader,
+							_List_Nil,
+							_List_fromArray(
+								[
+									$rtfeldman$elm_css$Html$Styled$text('Extra Info')
+								])),
+							A4(
+							$rtfeldman$elm_css$Html$Styled$styled,
+							$rtfeldman$elm_css$Html$Styled$div,
+							_List_fromArray(
+								[
+									$rtfeldman$elm_css$Css$marginLeft(
+									$rtfeldman$elm_css$Css$em(1)),
+									$rtfeldman$elm_css$Css$marginBottom(
+									$rtfeldman$elm_css$Css$em(1))
+								]),
+							_List_Nil,
+							A2(
+								$elm$core$List$map,
+								function (a) {
+									return A2(
+										$rtfeldman$elm_css$Html$Styled$div,
+										_List_Nil,
+										_List_fromArray(
+											[
+												$rtfeldman$elm_css$Html$Styled$text(a)
+											]));
+								},
+								evt.extraInfo)),
 							maybeMargin,
 							maybeBottomButton
 						]))
@@ -18992,7 +19076,9 @@ var $author$project$Pages$OrderTickets$UpdateEmail = function (a) {
 var $author$project$Pages$OrderTickets$UpdateLastName = function (a) {
 	return {$: 'UpdateLastName', a: a};
 };
+var $rtfeldman$elm_css$Html$Styled$br = $rtfeldman$elm_css$Html$Styled$node('br');
 var $rtfeldman$elm_css$Css$center = $rtfeldman$elm_css$Css$prop1('center');
+var $rtfeldman$elm_css$Html$Styled$Attributes$class = $rtfeldman$elm_css$Html$Styled$Attributes$stringProperty('className');
 var $author$project$Style$symbolButton = _List_fromArray(
 	[
 		$rtfeldman$elm_css$Css$backgroundColor(
@@ -19247,6 +19333,22 @@ var $author$project$Pages$OrderTickets$view = F2(
 			_List_Nil,
 			_List_fromArray(
 				[
+					model.connecting ? A2(
+					$rtfeldman$elm_css$Html$Styled$div,
+					_List_fromArray(
+						[
+							$rtfeldman$elm_css$Html$Styled$Attributes$class('loading-state')
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$rtfeldman$elm_css$Html$Styled$div,
+							_List_fromArray(
+								[
+									$rtfeldman$elm_css$Html$Styled$Attributes$class('loading')
+								]),
+							_List_Nil)
+						])) : $rtfeldman$elm_css$Html$Styled$text(''),
 					$author$project$Pages$ViewParts$Banner$view(shared.device),
 					A4(
 					$rtfeldman$elm_css$Html$Styled$styled,
@@ -20680,9 +20782,6 @@ var $pablohirafuji$elm_qrcode$QRCode$Matrix$rule1Score_ = F2(
 			}
 		}
 	});
-var $elm$core$List$sum = function (numbers) {
-	return A3($elm$core$List$foldl, $elm$core$Basics$add, 0, numbers);
-};
 var $pablohirafuji$elm_qrcode$QRCode$Matrix$rule1Score = A2(
 	$elm$core$Basics$composeR,
 	$elm$core$List$map(

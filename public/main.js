@@ -12670,7 +12670,6 @@ var $author$project$Style$address = _List_fromArray(
 		$rtfeldman$elm_css$Css$fontWeight($rtfeldman$elm_css$Css$normal),
 		$rtfeldman$elm_css$Css$whiteSpace($rtfeldman$elm_css$Css$pre)
 	]);
-var $rtfeldman$elm_css$Html$Styled$br = $rtfeldman$elm_css$Html$Styled$node('br');
 var $rtfeldman$elm_css$Css$auto = {eu: 0, d: 0, aN: 0, bM: 0, fe: 0, aT: 0, Z: 0, P: 0, aX: 0, K: 0, b3: 0, a0: 0, C: 0, U: 'auto'};
 var $rtfeldman$elm_css$Css$maxWidth = $rtfeldman$elm_css$Css$prop1('max-width');
 var $rtfeldman$elm_css$Css$width = $rtfeldman$elm_css$Css$prop1('width');
@@ -13822,6 +13821,27 @@ var $author$project$Pages$Home$view = F2(
 							_List_Nil,
 							_List_fromArray(
 								[
+									$rtfeldman$elm_css$Html$Styled$text('Tickets')
+								])),
+							A4(
+							$rtfeldman$elm_css$Html$Styled$styled,
+							$rtfeldman$elm_css$Html$Styled$div,
+							_List_fromArray(
+								[
+									$rtfeldman$elm_css$Css$marginLeft(
+									$rtfeldman$elm_css$Css$em(1)),
+									$rtfeldman$elm_css$Css$marginBottom(
+									$rtfeldman$elm_css$Css$em(1))
+								]),
+							_List_Nil,
+							A2($elm$core$List$map, ticketTypes, evt.b4)),
+							A4(
+							$rtfeldman$elm_css$Html$Styled$styled,
+							$rtfeldman$elm_css$Html$Styled$h2,
+							$author$project$Style$pageHeader,
+							_List_Nil,
+							_List_fromArray(
+								[
 									$rtfeldman$elm_css$Html$Styled$text('Extra Info')
 								])),
 							A4(
@@ -13847,29 +13867,6 @@ var $author$project$Pages$Home$view = F2(
 											]));
 								},
 								evt.bE)),
-							A4(
-							$rtfeldman$elm_css$Html$Styled$styled,
-							$rtfeldman$elm_css$Html$Styled$h2,
-							$author$project$Style$pageHeader,
-							_List_Nil,
-							_List_fromArray(
-								[
-									$rtfeldman$elm_css$Html$Styled$text('Tickets')
-								])),
-							A4(
-							$rtfeldman$elm_css$Html$Styled$styled,
-							$rtfeldman$elm_css$Html$Styled$div,
-							_List_fromArray(
-								[
-									$rtfeldman$elm_css$Css$marginLeft(
-									$rtfeldman$elm_css$Css$em(1)),
-									$rtfeldman$elm_css$Css$marginBottom(
-									$rtfeldman$elm_css$Css$em(1))
-								]),
-							_List_Nil,
-							A2($elm$core$List$map, ticketTypes, evt.b4)),
-							A2($rtfeldman$elm_css$Html$Styled$br, _List_Nil, _List_Nil),
-							A2($rtfeldman$elm_css$Html$Styled$br, _List_Nil, _List_Nil),
 							maybeMargin,
 							maybeBottomButton
 						]))
@@ -14410,6 +14407,7 @@ var $author$project$Pages$OrderTickets$UpdateEmail = function (a) {
 var $author$project$Pages$OrderTickets$UpdateLastName = function (a) {
 	return {$: 3, a: a};
 };
+var $rtfeldman$elm_css$Html$Styled$br = $rtfeldman$elm_css$Html$Styled$node('br');
 var $rtfeldman$elm_css$Css$center = $rtfeldman$elm_css$Css$prop1('center');
 var $rtfeldman$elm_css$Html$Styled$Attributes$class = $rtfeldman$elm_css$Html$Styled$Attributes$stringProperty('className');
 var $author$project$Style$symbolButton = _List_fromArray(
