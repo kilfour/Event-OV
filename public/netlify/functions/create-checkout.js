@@ -7,7 +7,7 @@ exports.handler = async function (event, context) {
         const data = JSON.parse(event.body);
         console.log(event.body);
 
-        const mollieClient = createMollieClient({ apiKey: 'test_zPhwMGNRwTThJxUwGR9n4fJHtUVUaU' });
+        const mollieClient = createMollieClient({ apiKey: 'live_7nuWz7gkkpvSERdUp7P25ActcrwGsx' });
         const payment = await mollieClient.payments.create({
             amount: {
                 currency: 'EUR',
