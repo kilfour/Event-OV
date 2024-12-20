@@ -1,7 +1,6 @@
 import createMollieClient from '@mollie/api-client';
 
 exports.handler = async function (event, context) {
-
     try {
         const data = JSON.parse(event.body);
         //const mollieClient = createMollieClient({ apiKey: 'live_7nuWz7gkkpvSERdUp7P25ActcrwGsx' });
