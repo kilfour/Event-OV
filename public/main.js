@@ -7118,7 +7118,6 @@ var $elm$url$Url$Parser$parse = F2(
 	});
 var $author$project$Routes$Home = {$: 3};
 var $author$project$Routes$InvoiceInfo = {$: 7};
-var $author$project$Routes$Maintenance = {$: 2};
 var $author$project$Routes$OrderTickets = {$: 4};
 var $author$project$Routes$PaymentSuccess = function (a) {
 	return {$: 5, a: a};
@@ -7262,7 +7261,7 @@ var $elm$url$Url$Parser$top = function (state) {
 var $author$project$Routes$parser = $elm$url$Url$Parser$oneOf(
 	_List_fromArray(
 		[
-			A2($elm$url$Url$Parser$map, $author$project$Routes$Maintenance, $elm$url$Url$Parser$top),
+			A2($elm$url$Url$Parser$map, $author$project$Routes$Home, $elm$url$Url$Parser$top),
 			A2(
 			$elm$url$Url$Parser$map,
 			$author$project$Routes$Home,

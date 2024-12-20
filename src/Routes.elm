@@ -27,7 +27,7 @@ type Route
 parser : Parser (Route -> a) a
 parser =
     oneOf
-        [ Parser.map Maintenance Parser.top
+        [ Parser.map Home Parser.top
         , Parser.map Home (Parser.s "home")
         , Parser.map OrderTickets (Parser.s "order-tickets")
         , Parser.map PaymentSuccess (Parser.s "payment-success" </> Parser.string)
