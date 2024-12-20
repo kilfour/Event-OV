@@ -519,11 +519,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.cG.bg === region.dd.bg)
+	if (region.cH.bc === region.de.bc)
 	{
-		return 'on line ' + region.cG.bg;
+		return 'on line ' + region.cH.bc;
 	}
-	return 'on lines ' + region.cG.bg + ' through ' + region.dd.bg;
+	return 'on lines ' + region.cH.bc + ' through ' + region.de.bc;
 }
 
 
@@ -2719,9 +2719,9 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		ae: func(record.ae),
-		cH: record.cH,
-		cC: record.cC
+		X: func(record.X),
+		cI: record.cI,
+		cD: record.cD
 	}
 });
 
@@ -2989,11 +2989,11 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.ae;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.cH;
+		var message = !tag ? value : tag < 3 ? value.a : value.X;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.cI;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.cC) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.cD) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3983,7 +3983,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 		impl.fI,
 		impl.fA,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.cF && impl.cF(sendToApp)
+			var divertHrefToApp = impl.cG && impl.cG(sendToApp)
 			var view = impl.fL;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
@@ -4058,7 +4058,7 @@ function _Browser_application(impl)
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		cF: function(sendToApp)
+		cG: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4074,9 +4074,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.dW === next.dW
-							&& curr.dq === next.dq
-							&& curr.dR.a === next.dR.a
+							&& curr.dX === next.dX
+							&& curr.dr === next.dr
+							&& curr.dS.a === next.dS.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4247,7 +4247,7 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		d4: _Browser_getScene(),
+		d5: _Browser_getScene(),
 		ei: {
 			el: _Browser_window.pageXOffset,
 			em: _Browser_window.pageYOffset,
@@ -4286,7 +4286,7 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			d4: {
+			d5: {
 				fO: node.scrollWidth,
 				e$: node.scrollHeight
 			},
@@ -4324,7 +4324,7 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			d4: _Browser_getScene(),
+			d5: _Browser_getScene(),
 			ei: {
 				el: x,
 				em: y,
@@ -4535,14 +4535,14 @@ function _Http_track(router, xhr, tracker)
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2($elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, $elm$http$Http$Sending({
 			fu: event.loaded,
-			d6: event.total
+			d7: event.total
 		}))));
 	});
 	xhr.addEventListener('progress', function(event) {
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2($elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, $elm$http$Http$Receiving({
 			fo: event.loaded,
-			d6: event.lengthComputable ? $elm$core$Maybe$Just(event.total) : $elm$core$Maybe$Nothing
+			d7: event.lengthComputable ? $elm$core$Maybe$Just(event.total) : $elm$core$Maybe$Nothing
 		}))));
 	});
 }
@@ -4804,9 +4804,9 @@ function _Markdown_formatOptions(options)
 {
 	function toHighlight(code, lang)
 	{
-		if (!lang && $elm$core$Maybe$isJust(options.da))
+		if (!lang && $elm$core$Maybe$isJust(options.db))
 		{
-			lang = options.da.a;
+			lang = options.db.a;
 		}
 
 		if (typeof hljs !== 'undefined' && lang && hljs.listLanguages().indexOf(lang) >= 0)
@@ -5623,7 +5623,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {dm: fragment, dq: host, dP: path, dR: port_, dW: protocol, dX: query};
+		return {dn: fragment, dr: host, dQ: path, dS: port_, dX: protocol, dY: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -5935,26 +5935,26 @@ var $author$project$Helmsman$TicketsPage = function (a) {
 	return {$: 8, a: a};
 };
 var $author$project$Pages$Home$init = {};
-var $author$project$Pages$InvoiceInfo$init = {cR: '', aD: true, c7: '', aK: true, bI: false, eh: '', a3: true};
+var $author$project$Pages$InvoiceInfo$init = {cS: '', aw: true, c8: '', aE: true, bG: false, eh: '', a$: true};
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Pages$OrderTickets$init = function (shared) {
 	return _Utils_Tuple2(
 		{
 			ez: '',
-			W: true,
-			X: '',
-			Y: true,
-			aL: false,
+			aC: true,
+			aF: '',
+			aG: true,
+			bv: false,
 			eQ: '',
-			Z: true,
-			_: true,
-			al: true,
-			bb: 0,
-			N: true,
+			aI: true,
+			aJ: true,
+			a5: true,
+			cq: 0,
+			ag: true,
 			e9: '',
-			ac: true,
-			w: {eK: 'Standaard', ds: 'VVK', dJ: 0, fm: 60},
-			x: {eK: 'Vip Tafel', ds: 'VIP', dJ: 0, fm: 500}
+			aP: true,
+			E: {eK: 'Standaard', dt: 'VVK', bN: 0, fm: 60},
+			F: {eK: 'Vip Tafel', dt: 'VIP', bN: 0, fm: 500}
 		},
 		$elm$core$Platform$Cmd$none);
 };
@@ -5963,7 +5963,7 @@ var $author$project$Pages$PaymentSuccess$OrderInfoLoaded = function (a) {
 };
 var $author$project$Api$GetOrderInfo$Order = F6(
 	function (id, code, christianName, lastName, email, tickets) {
-		return {ez: christianName, eB: code, eQ: email, ds: id, e9: lastName, fD: tickets};
+		return {ez: christianName, eB: code, eQ: email, dt: id, e9: lastName, fD: tickets};
 	});
 var $elm$json$Json$Decode$list = _Json_decodeList;
 var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$custom = $elm$json$Json$Decode$map2($elm$core$Basics$apR);
@@ -5978,7 +5978,7 @@ var $NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required = F3(
 var $elm$json$Json$Decode$string = _Json_decodeString;
 var $author$project$Api$GetOrderInfo$Ticket = F3(
 	function (id, description, price) {
-		return {eK: description, ds: id, fm: price};
+		return {eK: description, dt: id, fm: price};
 	});
 var $elm$json$Json$Decode$float = _Json_decodeFloat;
 var $author$project$Api$GetOrderInfo$ticketDecoder = A3(
@@ -6661,7 +6661,7 @@ var $elm$http$Http$Request = function (a) {
 };
 var $elm$http$Http$State = F2(
 	function (reqs, subs) {
-		return {d$: reqs, ea: subs};
+		return {d0: reqs, eb: subs};
 	});
 var $elm$http$Http$init = $elm$core$Task$succeed(
 	A2($elm$http$Http$State, $elm$core$Dict$empty, _List_Nil));
@@ -6735,7 +6735,7 @@ var $elm$http$Http$onEffects = F4(
 				return $elm$core$Task$succeed(
 					A2($elm$http$Http$State, reqs, subs));
 			},
-			A3($elm$http$Http$updateReqs, router, cmds, state.d$));
+			A3($elm$http$Http$updateReqs, router, cmds, state.d0));
 	});
 var $elm$core$List$maybeCons = F3(
 	function (f, mx, xs) {
@@ -6778,7 +6778,7 @@ var $elm$http$Http$onSelfMsg = F3(
 				A2(
 					$elm$core$List$filterMap,
 					A3($elm$http$Http$maybeSend, router, tracker, progress),
-					state.ea)));
+					state.eb)));
 	});
 var $elm$http$Http$Cancel = function (a) {
 	return {$: 0, a: a};
@@ -6846,7 +6846,7 @@ var $author$project$Api$GetOrderInfo$dispatch = F3(
 var $author$project$Pages$PaymentSuccess$init = F2(
 	function (shared, orderId) {
 		return _Utils_Tuple2(
-			{R: 2, dM: orderId, aX: $elm$core$Maybe$Nothing},
+			{ak: 2, dM: orderId, bP: $elm$core$Maybe$Nothing},
 			A3($author$project$Api$GetOrderInfo$dispatch, shared.eu, orderId, $author$project$Pages$PaymentSuccess$OrderInfoLoaded));
 	});
 var $author$project$Pages$TeesAndCees$init = '# Algemene Voorwaarden\r\n\r\n## 1. Inleiding\r\n\r\nWelkom bij Pequivents (de "Website"). Deze Algemene Voorwaarden zijn van toepassing op uw gebruik van de Website en de aankoop van tickets via de Website. Door toegang te krijgen tot of gebruik te maken van de Website, gaat u akkoord met deze Voorwaarden. Als u niet akkoord gaat met deze Voorwaarden, mag u de Website niet gebruiken.\r\n\r\n## 2. Definities\r\n\r\n- **"Wij," "Ons," "Onze"** verwijst naar Cook & Taste, de eigenaar en exploitant van de Website.\r\n- **"U," "Uw"** verwijst naar de persoon of entiteit die toegang heeft tot of gebruik maakt van de Website.\r\n- **"Evenement"** verwijst naar het evenement waarvoor tickets worden verkocht via de Website.\r\n- **"Ticket"** verwijst naar de licentie om een Evenement bij te wonen, gekocht via de Website.\r\n\r\n## 3. Gebruik van de Website\r\n\r\n### 3.1 Geschiktheid\r\n\r\nDoor gebruik te maken van de Website, verklaart u dat u ten minste 18 jaar oud bent of de toestemming van een wettelijke voogd heeft.\r\n\r\n### 3.2 Account Aanmaken\r\n\r\nOm tickets te kopen, moet u mogelijk een account aanmaken op de Website. U stemt ermee in om nauwkeurige en volledige informatie te verstrekken tijdens de registratie en om uw accountinformatie up-to-date te houden.\r\n\r\n### 3.3 Verboden Activiteiten\r\n\r\nU stemt ermee in de Website niet te gebruiken voor enig onwettig doel of op een manier die ons, andere gebruikers of de Evenementorganisatoren zou kunnen schaden. Dit omvat, maar is niet beperkt tot, het doorverkopen van tickets, het gebruik van bots om tickets te kopen, of het deelnemen aan frauduleuze activiteiten.\r\n\r\n## 4. Ticket Aankoop\r\n\r\n### 4.1 Prijzen en Beschikbaarheid\r\n\r\nTicketprijzen zijn zoals vermeld op de Website. We behouden ons het recht voor om prijzen op elk moment zonder voorafgaande kennisgeving te wijzigen. Tickets zijn onder voorbehoud van beschikbaarheid, en we garanderen niet dat tickets op elk moment beschikbaar zullen zijn voor aankoop.\r\n\r\n### 4.2 Betaling\r\n\r\nAlle ticketaankopen moeten volledig worden betaald op het moment van aankoop. We accepteren betaalmethoden zoals vermeld op de Website. Door betalingsinformatie te verstrekken, verklaart en garandeert u dat u wettelijk recht hebt om de betaalmethode te gebruiken.\r\n\r\n### 4.3 Orderbevestiging\r\n\r\nZodra uw bestelling succesvol is geplaatst, ontvangt u een orderbevestiging via e-mail. Controleer uw spam- of ongewenste e-mailmap als u de bevestiging niet ontvangt.\r\n\r\n### 4.4 Ticketlevering\r\n\r\nTickets worden elektronisch geleverd naar het e-mailadres dat tijdens de aankoop is opgegeven of beschikbaar gesteld voor download in uw accountdashboard.\r\n\r\n## 5. Restituties en Ruilingen\r\n\r\n### 5.1 Geen Restituties\r\n\r\nAlle ticketverkopen zijn definitief, en we bieden geen restituties of ruilingen aan, tenzij het Evenement wordt geannuleerd, uitgesteld of verplaatst door de Evenementorganisator.\r\n\r\n### 5.2 Annulering van het Evenement\r\n\r\nIn geval van annulering, uitstel, of significante wijziging van het Evenement, zullen we proberen u zo snel mogelijk op de hoogte te stellen. Restituties of ruilingen voor geannuleerde of verplaatste Evenementen worden aangeboden in overeenstemming met het beleid van de Evenementorganisator.\r\n\r\n## 6. Toegang tot het Evenement\r\n\r\n### 6.1 Toelatingsvereisten\r\n\r\nU moet een geldig ticket tonen om toegang te krijgen tot het Evenement. De Evenementorganisator behoudt zich het recht voor om elke persoon zonder restitutie de toegang te weigeren.\r\n\r\n### 6.2 Gedrag op het Evenement\r\n\r\nU stemt ermee in om alle regels en voorschriften van het Evenement na te leven, inclusief die met betrekking tot gedrag, veiligheid en beveiliging. Het niet naleven van deze regels kan resulteren in uw verwijdering van het Evenement zonder restitutie.\r\n\r\n## 7. Intellectueel Eigendom\r\n\r\n### 7.1 Website Inhoud\r\n\r\nAlle inhoud op de Website, inclusief tekst, afbeeldingen, logo\'s en afbeeldingen, is eigendom van Cook & Taste of haar licentiegevers en is beschermd door intellectuele eigendomswetten.\r\n\r\n### 7.2 Beperkte Licentie\r\n\r\nU krijgt een beperkte, niet-exclusieve, niet-overdraagbare licentie om toegang te krijgen tot en gebruik te maken van de Website voor persoonlijke, niet-commerciële doeleinden.\r\n\r\n## 8. Afwijzing van Garanties\r\n\r\nDe Website en alle via de Website verkochte tickets worden geleverd "zoals ze zijn" en "zoals beschikbaar" zonder enige vorm van garanties, expliciet of impliciet. We garanderen niet dat de Website foutloos, veilig of vrij van virussen zal zijn.\r\n\r\n## 9. Beperking van Aansprakelijkheid\r\n\r\nVoor zover maximaal toegestaan door de wet, zullen Cook & Taste en haar gelieerde ondernemingen niet aansprakelijk zijn voor enige indirecte, incidentele, speciale, gevolg- of bestraffende schade voortvloeiend uit of gerelateerd aan uw gebruik van de Website of uw deelname aan een Evenement.\r\n\r\n## 10. Vrijwaring\r\n\r\nU stemt ermee in Cook & Taste en haar gelieerde ondernemingen te vrijwaren en schadeloos te stellen van enige claims, verliezen, schade, aansprakelijkheden, inclusief juridische kosten, voortvloeiend uit uw gebruik van de Website of schending van deze Voorwaarden.\r\n\r\n## 11. Toepasselijk Recht\r\n\r\nDeze Voorwaarden en eventuele geschillen voortvloeiend uit uw gebruik van de Website worden beheerst door en geïnterpreteerd in overeenstemming met de wetten van de europese unie, zonder rekening te houden met conflicten van rechtsprincipes.\r\n\r\n## 12. Wijzigingen in de Voorwaarden\r\n\r\nWe behouden ons het recht voor om deze Voorwaarden op elk moment te wijzigen. Wijzigingen worden onmiddellijk van kracht na plaatsing op de Website. Uw voortgezet gebruik van de Website na plaatsing van wijzigingen houdt in dat u akkoord gaat met de gewijzigde Voorwaarden.\r\n\r\n## 13. Contactinformatie\r\n\r\nAls u vragen heeft over deze Voorwaarden, kunt u contact met ons opnemen via: kilfour@gmail.com\r\n\r\nCook & Taste BV\r\nHemelshoek 235 B-2590 Berlaar (Belgium)\r\nBTW BE 0800.315.029\r\nTel +32 3 366 21 00 \r\nGSM +32 498 10 38 88 \r\n';
@@ -6905,7 +6905,7 @@ var $author$project$Pages$Tickets$init = F2(
 			$elm$core$List$head(
 				A2($elm$core$List$drop, 1, split)));
 		return _Utils_Tuple2(
-			{eB: code, ds: id, bK: true, aX: $elm$core$Maybe$Nothing},
+			{eB: code, dt: id, bI: true, bP: $elm$core$Maybe$Nothing},
 			A3($author$project$Api$GetOrderInfo$dispatch, shared.eu, id, $author$project$Pages$Tickets$OrderInfoLoaded));
 	});
 var $elm$core$Platform$Cmd$map = _Platform_map;
@@ -6916,49 +6916,49 @@ var $author$project$Routes$changeRouteTo = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{aS: $author$project$Helmsman$NotFound}),
+						{aO: $author$project$Helmsman$NotFound}),
 					$elm$core$Platform$Cmd$none);
 			case 1:
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{aS: $author$project$Helmsman$SplashPage}),
+						{aO: $author$project$Helmsman$SplashPage}),
 					$elm$core$Platform$Cmd$none);
 			case 2:
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{aS: $author$project$Helmsman$MaintenancePage}),
+						{aO: $author$project$Helmsman$MaintenancePage}),
 					$elm$core$Platform$Cmd$none);
 			case 3:
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							aS: $author$project$Helmsman$HomePage($author$project$Pages$Home$init)
+							aO: $author$project$Helmsman$HomePage($author$project$Pages$Home$init)
 						}),
 					$elm$core$Platform$Cmd$none);
 			case 4:
-				var _v1 = $author$project$Pages$OrderTickets$init(model.D);
+				var _v1 = $author$project$Pages$OrderTickets$init(model.B);
 				var page = _v1.a;
 				var cmd = _v1.b;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							aS: $author$project$Helmsman$OrderTicketsPage(page)
+							aO: $author$project$Helmsman$OrderTicketsPage(page)
 						}),
 					A2($elm$core$Platform$Cmd$map, $author$project$Helmsman$OrderTicketsMsg, cmd));
 			case 5:
 				var orderId = route.a;
-				var _v2 = A2($author$project$Pages$PaymentSuccess$init, model.D, orderId);
+				var _v2 = A2($author$project$Pages$PaymentSuccess$init, model.B, orderId);
 				var page = _v2.a;
 				var cmd = _v2.b;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							aS: $author$project$Helmsman$PaymentSuccessPage(page)
+							aO: $author$project$Helmsman$PaymentSuccessPage(page)
 						}),
 					A2($elm$core$Platform$Cmd$map, $author$project$Helmsman$PaymentSuccessMsg, cmd));
 			case 6:
@@ -6966,7 +6966,7 @@ var $author$project$Routes$changeRouteTo = F2(
 					_Utils_update(
 						model,
 						{
-							aS: $author$project$Helmsman$TeesAndCeesPage($author$project$Pages$TeesAndCees$init)
+							aO: $author$project$Helmsman$TeesAndCeesPage($author$project$Pages$TeesAndCees$init)
 						}),
 					$elm$core$Platform$Cmd$none);
 			case 7:
@@ -6974,19 +6974,19 @@ var $author$project$Routes$changeRouteTo = F2(
 					_Utils_update(
 						model,
 						{
-							aS: $author$project$Helmsman$InvoiceInfoPage($author$project$Pages$InvoiceInfo$init)
+							aO: $author$project$Helmsman$InvoiceInfoPage($author$project$Pages$InvoiceInfo$init)
 						}),
 					$elm$core$Platform$Cmd$none);
 			default:
 				var info = route.a;
-				var _v3 = A2($author$project$Pages$Tickets$init, model.D, info);
+				var _v3 = A2($author$project$Pages$Tickets$init, model.B, info);
 				var page = _v3.a;
 				var cmd = _v3.b;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							aS: $author$project$Helmsman$TicketsPage(page)
+							aO: $author$project$Helmsman$TicketsPage(page)
 						}),
 					A2($elm$core$Platform$Cmd$map, $author$project$Helmsman$TicketsMsg, cmd));
 		}
@@ -6999,7 +6999,7 @@ var $elm$core$Basics$composeL = F3(
 var $author$project$Routes$NotFound = {$: 0};
 var $elm$url$Url$Parser$State = F5(
 	function (visited, unvisited, params, frag, value) {
-		return {ao: frag, as: params, ai: unvisited, T: value, aA: visited};
+		return {af: frag, al: params, aa: unvisited, R: value, at: visited};
 	});
 var $elm$url$Url$Parser$getFirstMatch = function (states) {
 	getFirstMatch:
@@ -7009,12 +7009,12 @@ var $elm$url$Url$Parser$getFirstMatch = function (states) {
 		} else {
 			var state = states.a;
 			var rest = states.b;
-			var _v1 = state.ai;
+			var _v1 = state.aa;
 			if (!_v1.b) {
-				return $elm$core$Maybe$Just(state.T);
+				return $elm$core$Maybe$Just(state.R);
 			} else {
 				if ((_v1.a === '') && (!_v1.b.b)) {
-					return $elm$core$Maybe$Just(state.T);
+					return $elm$core$Maybe$Just(state.R);
 				} else {
 					var $temp$states = rest;
 					states = $temp$states;
@@ -7111,9 +7111,9 @@ var $elm$url$Url$Parser$parse = F2(
 				A5(
 					$elm$url$Url$Parser$State,
 					_List_Nil,
-					$elm$url$Url$Parser$preparePath(url.dP),
-					$elm$url$Url$Parser$prepareQuery(url.dX),
-					url.dm,
+					$elm$url$Url$Parser$preparePath(url.dQ),
+					$elm$url$Url$Parser$prepareQuery(url.dY),
+					url.dn,
 					$elm$core$Basics$identity)));
 	});
 var $author$project$Routes$Home = {$: 3};
@@ -7130,11 +7130,11 @@ var $author$project$Routes$Tickets = function (a) {
 var $elm$url$Url$Parser$Parser = $elm$core$Basics$identity;
 var $elm$url$Url$Parser$mapState = F2(
 	function (func, _v0) {
-		var visited = _v0.aA;
-		var unvisited = _v0.ai;
-		var params = _v0.as;
-		var frag = _v0.ao;
-		var value = _v0.T;
+		var visited = _v0.at;
+		var unvisited = _v0.aa;
+		var params = _v0.al;
+		var frag = _v0.af;
+		var value = _v0.R;
 		return A5(
 			$elm$url$Url$Parser$State,
 			visited,
@@ -7147,11 +7147,11 @@ var $elm$url$Url$Parser$map = F2(
 	function (subValue, _v0) {
 		var parseArg = _v0;
 		return function (_v1) {
-			var visited = _v1.aA;
-			var unvisited = _v1.ai;
-			var params = _v1.as;
-			var frag = _v1.ao;
-			var value = _v1.T;
+			var visited = _v1.at;
+			var unvisited = _v1.aa;
+			var params = _v1.al;
+			var frag = _v1.af;
+			var value = _v1.R;
 			return A2(
 				$elm$core$List$map,
 				$elm$url$Url$Parser$mapState(value),
@@ -7188,11 +7188,11 @@ var $elm$url$Url$Parser$oneOf = function (parsers) {
 };
 var $elm$url$Url$Parser$s = function (str) {
 	return function (_v0) {
-		var visited = _v0.aA;
-		var unvisited = _v0.ai;
-		var params = _v0.as;
-		var frag = _v0.ao;
-		var value = _v0.T;
+		var visited = _v0.at;
+		var unvisited = _v0.aa;
+		var params = _v0.al;
+		var frag = _v0.af;
+		var value = _v0.R;
 		if (!unvisited.b) {
 			return _List_Nil;
 		} else {
@@ -7225,11 +7225,11 @@ var $elm$url$Url$Parser$slash = F2(
 var $elm$url$Url$Parser$custom = F2(
 	function (tipe, stringToSomething) {
 		return function (_v0) {
-			var visited = _v0.aA;
-			var unvisited = _v0.ai;
-			var params = _v0.as;
-			var frag = _v0.ao;
-			var value = _v0.T;
+			var visited = _v0.at;
+			var unvisited = _v0.aa;
+			var params = _v0.al;
+			var frag = _v0.af;
+			var value = _v0.R;
 			if (!unvisited.b) {
 				return _List_Nil;
 			} else {
@@ -7310,7 +7310,7 @@ var $elm$browser$Browser$Dom$getViewport = _Browser_withWindow(_Browser_getViewp
 var $author$project$Shared$init = F2(
 	function (baseApiUrl, navKey) {
 		return _Utils_Tuple2(
-			{eu: baseApiUrl, aM: 0, eL: 1, eR: $elm$core$Maybe$Nothing, fg: navKey, bT: false},
+			{eu: baseApiUrl, by: 0, eL: 1, eR: $elm$core$Maybe$Nothing, fg: navKey, dP: false},
 			$elm$core$Platform$Cmd$batch(
 				_List_fromArray(
 					[
@@ -7325,7 +7325,7 @@ var $author$project$App$init = F3(
 		var _v1 = A2(
 			$author$project$Routes$changeRouteToFromUrl,
 			url,
-			{aS: $author$project$Helmsman$init, D: shared});
+			{aO: $author$project$Helmsman$init, B: shared});
 		var model = _v1.a;
 		var helmsmanCmd = _v1.b;
 		return _Utils_Tuple2(
@@ -7354,7 +7354,7 @@ var $elm$browser$Browser$Events$MySub = F3(
 	});
 var $elm$browser$Browser$Events$State = F2(
 	function (subs, pids) {
-		return {dQ: pids, ea: subs};
+		return {dR: pids, eb: subs};
 	});
 var $elm$browser$Browser$Events$init = $elm$core$Task$succeed(
 	A2($elm$browser$Browser$Events$State, _List_Nil, $elm$core$Dict$empty));
@@ -7474,7 +7474,7 @@ var $elm$core$Dict$merge = F6(
 	});
 var $elm$browser$Browser$Events$Event = F2(
 	function (key, event) {
-		return {df: event, dB: key};
+		return {dg: event, dC: key};
 	});
 var $elm$browser$Browser$Events$spawn = F3(
 	function (router, key, _v0) {
@@ -7548,7 +7548,7 @@ var $elm$browser$Browser$Events$onEffects = F3(
 			stepLeft,
 			stepBoth,
 			stepRight,
-			state.dQ,
+			state.dR,
 			$elm$core$Dict$fromList(newSubs),
 			_Utils_Tuple3(_List_Nil, $elm$core$Dict$empty, _List_Nil));
 		var deadPids = _v0.a;
@@ -7576,8 +7576,8 @@ var $elm$browser$Browser$Events$onEffects = F3(
 	});
 var $elm$browser$Browser$Events$onSelfMsg = F3(
 	function (router, _v0, state) {
-		var key = _v0.dB;
-		var event = _v0.df;
+		var key = _v0.dC;
+		var event = _v0.dg;
 		var toMessage = function (_v2) {
 			var subKey = _v2.a;
 			var _v3 = _v2.b;
@@ -7586,7 +7586,7 @@ var $elm$browser$Browser$Events$onSelfMsg = F3(
 			var decoder = _v3.c;
 			return _Utils_eq(subKey, key) ? A2(_Browser_decodeEvent, decoder, event) : $elm$core$Maybe$Nothing;
 		};
-		var messages = A2($elm$core$List$filterMap, toMessage, state.ea);
+		var messages = A2($elm$core$List$filterMap, toMessage, state.eb);
 		return A2(
 			$elm$core$Task$andThen,
 			function (_v1) {
@@ -7643,7 +7643,7 @@ var $rtfeldman$elm_css$VirtualDom$Styled$UnscopedStyles = function (a) {
 var $elm$core$String$cons = _String_cons;
 var $robinheghan$murmur3$Murmur3$HashData = F4(
 	function (shift, seed, hash, charsProcessed) {
-		return {aI: charsProcessed, aQ: hash, av: seed, aZ: shift};
+		return {aB: charsProcessed, aM: hash, ao: seed, aV: shift};
 	});
 var $robinheghan$murmur3$Murmur3$c1 = 3432918353;
 var $robinheghan$murmur3$Murmur3$c2 = 461845907;
@@ -7662,14 +7662,14 @@ var $robinheghan$murmur3$Murmur3$rotlBy = F2(
 	});
 var $elm$core$Bitwise$xor = _Bitwise_xor;
 var $robinheghan$murmur3$Murmur3$finalize = function (data) {
-	var acc = (!(!data.aQ)) ? (data.av ^ A2(
+	var acc = (!(!data.aM)) ? (data.ao ^ A2(
 		$robinheghan$murmur3$Murmur3$multiplyBy,
 		$robinheghan$murmur3$Murmur3$c2,
 		A2(
 			$robinheghan$murmur3$Murmur3$rotlBy,
 			15,
-			A2($robinheghan$murmur3$Murmur3$multiplyBy, $robinheghan$murmur3$Murmur3$c1, data.aQ)))) : data.av;
-	var h0 = acc ^ data.aI;
+			A2($robinheghan$murmur3$Murmur3$multiplyBy, $robinheghan$murmur3$Murmur3$c1, data.aM)))) : data.ao;
+	var h0 = acc ^ data.aB;
 	var h1 = A2($robinheghan$murmur3$Murmur3$multiplyBy, 2246822507, h0 ^ (h0 >>> 16));
 	var h2 = A2($robinheghan$murmur3$Murmur3$multiplyBy, 3266489909, h1 ^ (h1 >>> 13));
 	return (h2 ^ (h2 >>> 16)) >>> 0;
@@ -7693,17 +7693,17 @@ var $robinheghan$murmur3$Murmur3$mix = F2(
 	});
 var $robinheghan$murmur3$Murmur3$hashFold = F2(
 	function (c, data) {
-		var res = data.aQ | ((255 & $elm$core$Char$toCode(c)) << data.aZ);
-		var _v0 = data.aZ;
+		var res = data.aM | ((255 & $elm$core$Char$toCode(c)) << data.aV);
+		var _v0 = data.aV;
 		if (_v0 === 24) {
 			return {
-				aI: data.aI + 1,
-				aQ: 0,
-				av: A2($robinheghan$murmur3$Murmur3$mix, data.av, res),
-				aZ: 0
+				aB: data.aB + 1,
+				aM: 0,
+				ao: A2($robinheghan$murmur3$Murmur3$mix, data.ao, res),
+				aV: 0
 			};
 		} else {
-			return {aI: data.aI + 1, aQ: res, av: data.av, aZ: data.aZ + 8};
+			return {aB: data.aB + 1, aM: res, ao: data.ao, aV: data.aV + 8};
 		}
 	});
 var $robinheghan$murmur3$Murmur3$hashString = F2(
@@ -8830,7 +8830,7 @@ var $author$project$Api$OrderInfoEntered$ticketEncoder = function (ticketInfo) {
 			[
 				_Utils_Tuple2(
 				'id',
-				$elm$json$Json$Encode$string(ticketInfo.ds)),
+				$elm$json$Json$Encode$string(ticketInfo.dt)),
 				_Utils_Tuple2(
 				'description',
 				$elm$json$Json$Encode$string(ticketInfo.eK)),
@@ -8839,7 +8839,7 @@ var $author$project$Api$OrderInfoEntered$ticketEncoder = function (ticketInfo) {
 				$elm$json$Json$Encode$float(ticketInfo.fm)),
 				_Utils_Tuple2(
 				'numberOfTickets',
-				$elm$json$Json$Encode$int(ticketInfo.dJ))
+				$elm$json$Json$Encode$int(ticketInfo.bN))
 			]));
 };
 var $author$project$Api$OrderInfoEntered$encoder = function (orderInfo) {
@@ -8857,11 +8857,17 @@ var $author$project$Api$OrderInfoEntered$encoder = function (orderInfo) {
 				$elm$json$Json$Encode$string(orderInfo.eQ)),
 				_Utils_Tuple2(
 				'ticketsInfo',
-				A2($elm$json$Json$Encode$list, $author$project$Api$OrderInfoEntered$ticketEncoder, orderInfo.ed))
+				A2($elm$json$Json$Encode$list, $author$project$Api$OrderInfoEntered$ticketEncoder, orderInfo.b0)),
+				_Utils_Tuple2(
+				'tickets',
+				A2($elm$json$Json$Encode$list, $elm$json$Json$Encode$string, _List_Nil)),
+				_Utils_Tuple2(
+				'code',
+				$elm$json$Json$Encode$string('PROCESSING'))
 			]));
 };
 var $author$project$Api$Helpers$ObjectId$Id = function (id) {
-	return {ds: id};
+	return {dt: id};
 };
 var $author$project$Api$Helpers$ObjectId$objectIdDecoder = A3(
 	$NoRedInk$elm_json_decode_pipeline$Json$Decode$Pipeline$required,
@@ -8933,14 +8939,14 @@ var $author$project$Shared$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{aM: total}),
+						{by: total}),
 					A3($author$project$Api$OrderInfoEntered$dispatch, model.eu, evt, $author$project$Shared$OrderInfoEnteredSaved));
 			case 4:
 				if (!msg.a.$) {
 					var objectId = msg.a.a;
 					return _Utils_Tuple2(
 						model,
-						A4($author$project$Api$CreateCheckOut$dispatch, model.eu, objectId.ds, model.aM, $author$project$Shared$CheckOutCreated));
+						A4($author$project$Api$CreateCheckOut$dispatch, model.eu, objectId.dt, model.by, $author$project$Shared$CheckOutCreated));
 				} else {
 					var error = msg.a.a;
 					return _Utils_Tuple2(
@@ -9028,7 +9034,7 @@ var $elm$url$Url$addPrefixed = F3(
 	});
 var $elm$url$Url$toString = function (url) {
 	var http = function () {
-		var _v0 = url.dW;
+		var _v0 = url.dX;
 		if (!_v0) {
 			return 'http://';
 		} else {
@@ -9038,17 +9044,17 @@ var $elm$url$Url$toString = function (url) {
 	return A3(
 		$elm$url$Url$addPrefixed,
 		'#',
-		url.dm,
+		url.dn,
 		A3(
 			$elm$url$Url$addPrefixed,
 			'?',
-			url.dX,
+			url.dY,
 			_Utils_ap(
 				A2(
 					$elm$url$Url$addPort,
-					url.dR,
-					_Utils_ap(http, url.dq)),
-				url.dP)));
+					url.dS,
+					_Utils_ap(http, url.dr)),
+				url.dQ)));
 };
 var $author$project$Helmsman$HomeMsg = function (a) {
 	return {$: 0, a: a};
@@ -9131,13 +9137,13 @@ var $author$project$Api$SaveInvoiceInfo$encoder = function (invoiceInfo) {
 				$elm$json$Json$Encode$string(invoiceInfo.dM)),
 				_Utils_Tuple2(
 				'companyName',
-				$elm$json$Json$Encode$string(invoiceInfo.c7)),
+				$elm$json$Json$Encode$string(invoiceInfo.c8)),
 				_Utils_Tuple2(
 				'vatNumber',
 				$elm$json$Json$Encode$string(invoiceInfo.eh)),
 				_Utils_Tuple2(
 				'address',
-				$elm$json$Json$Encode$string(invoiceInfo.cR))
+				$elm$json$Json$Encode$string(invoiceInfo.cS))
 			]));
 };
 var $author$project$Api$SaveInvoiceInfo$dispatch = F3(
@@ -9167,8 +9173,8 @@ var $author$project$Pages$InvoiceInfo$update = F3(
 					_Utils_update(
 						model,
 						{
-							c7: str,
-							aK: !$elm$core$String$isEmpty(str)
+							c8: str,
+							aE: !$elm$core$String$isEmpty(str)
 						}),
 					$author$project$Lib$Effect$None);
 			case 1:
@@ -9177,8 +9183,8 @@ var $author$project$Pages$InvoiceInfo$update = F3(
 					_Utils_update(
 						model,
 						{
-							cR: str,
-							aD: !$elm$core$String$isEmpty(str)
+							cS: str,
+							aw: !$elm$core$String$isEmpty(str)
 						}),
 					$author$project$Lib$Effect$None);
 			case 2:
@@ -9188,21 +9194,21 @@ var $author$project$Pages$InvoiceInfo$update = F3(
 						model,
 						{
 							eh: str,
-							a3: !$elm$core$String$isEmpty(str)
+							a$: !$elm$core$String$isEmpty(str)
 						}),
 					$author$project$Lib$Effect$None);
 			case 3:
 				var updatedModel = _Utils_update(
 					model,
 					{
-						aD: !$elm$core$String$isEmpty(model.cR),
-						aK: !$elm$core$String$isEmpty(model.c7),
-						a3: !$elm$core$String$isEmpty(model.eh)
+						aw: !$elm$core$String$isEmpty(model.cS),
+						aE: !$elm$core$String$isEmpty(model.c8),
+						a$: !$elm$core$String$isEmpty(model.eh)
 					});
-				var isValid = updatedModel.aK && (updatedModel.aD && updatedModel.a3);
+				var isValid = updatedModel.aE && (updatedModel.aw && updatedModel.a$);
 				var effect = function () {
 					if (isValid) {
-						var info = {cR: model.cR, c7: model.c7, dM: 'TODO', eh: model.eh};
+						var info = {cS: model.cS, c8: model.c8, dM: 'TODO', eh: model.eh};
 						return $author$project$Lib$Effect$Cmd(
 							A3($author$project$Api$SaveInvoiceInfo$dispatch, shared.eu, info, $author$project$Pages$InvoiceInfo$InvoiceInfoSaved));
 					} else {
@@ -9215,7 +9221,7 @@ var $author$project$Pages$InvoiceInfo$update = F3(
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
-							{bI: true}),
+							{bG: true}),
 						$author$project$Lib$Effect$none);
 				} else {
 					var err = msg.a.a;
@@ -9252,7 +9258,7 @@ var $elm$parser$Parser$Advanced$AddRight = F2(
 	});
 var $elm$parser$Parser$Advanced$DeadEnd = F4(
 	function (row, col, problem, contextStack) {
-		return {c4: col, eE: contextStack, dT: problem, au: row};
+		return {c5: col, eE: contextStack, dU: problem, an: row};
 	});
 var $elm$parser$Parser$Advanced$Empty = {$: 0};
 var $elm$parser$Parser$Advanced$fromState = F2(
@@ -9260,7 +9266,7 @@ var $elm$parser$Parser$Advanced$fromState = F2(
 		return A2(
 			$elm$parser$Parser$Advanced$AddRight,
 			$elm$parser$Parser$Advanced$Empty,
-			A4($elm$parser$Parser$Advanced$DeadEnd, s.au, s.c4, x, s.g));
+			A4($elm$parser$Parser$Advanced$DeadEnd, s.an, s.c5, x, s.g));
 	});
 var $elm$parser$Parser$Advanced$end = function (x) {
 	return function (s) {
@@ -9490,7 +9496,7 @@ var $elm$parser$Parser$Advanced$chompWhileHelp = F5(
 					$elm$parser$Parser$Advanced$Good,
 					_Utils_cmp(s0.c, offset) < 0,
 					0,
-					{c4: col, g: s0.g, h: s0.h, c: offset, au: row, b: s0.b});
+					{c5: col, g: s0.g, h: s0.h, c: offset, an: row, b: s0.b});
 			} else {
 				if (_Utils_eq(newOffset, -2)) {
 					var $temp$isGood = isGood,
@@ -9522,7 +9528,7 @@ var $elm$parser$Parser$Advanced$chompWhileHelp = F5(
 	});
 var $elm$parser$Parser$Advanced$chompWhile = function (isGood) {
 	return function (s) {
-		return A5($elm$parser$Parser$Advanced$chompWhileHelp, isGood, s.c, s.au, s.c4, s);
+		return A5($elm$parser$Parser$Advanced$chompWhileHelp, isGood, s.c, s.an, s.c5, s);
 	};
 };
 var $elm$parser$Parser$chompWhile = $elm$parser$Parser$Advanced$chompWhile;
@@ -9631,7 +9637,7 @@ var $elm$parser$Parser$Advanced$token = function (_v0) {
 	var expecting = _v0.b;
 	var progress = !$elm$core$String$isEmpty(str);
 	return function (s) {
-		var _v1 = A5($elm$parser$Parser$Advanced$isSubString, str, s.c, s.au, s.c4, s.b);
+		var _v1 = A5($elm$parser$Parser$Advanced$isSubString, str, s.c, s.an, s.c5, s.b);
 		var newOffset = _v1.a;
 		var newRow = _v1.b;
 		var newCol = _v1.c;
@@ -9642,7 +9648,7 @@ var $elm$parser$Parser$Advanced$token = function (_v0) {
 			$elm$parser$Parser$Advanced$Good,
 			progress,
 			0,
-			{c4: newCol, g: s.g, h: s.h, c: newOffset, au: newRow, b: s.b});
+			{c5: newCol, g: s.g, h: s.h, c: newOffset, an: newRow, b: s.b});
 	};
 };
 var $elm$parser$Parser$Advanced$symbol = $elm$parser$Parser$Advanced$token;
@@ -9711,7 +9717,7 @@ var $bellroy$elm_email$Email$parseEmail = function () {
 										}()
 										]));
 								return ($elm$core$String$length(fullLocalPart) > 64) ? $elm$core$Maybe$Nothing : (($elm$core$List$length(tlds) < 1) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just(
-									{ck: domain, cu: localPart, cJ: tags, cL: tlds}));
+									{ck: domain, cv: localPart, cK: tags, cM: tlds}));
 							})),
 					$bellroy$elm_email$Email$parseLocalPart),
 				A2(
@@ -9726,10 +9732,10 @@ var $bellroy$elm_email$Email$parseEmail = function () {
 }();
 var $elm$parser$Parser$DeadEnd = F3(
 	function (row, col, problem) {
-		return {c4: col, dT: problem, au: row};
+		return {c5: col, dU: problem, an: row};
 	});
 var $elm$parser$Parser$problemToDeadEnd = function (p) {
-	return A3($elm$parser$Parser$DeadEnd, p.au, p.c4, p.dT);
+	return A3($elm$parser$Parser$DeadEnd, p.an, p.c5, p.dU);
 };
 var $elm$parser$Parser$Advanced$bagToList = F2(
 	function (bag, list) {
@@ -9761,7 +9767,7 @@ var $elm$parser$Parser$Advanced$run = F2(
 	function (_v0, src) {
 		var parse = _v0;
 		var _v1 = parse(
-			{c4: 1, g: _List_Nil, h: 1, c: 0, au: 1, b: src});
+			{c5: 1, g: _List_Nil, h: 1, c: 0, an: 1, b: src});
 		if (!_v1.$) {
 			var value = _v1.b;
 			return $elm$core$Result$Ok(value);
@@ -9793,8 +9799,8 @@ var $bellroy$elm_email$Email$fromString = function (string) {
 	}
 };
 var $author$project$Pages$OrderTickets$totalAmount = function (model) {
-	var nonMemberTotal = model.x.dJ * model.x.fm;
-	var memberTotal = model.w.dJ * model.w.fm;
+	var nonMemberTotal = model.F.bN * model.F.fm;
+	var memberTotal = model.E.bN * model.E.fm;
 	return memberTotal + nonMemberTotal;
 };
 var $author$project$Pages$OrderTickets$update = F3(
@@ -9809,7 +9815,7 @@ var $author$project$Pages$OrderTickets$update = F3(
 						model,
 						{
 							ez: str,
-							W: !$elm$core$String$isEmpty(str)
+							aC: !$elm$core$String$isEmpty(str)
 						}),
 					$author$project$Lib$Effect$None);
 			case 2:
@@ -9819,7 +9825,7 @@ var $author$project$Pages$OrderTickets$update = F3(
 						model,
 						{
 							e9: str,
-							ac: !$elm$core$String$isEmpty(str)
+							aP: !$elm$core$String$isEmpty(str)
 						}),
 					$author$project$Lib$Effect$None);
 			case 3:
@@ -9829,8 +9835,8 @@ var $author$project$Pages$OrderTickets$update = F3(
 						model,
 						{
 							eQ: str,
-							Z: !$elm$core$String$isEmpty(str),
-							_: true
+							aI: !$elm$core$String$isEmpty(str),
+							aJ: true
 						}),
 					$author$project$Lib$Effect$None);
 			case 4:
@@ -9839,19 +9845,19 @@ var $author$project$Pages$OrderTickets$update = F3(
 					_Utils_update(
 						model,
 						{
-							X: str,
-							Y: !$elm$core$String$isEmpty(str)
+							aF: str,
+							aG: !$elm$core$String$isEmpty(str)
 						}),
 					$author$project$Lib$Effect$None);
 			case 9:
-				var totalNumberOfTickets = model.w.dJ + model.x.dJ;
+				var totalNumberOfTickets = model.E.bN + model.F.bN;
 				var updatedModel = _Utils_update(
 					model,
 					{
-						W: !$elm$core$String$isEmpty(model.ez),
-						Y: !$elm$core$String$isEmpty(model.X),
-						Z: !$elm$core$String$isEmpty(model.eQ),
-						_: function () {
+						aC: !$elm$core$String$isEmpty(model.ez),
+						aG: !$elm$core$String$isEmpty(model.aF),
+						aI: !$elm$core$String$isEmpty(model.eQ),
+						aJ: function () {
 							var _v2 = $bellroy$elm_email$Email$fromString(model.eQ);
 							if (!_v2.$) {
 								return true;
@@ -9859,11 +9865,11 @@ var $author$project$Pages$OrderTickets$update = F3(
 								return false;
 							}
 						}(),
-						al: _Utils_eq(model.eQ, model.X),
-						N: totalNumberOfTickets > 0,
-						ac: !$elm$core$String$isEmpty(model.e9)
+						a5: _Utils_eq(model.eQ, model.aF),
+						ag: totalNumberOfTickets > 0,
+						aP: !$elm$core$String$isEmpty(model.e9)
 					});
-				var isValid = updatedModel.W && (updatedModel.ac && (updatedModel.Z && (updatedModel._ && (updatedModel.Y && (updatedModel.al && updatedModel.N)))));
+				var isValid = updatedModel.aC && (updatedModel.aP && (updatedModel.aI && (updatedModel.aJ && (updatedModel.aG && (updatedModel.a5 && updatedModel.ag)))));
 				var effect = isValid ? $author$project$Lib$Effect$Shared(
 					A2(
 						$author$project$Shared$OrderInfoEntered,
@@ -9871,62 +9877,62 @@ var $author$project$Pages$OrderTickets$update = F3(
 							ez: model.ez,
 							eQ: model.eQ,
 							e9: model.e9,
-							ed: _List_fromArray(
-								[model.w, model.x])
+							b0: _List_fromArray(
+								[model.E, model.F])
 						},
 						$author$project$Pages$OrderTickets$totalAmount(model))) : $author$project$Lib$Effect$None;
 				return _Utils_Tuple2(
 					_Utils_update(
 						updatedModel,
-						{aL: isValid}),
+						{bv: isValid}),
 					effect);
 			case 5:
-				var info = model.w;
+				var info = model.E;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							N: true,
-							w: _Utils_update(
+							ag: true,
+							E: _Utils_update(
 								info,
-								{dJ: info.dJ + 1})
+								{bN: info.bN + 1})
 						}),
 					$author$project$Lib$Effect$None);
 			case 6:
-				var info = model.w;
+				var info = model.E;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							w: _Utils_update(
+							E: _Utils_update(
 								info,
 								{
-									dJ: A2($elm$core$Basics$max, 0, info.dJ - 1)
+									bN: A2($elm$core$Basics$max, 0, info.bN - 1)
 								})
 						}),
 					$author$project$Lib$Effect$None);
 			case 7:
-				var info = model.x;
+				var info = model.F;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							N: true,
-							x: _Utils_update(
+							ag: true,
+							F: _Utils_update(
 								info,
-								{dJ: info.dJ + 1})
+								{bN: info.bN + 1})
 						}),
 					$author$project$Lib$Effect$None);
 			default:
-				var info = model.x;
+				var info = model.F;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							x: _Utils_update(
+							F: _Utils_update(
 								info,
 								{
-									dJ: A2($elm$core$Basics$max, 0, info.dJ - 1)
+									bN: A2($elm$core$Basics$max, 0, info.bN - 1)
 								})
 						}),
 					$author$project$Lib$Effect$None);
@@ -9947,16 +9953,16 @@ var $author$project$Pages$PaymentSuccess$update = F3(
 			default:
 				if (!msg.a.$) {
 					var orderInfo = msg.a.a;
-					var cmd = ((orderInfo.eB === 'PROCESSING') && (model.R <= 25)) ? A2(
+					var cmd = ((orderInfo.eB === 'PROCESSING') && (model.ak <= 25)) ? A2(
 						$elm$core$Task$perform,
 						$elm$core$Basics$always($author$project$Pages$PaymentSuccess$CheckOrderInfo),
-						$elm$core$Process$sleep(model.R * 1000)) : $elm$core$Platform$Cmd$none;
+						$elm$core$Process$sleep(model.ak * 1000)) : $elm$core$Platform$Cmd$none;
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
 							{
-								R: model.R + 1,
-								aX: $elm$core$Maybe$Just(orderInfo)
+								ak: model.ak + 1,
+								bP: $elm$core$Maybe$Just(orderInfo)
 							}),
 						$author$project$Lib$Effect$Cmd(cmd));
 				} else {
@@ -9990,8 +9996,8 @@ var $author$project$Pages$Tickets$update = F3(
 					_Utils_update(
 						model,
 						{
-							bK: _Utils_eq(orderInfo.eB, model.eB),
-							aX: $elm$core$Maybe$Just(orderInfo)
+							bI: _Utils_eq(orderInfo.eB, model.eB),
+							bP: $elm$core$Maybe$Just(orderInfo)
 						}),
 					$author$project$Lib$Effect$none);
 			} else {
@@ -10096,26 +10102,26 @@ var $author$project$App$update = F2(
 		switch (msg.$) {
 			case 0:
 				var sharedMsg = msg.a;
-				var _v1 = A2($author$project$Shared$update, sharedMsg, model.D);
+				var _v1 = A2($author$project$Shared$update, sharedMsg, model.B);
 				var shared = _v1.a;
 				var cmd = _v1.b;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{D: shared}),
+						{B: shared}),
 					A2($elm$core$Platform$Cmd$map, $author$project$App$SharedMsg, cmd));
 			case 1:
 				var helmsmanMsg = msg.a;
-				var _v2 = A3($author$project$Helmsman$update, helmsmanMsg, model.D, model.aS);
+				var _v2 = A3($author$project$Helmsman$update, helmsmanMsg, model.B, model.aO);
 				var helmsman = _v2.a;
 				var effect = _v2.b;
-				var _v3 = A2($author$project$App$applyEffect, effect, model.D);
+				var _v3 = A2($author$project$App$applyEffect, effect, model.B);
 				var shared = _v3.a;
 				var cmd = _v3.b;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{aS: helmsman, D: shared}),
+						{aO: helmsman, B: shared}),
 					cmd);
 			case 2:
 				var urlRequest = msg.a;
@@ -10125,7 +10131,7 @@ var $author$project$App$update = F2(
 						model,
 						A2(
 							$elm$browser$Browser$Navigation$pushUrl,
-							model.D.fg,
+							model.B.fg,
 							$elm$url$Url$toString(url)));
 				} else {
 					var href = urlRequest.a;
@@ -10177,7 +10183,7 @@ var $rtfeldman$elm_css$Css$property = F2(
 	});
 var $rtfeldman$elm_css$Css$prop1 = F2(
 	function (key, arg) {
-		return A2($rtfeldman$elm_css$Css$property, key, arg.T);
+		return A2($rtfeldman$elm_css$Css$property, key, arg.R);
 	});
 var $elm$core$List$isEmpty = function (xs) {
 	if (!xs.b) {
@@ -10187,8 +10193,8 @@ var $elm$core$List$isEmpty = function (xs) {
 	}
 };
 var $rtfeldman$elm_css$Css$stringsToValue = function (list) {
-	return $elm$core$List$isEmpty(list) ? {T: 'none'} : {
-		T: A2($elm$core$String$join, ', ', list)
+	return $elm$core$List$isEmpty(list) ? {R: 'none'} : {
+		R: A2($elm$core$String$join, ', ', list)
 	};
 };
 var $rtfeldman$elm_css$Css$fontFamilies = A2(
@@ -10197,7 +10203,7 @@ var $rtfeldman$elm_css$Css$fontFamilies = A2(
 	$rtfeldman$elm_css$Css$stringsToValue);
 var $rtfeldman$elm_css$Css$fontSize = $rtfeldman$elm_css$Css$prop1('font-size');
 var $rtfeldman$elm_css$Css$fontWeight = function (_v0) {
-	var value = _v0.T;
+	var value = _v0.R;
 	return A2($rtfeldman$elm_css$Css$property, 'font-weight', value);
 };
 var $rtfeldman$elm_css$VirtualDom$Styled$KeyedNode = F3(
@@ -10319,29 +10325,29 @@ var $rtfeldman$elm_css$VirtualDom$Styled$map = F2(
 	});
 var $rtfeldman$elm_css$Html$Styled$map = $rtfeldman$elm_css$VirtualDom$Styled$map;
 var $rtfeldman$elm_css$Css$Structure$Compatible = 0;
-var $rtfeldman$elm_css$Css$normal = {dj: 0, ba: 0, an: 0, aW: 0, dO: 0, T: 'normal', aC: 0};
+var $rtfeldman$elm_css$Css$normal = {dk: 0, a7: 0, ae: 0, aT: 0, dO: 0, R: 'normal', av: 0};
 var $rtfeldman$elm_css$Css$PxUnits = 0;
 var $rtfeldman$elm_css$Css$Internal$lengthConverter = F3(
 	function (units, unitLabel, numericValue) {
 		return {
-			cP: 0,
-			c1: 0,
-			aO: 0,
+			cQ: 0,
+			c2: 0,
+			aK: 0,
 			u: 0,
-			bf: 0,
+			bb: 0,
+			aQ: 0,
+			W: 0,
+			aR: 0,
+			aS: 0,
+			ah: 0,
+			ai: 0,
+			O: 0,
 			aT: 0,
-			ad: 0,
-			aU: 0,
-			aV: 0,
-			ap: 0,
-			aq: 0,
-			P: 0,
-			aW: 0,
-			af: numericValue,
-			a0: 0,
-			a2: unitLabel,
-			br: units,
-			T: _Utils_ap(
+			Y: numericValue,
+			aY: 0,
+			a_: unitLabel,
+			bn: units,
+			R: _Utils_ap(
 				$elm$core$String$fromFloat(numericValue),
 				unitLabel)
 		};
@@ -10398,7 +10404,7 @@ var $rtfeldman$elm_css$Css$Structure$compactHelp = F2(
 			case 6:
 				var record = declaration.a;
 				return $elm$core$String$isEmpty(record.eH) ? _Utils_Tuple2(keyframesByName, declarations) : _Utils_Tuple2(
-					A3($elm$core$Dict$insert, record.bO, record.eH, keyframesByName),
+					A3($elm$core$Dict$insert, record.bM, record.eH, keyframesByName),
 					declarations);
 			case 7:
 				var properties = declaration.a;
@@ -10436,7 +10442,7 @@ var $rtfeldman$elm_css$Css$Structure$withKeyframeDeclarations = F2(
 					var name = _v0.a;
 					var decl = _v0.b;
 					return $rtfeldman$elm_css$Css$Structure$Keyframes(
-						{eH: decl, bO: name});
+						{eH: decl, bM: name});
 				},
 				$elm$core$Dict$toList(keyframesByName)),
 			compactedDeclarations);
@@ -10452,15 +10458,15 @@ var $rtfeldman$elm_css$Css$Structure$compactDeclarations = function (declaration
 	return A2($rtfeldman$elm_css$Css$Structure$withKeyframeDeclarations, keyframesByName, compactedDeclarations);
 };
 var $rtfeldman$elm_css$Css$Structure$compactStylesheet = function (_v0) {
-	var charset = _v0.c3;
-	var imports = _v0.dv;
-	var namespaces = _v0.dH;
+	var charset = _v0.c4;
+	var imports = _v0.dw;
+	var namespaces = _v0.dI;
 	var declarations = _v0.eI;
 	return {
-		c3: charset,
+		c4: charset,
 		eI: $rtfeldman$elm_css$Css$Structure$compactDeclarations(declarations),
-		dv: imports,
-		dH: namespaces
+		dw: imports,
+		dI: namespaces
 	};
 };
 var $rtfeldman$elm_css$Css$Structure$Output$charsetToString = function (charset) {
@@ -10505,13 +10511,13 @@ var $rtfeldman$elm_css$Css$String$mapJoin = F3(
 		return A4($rtfeldman$elm_css$Css$String$mapJoinHelp, map, sep, strs, '');
 	});
 var $rtfeldman$elm_css$Css$Structure$Output$mediaExpressionToString = function (expression) {
-	return '(' + (expression.di + (A2(
+	return '(' + (expression.dj + (A2(
 		$elm$core$Maybe$withDefault,
 		'',
 		A2(
 			$elm$core$Maybe$map,
 			$elm$core$Basics$append(': '),
-			expression.T)) + ')'));
+			expression.R)) + ')'));
 };
 var $rtfeldman$elm_css$Css$Structure$Output$mediaTypeToString = function (mediaType) {
 	switch (mediaType) {
@@ -10684,7 +10690,7 @@ var $rtfeldman$elm_css$Css$Structure$Output$prettyPrintDeclaration = function (d
 		case 5:
 			return 'TODO';
 		case 6:
-			var name = decl.a.bO;
+			var name = decl.a.bM;
 			var declaration = decl.a.eH;
 			return '@keyframes ' + (name + ('{' + (declaration + '}')));
 		case 7:
@@ -10696,9 +10702,9 @@ var $rtfeldman$elm_css$Css$Structure$Output$prettyPrintDeclaration = function (d
 	}
 };
 var $rtfeldman$elm_css$Css$Structure$Output$prettyPrint = function (_v0) {
-	var charset = _v0.c3;
-	var imports = _v0.dv;
-	var namespaces = _v0.dH;
+	var charset = _v0.c4;
+	var imports = _v0.dw;
+	var namespaces = _v0.dI;
 	var declarations = _v0.eI;
 	return $rtfeldman$elm_css$Css$Structure$Output$charsetToString(charset) + (A3($rtfeldman$elm_css$Css$String$mapJoin, $rtfeldman$elm_css$Css$Structure$Output$importToString, '\n', imports) + (A3($rtfeldman$elm_css$Css$String$mapJoin, $rtfeldman$elm_css$Css$Structure$Output$namespaceToString, '\n', namespaces) + (A3($rtfeldman$elm_css$Css$String$mapJoin, $rtfeldman$elm_css$Css$Structure$Output$prettyPrintDeclaration, '\n', declarations) + '')));
 };
@@ -11592,7 +11598,7 @@ var $rtfeldman$elm_css$Css$Preprocess$Resolve$applyStyles = F2(
 						_List_fromArray(
 							[
 								$rtfeldman$elm_css$Css$Structure$Keyframes(
-								{eH: str, bO: name})
+								{eH: str, bM: name})
 							]));
 				case 4:
 					var _v12 = styles.a;
@@ -11726,13 +11732,13 @@ var $rtfeldman$elm_css$Css$Preprocess$Resolve$toDeclarations = function (snippet
 	}
 };
 var $rtfeldman$elm_css$Css$Preprocess$Resolve$toStructure = function (_v0) {
-	var charset = _v0.c3;
-	var imports = _v0.dv;
-	var namespaces = _v0.dH;
-	var snippets = _v0.d7;
+	var charset = _v0.c4;
+	var imports = _v0.dw;
+	var namespaces = _v0.dI;
+	var snippets = _v0.d8;
 	var declarations = $rtfeldman$elm_css$Css$Preprocess$Resolve$extract(
 		A2($elm$core$List$concatMap, $rtfeldman$elm_css$Css$Preprocess$unwrapSnippet, snippets));
-	return {c3: charset, eI: declarations, dv: imports, dH: namespaces};
+	return {c4: charset, eI: declarations, dw: imports, dI: namespaces};
 };
 var $rtfeldman$elm_css$Css$Preprocess$Resolve$compile = function (sheet) {
 	return $rtfeldman$elm_css$Css$Structure$Output$prettyPrint(
@@ -11757,7 +11763,7 @@ var $rtfeldman$elm_css$VirtualDom$Styled$makeSnippet = F2(
 			]);
 	});
 var $rtfeldman$elm_css$Css$Preprocess$stylesheet = function (snippets) {
-	return {c3: $elm$core$Maybe$Nothing, dv: _List_Nil, dH: _List_Nil, d7: snippets};
+	return {c4: $elm$core$Maybe$Nothing, dw: _List_Nil, dI: _List_Nil, d8: snippets};
 };
 var $rtfeldman$elm_css$Css$Structure$ClassSelector = function (a) {
 	return {$: 0, a: a};
@@ -11805,12 +11811,12 @@ var $rtfeldman$elm_css$Css$withPrecedingHash = function (str) {
 };
 var $rtfeldman$elm_css$Css$erroneousHex = function (str) {
 	return {
-		aE: 1,
+		ax: 1,
 		cd: 0,
-		by: 0,
-		cq: 0,
-		cD: 0,
-		T: $rtfeldman$elm_css$Css$withPrecedingHash(str)
+		bu: 0,
+		cr: 0,
+		cE: 0,
+		R: $rtfeldman$elm_css$Css$withPrecedingHash(str)
 	};
 };
 var $elm$core$Basics$pow = _Basics_pow;
@@ -12046,12 +12052,12 @@ var $rtfeldman$elm_css$Css$validHex = F5(
 			var blue = _v6.a.a;
 			var alpha = _v6.b.a;
 			return {
-				aE: alpha / 255,
+				ax: alpha / 255,
 				cd: blue,
-				by: 0,
-				cq: green,
-				cD: red,
-				T: $rtfeldman$elm_css$Css$withPrecedingHash(str)
+				bu: 0,
+				cr: green,
+				cE: red,
+				R: $rtfeldman$elm_css$Css$withPrecedingHash(str)
 			};
 		} else {
 			return $rtfeldman$elm_css$Css$erroneousHex(str);
@@ -12156,27 +12162,27 @@ var $author$project$Style$theme = {
 	ca: $rtfeldman$elm_css$Css$hex('fff'),
 	eV: _List_fromArray(
 		['Roboto']),
-	aR: $rtfeldman$elm_css$Css$hex('49586d'),
-	bU: $rtfeldman$elm_css$Css$hex('999'),
-	dS: $rtfeldman$elm_css$Css$hex('e9eef3')
+	aN: $rtfeldman$elm_css$Css$hex('49586d'),
+	bT: $rtfeldman$elm_css$Css$hex('999'),
+	dT: $rtfeldman$elm_css$Css$hex('e9eef3')
 };
 var $rtfeldman$elm_css$Html$Styled$h1 = $rtfeldman$elm_css$Html$Styled$node('h1');
 var $author$project$Pages$Home$GotoTickets = 0;
 var $rtfeldman$elm_css$Html$Styled$a = $rtfeldman$elm_css$Html$Styled$node('a');
 var $rtfeldman$elm_css$Css$color = function (c) {
-	return A2($rtfeldman$elm_css$Css$property, 'color', c.T);
+	return A2($rtfeldman$elm_css$Css$property, 'color', c.R);
 };
 var $rtfeldman$elm_css$Css$prop2 = F3(
 	function (key, argA, argB) {
-		return A2($rtfeldman$elm_css$Css$property, key, argA.T + (' ' + argB.T));
+		return A2($rtfeldman$elm_css$Css$property, key, argA.R + (' ' + argB.R));
 	});
 var $rtfeldman$elm_css$Css$margin2 = $rtfeldman$elm_css$Css$prop2('margin');
-var $rtfeldman$elm_css$Css$pre = {T: 'pre', aC: 0};
+var $rtfeldman$elm_css$Css$pre = {R: 'pre', av: 0};
 var $rtfeldman$elm_css$Css$VwUnits = 0;
 var $rtfeldman$elm_css$Css$vw = A2($rtfeldman$elm_css$Css$Internal$lengthConverter, 0, 'vw');
 var $rtfeldman$elm_css$Css$whiteSpace = $rtfeldman$elm_css$Css$prop1('white-space');
 var $rtfeldman$elm_css$Css$UnitlessInteger = 0;
-var $rtfeldman$elm_css$Css$zero = {bf: 0, aT: 0, ad: 0, aU: 0, aV: 0, ap: 0, aq: 0, fh: 0, af: 0, bS: 0, a2: '', br: 0, T: '0'};
+var $rtfeldman$elm_css$Css$zero = {bb: 0, aQ: 0, W: 0, aR: 0, aS: 0, ah: 0, ai: 0, fh: 0, Y: 0, bS: 0, a_: '', bn: 0, R: '0'};
 var $author$project$Style$address = _List_fromArray(
 	[
 		A2(
@@ -12188,7 +12194,7 @@ var $author$project$Style$address = _List_fromArray(
 		$rtfeldman$elm_css$Css$fontWeight($rtfeldman$elm_css$Css$normal),
 		$rtfeldman$elm_css$Css$whiteSpace($rtfeldman$elm_css$Css$pre)
 	]);
-var $rtfeldman$elm_css$Css$auto = {ep: 0, d: 0, aO: 0, bJ: 0, e8: 0, aT: 0, ad: 0, P: 0, aY: 0, K: 0, b$: 0, a1: 0, E: 0, T: 'auto'};
+var $rtfeldman$elm_css$Css$auto = {ep: 0, d: 0, aK: 0, bH: 0, e8: 0, aQ: 0, W: 0, O: 0, aU: 0, K: 0, b_: 0, aZ: 0, C: 0, R: 'auto'};
 var $rtfeldman$elm_css$Css$maxWidth = $rtfeldman$elm_css$Css$prop1('max-width');
 var $rtfeldman$elm_css$Css$width = $rtfeldman$elm_css$Css$prop1('width');
 var $author$project$Style$container = _List_fromArray(
@@ -12200,7 +12206,7 @@ var $author$project$Style$container = _List_fromArray(
 		A2($rtfeldman$elm_css$Css$margin2, $rtfeldman$elm_css$Css$zero, $rtfeldman$elm_css$Css$auto)
 	]);
 var $author$project$Domain$Event$dateTimeString = function (evt) {
-	return evt.a8 + (' om ' + (evt.bm + ' uur.'));
+	return evt.a4 + (' om ' + (evt.bi + ' uur.'));
 };
 var $rtfeldman$elm_css$Css$EmUnits = 0;
 var $rtfeldman$elm_css$Css$em = A2($rtfeldman$elm_css$Css$Internal$lengthConverter, 0, 'em');
@@ -12232,12 +12238,12 @@ var $rtfeldman$elm_css$Css$Transitions$BoxShadow = 25;
 var $rtfeldman$elm_css$Css$Transitions$Transition = $elm$core$Basics$identity;
 var $rtfeldman$elm_css$Css$Transitions$durationTransition = F2(
 	function (animation, duration) {
-		return {bt: animation, bB: $elm$core$Maybe$Nothing, db: duration, b1: $elm$core$Maybe$Nothing};
+		return {bp: animation, bz: $elm$core$Maybe$Nothing, dc: duration, b1: $elm$core$Maybe$Nothing};
 	});
 var $rtfeldman$elm_css$Css$Transitions$boxShadow = $rtfeldman$elm_css$Css$Transitions$durationTransition(25);
 var $rtfeldman$elm_css$Css$prop6 = F7(
 	function (key, argA, argB, argC, argD, argE, argF) {
-		return A2($rtfeldman$elm_css$Css$property, key, argA.T + (' ' + (argB.T + (' ' + (argC.T + (' ' + (argD.T + (' ' + (argE.T + (' ' + argF.T))))))))));
+		return A2($rtfeldman$elm_css$Css$property, key, argA.R + (' ' + (argB.R + (' ' + (argC.R + (' ' + (argD.R + (' ' + (argE.R + (' ' + argF.R))))))))));
 	});
 var $rtfeldman$elm_css$Css$boxShadow6 = $rtfeldman$elm_css$Css$prop6('box-shadow');
 var $rtfeldman$elm_css$Css$Transitions$Color = 29;
@@ -12257,23 +12263,23 @@ var $rtfeldman$elm_css$Css$pseudoClass = function (_class) {
 		$rtfeldman$elm_css$Css$Structure$PseudoClassSelector(_class));
 };
 var $rtfeldman$elm_css$Css$hover = $rtfeldman$elm_css$Css$pseudoClass('hover');
-var $rtfeldman$elm_css$Css$inset = {y: 0, T: 'inset'};
+var $rtfeldman$elm_css$Css$inset = {w: 0, R: 'inset'};
 var $rtfeldman$elm_css$Css$margin = $rtfeldman$elm_css$Css$prop1('margin');
-var $rtfeldman$elm_css$Css$none = {aF: 0, c_: 0, y: 0, d: 0, l: 0, e2: 0, dw: 0, ct: 0, aV: 0, ap: 0, P: 0, f: 0, e: 0, cx: 0, bS: 0, fl: 0, K: 0, bX: 0, fs: 0, a$: 0, az: 0, E: 0, j: 0, fJ: 0, T: 'none'};
+var $rtfeldman$elm_css$Css$none = {ay: 0, c$: 0, w: 0, d: 0, l: 0, e2: 0, dx: 0, cu: 0, aS: 0, ah: 0, O: 0, f: 0, e: 0, cy: 0, bS: 0, fl: 0, K: 0, bW: 0, fs: 0, aX: 0, as: 0, C: 0, j: 0, fJ: 0, R: 'none'};
 var $rtfeldman$elm_css$Css$prop4 = F5(
 	function (key, argA, argB, argC, argD) {
-		return A2($rtfeldman$elm_css$Css$property, key, argA.T + (' ' + (argB.T + (' ' + (argC.T + (' ' + argD.T))))));
+		return A2($rtfeldman$elm_css$Css$property, key, argA.R + (' ' + (argB.R + (' ' + (argC.R + (' ' + argD.R))))));
 	});
 var $rtfeldman$elm_css$Css$padding4 = $rtfeldman$elm_css$Css$prop4('padding');
-var $rtfeldman$elm_css$Css$pointer = {d: 0, T: 'pointer'};
+var $rtfeldman$elm_css$Css$pointer = {d: 0, R: 'pointer'};
 var $rtfeldman$elm_css$Css$textDecoration = $rtfeldman$elm_css$Css$prop1('text-decoration');
 var $rtfeldman$elm_css$Css$Transitions$Transform = 89;
 var $rtfeldman$elm_css$Css$Transitions$fullTransition = F4(
 	function (animation, duration, delay, timing) {
 		return {
-			bt: animation,
-			bB: $elm$core$Maybe$Just(delay),
-			db: duration,
+			bp: animation,
+			bz: $elm$core$Maybe$Just(delay),
+			dc: duration,
 			b1: $elm$core$Maybe$Just(timing)
 		};
 	});
@@ -12510,9 +12516,9 @@ var $rtfeldman$elm_css$Css$Transitions$transition = function (options) {
 			$elm$core$List$foldl,
 			F2(
 				function (_v0, s) {
-					var animation = _v0.bt;
-					var duration = _v0.db;
-					var delay = _v0.bB;
+					var animation = _v0.bp;
+					var duration = _v0.dc;
+					var delay = _v0.bz;
 					var timing = _v0.b1;
 					return s + ($rtfeldman$elm_css$Css$Transitions$propToString(animation) + (' ' + ($rtfeldman$elm_css$Css$Transitions$timeToString(duration) + (' ' + (A2(
 						$elm$core$Maybe$withDefault,
@@ -12532,8 +12538,8 @@ var $author$project$Style$hyperLink = $rtfeldman$elm_css$Css$batch(
 			$rtfeldman$elm_css$Css$margin(
 			$rtfeldman$elm_css$Css$em(0.25)),
 			$rtfeldman$elm_css$Css$textDecoration($rtfeldman$elm_css$Css$none),
-			$rtfeldman$elm_css$Css$color($author$project$Style$theme.aR),
-			A6($rtfeldman$elm_css$Css$boxShadow6, $rtfeldman$elm_css$Css$inset, $rtfeldman$elm_css$Css$zero, $rtfeldman$elm_css$Css$zero, $rtfeldman$elm_css$Css$zero, $rtfeldman$elm_css$Css$zero, $author$project$Style$theme.aR),
+			$rtfeldman$elm_css$Css$color($author$project$Style$theme.aN),
+			A6($rtfeldman$elm_css$Css$boxShadow6, $rtfeldman$elm_css$Css$inset, $rtfeldman$elm_css$Css$zero, $rtfeldman$elm_css$Css$zero, $rtfeldman$elm_css$Css$zero, $rtfeldman$elm_css$Css$zero, $author$project$Style$theme.aN),
 			$rtfeldman$elm_css$Css$Transitions$transition(
 			_List_fromArray(
 				[
@@ -12553,7 +12559,7 @@ var $author$project$Style$hyperLink = $rtfeldman$elm_css$Css$batch(
 					$rtfeldman$elm_css$Css$zero,
 					$rtfeldman$elm_css$Css$zero,
 					$rtfeldman$elm_css$Css$zero,
-					$author$project$Style$theme.bU)
+					$author$project$Style$theme.bT)
 				])),
 			$rtfeldman$elm_css$Css$fontSize(
 			$rtfeldman$elm_css$Css$em(0.8)),
@@ -12579,69 +12585,69 @@ var $author$project$Style$pageHeader = _List_fromArray(
 		$rtfeldman$elm_css$Css$fontWeight($rtfeldman$elm_css$Css$normal)
 	]);
 var $author$project$Domain$Event$theEvent = {
-	cR: 'Maneblusser City\nNora Tilleylaan 28\n2800 Mechelen',
-	a8: 'Donderdag 9 Januari 2025',
-	bC: _List_fromArray(
+	cS: 'Maneblusser City\nNora Tilleylaan 28\n2800 Mechelen',
+	a4: 'Donderdag 9 Januari 2025',
+	bA: _List_fromArray(
 		['Gratis parkeren.', 'Keynote spreker Rik Moons : \'Domme vragen bestaan wel\'.', 'Catering verzorgd door Cook & Taste.']),
-	ds: $elm$core$Maybe$Nothing,
-	bO: 'Nieuwjaarsdrink 2025',
-	b0: _List_fromArray(
+	dt: $elm$core$Maybe$Nothing,
+	bM: 'Nieuwjaarsdrink 2025',
+	b$: _List_fromArray(
 		[
 			{
 			eK: 'Standaard',
-			ds: 'VVK',
-			bd: _List_fromArray(
+			dt: 'VVK',
+			a9: _List_fromArray(
 				['Drank en gerechtjes inbegrepen tot 21u30.']),
 			fm: 60
 		},
 			{
 			eK: 'Vip Tafel',
-			ds: 'VIP',
-			bd: _List_fromArray(
+			dt: 'VIP',
+			a9: _List_fromArray(
 				['Voor zes personen plus fles Champagne.', 'Sponsor logo getoond op afzonderlijke tafel en geprojecteerd op scherm.', 'Drank en gerechtjes inbegrepen tot 21u30.']),
 			fm: 500
 		}
 		]),
-	bm: '18:30'
+	bi: '18:30'
 };
-var $rtfeldman$elm_css$Css$absolute = {bk: 0, T: 'absolute'};
+var $rtfeldman$elm_css$Css$absolute = {bg: 0, R: 'absolute'};
 var $rtfeldman$elm_css$Css$backgroundImage = $rtfeldman$elm_css$Css$prop1('background-image');
 var $rtfeldman$elm_css$Css$backgroundPosition2 = $rtfeldman$elm_css$Css$prop2('background-position');
 var $rtfeldman$elm_css$Css$backgroundRepeat = $rtfeldman$elm_css$Css$prop1('background-repeat');
 var $rtfeldman$elm_css$Css$backgroundSize = $rtfeldman$elm_css$Css$prop1('background-size');
-var $rtfeldman$elm_css$Css$block = {l: 0, T: 'block'};
+var $rtfeldman$elm_css$Css$block = {l: 0, R: 'block'};
 var $rtfeldman$elm_css$Css$borderRadius = $rtfeldman$elm_css$Css$prop1('border-radius');
-var $rtfeldman$elm_css$Css$cover = {ad: 0, T: 'cover'};
+var $rtfeldman$elm_css$Css$cover = {W: 0, R: 'cover'};
 var $rtfeldman$elm_css$Css$display = $rtfeldman$elm_css$Css$prop1('display');
 var $rtfeldman$elm_css$Css$height = $rtfeldman$elm_css$Css$prop1('height');
-var $rtfeldman$elm_css$Css$hidden = {y: 0, aY: 0, T: 'hidden', bs: 0};
+var $rtfeldman$elm_css$Css$hidden = {w: 0, aU: 0, R: 'hidden', bo: 0};
 var $rtfeldman$elm_css$Html$Styled$img = $rtfeldman$elm_css$Html$Styled$node('img');
 var $rtfeldman$elm_css$Css$int = function (val) {
 	return {
-		an: 0,
-		bJ: 0,
-		aq: 0,
-		P: 0,
+		ae: 0,
+		bH: 0,
+		ai: 0,
+		O: 0,
 		fh: 0,
-		bP: 0,
-		af: val,
-		a2: '',
-		br: 0,
-		T: $elm$core$String$fromInt(val)
+		bO: 0,
+		Y: val,
+		a_: '',
+		bn: 0,
+		R: $elm$core$String$fromInt(val)
 	};
 };
 var $rtfeldman$elm_css$Css$maxHeight = $rtfeldman$elm_css$Css$prop1('max-height');
-var $rtfeldman$elm_css$Css$noRepeat = {aG: 0, V: 0, T: 'no-repeat'};
+var $rtfeldman$elm_css$Css$noRepeat = {az: 0, T: 0, R: 'no-repeat'};
 var $rtfeldman$elm_css$Css$overflow = $rtfeldman$elm_css$Css$prop1('overflow');
 var $rtfeldman$elm_css$Css$PercentageUnits = 0;
 var $rtfeldman$elm_css$Css$pct = A2($rtfeldman$elm_css$Css$Internal$lengthConverter, 0, '%');
 var $rtfeldman$elm_css$Css$position = $rtfeldman$elm_css$Css$prop1('position');
-var $rtfeldman$elm_css$Css$relative = {bk: 0, T: 'relative'};
+var $rtfeldman$elm_css$Css$relative = {bg: 0, R: 'relative'};
 var $rtfeldman$elm_css$Html$Styled$Attributes$src = function (url) {
 	return A2($rtfeldman$elm_css$Html$Styled$Attributes$stringProperty, 'src', url);
 };
 var $rtfeldman$elm_css$Css$url = function (urlValue) {
-	return {aF: 0, T: 'url(' + (urlValue + ')')};
+	return {ay: 0, R: 'url(' + (urlValue + ')')};
 };
 var $rtfeldman$elm_css$Css$VhUnits = 0;
 var $rtfeldman$elm_css$Css$vh = A2($rtfeldman$elm_css$Css$Internal$lengthConverter, 0, 'vh');
@@ -12729,11 +12735,11 @@ var $author$project$Pages$ViewParts$Banner$view = function (device) {
 			]));
 };
 var $rtfeldman$elm_css$Css$backgroundColor = function (c) {
-	return A2($rtfeldman$elm_css$Css$property, 'background-color', c.T);
+	return A2($rtfeldman$elm_css$Css$property, 'background-color', c.R);
 };
 var $rtfeldman$elm_css$Css$prop3 = F4(
 	function (key, argA, argB, argC) {
-		return A2($rtfeldman$elm_css$Css$property, key, argA.T + (' ' + (argB.T + (' ' + argC.T))));
+		return A2($rtfeldman$elm_css$Css$property, key, argA.R + (' ' + (argB.R + (' ' + argC.R))));
 	});
 var $rtfeldman$elm_css$Css$border3 = $rtfeldman$elm_css$Css$prop3('border');
 var $rtfeldman$elm_css$Css$bottom = $rtfeldman$elm_css$Css$prop1('bottom');
@@ -12778,12 +12784,12 @@ var $author$project$UI$UI$button = F3(
 					$rtfeldman$elm_css$Html$Styled$text(label)
 				]));
 	});
-var $rtfeldman$elm_css$Css$fixed = {a7: 0, bk: 0, b$: 0, T: 'fixed'};
-var $rtfeldman$elm_css$Css$inlineBlock = {l: 0, T: 'inline-block'};
+var $rtfeldman$elm_css$Css$fixed = {a3: 0, bg: 0, b_: 0, R: 'fixed'};
+var $rtfeldman$elm_css$Css$inlineBlock = {l: 0, R: 'inline-block'};
 var $rtfeldman$elm_css$Css$left = $rtfeldman$elm_css$Css$prop1('left');
 var $rtfeldman$elm_css$Css$padding = $rtfeldman$elm_css$Css$prop1('padding');
-var $rtfeldman$elm_css$Css$solid = {y: 0, ay: 0, T: 'solid'};
-var $rtfeldman$elm_css$Css$bold = {an: 0, T: 'bold'};
+var $rtfeldman$elm_css$Css$solid = {w: 0, ar: 0, R: 'solid'};
+var $rtfeldman$elm_css$Css$bold = {ae: 0, R: 'bold'};
 var $rtfeldman$elm_css$Css$border = $rtfeldman$elm_css$Css$prop1('border');
 var $rtfeldman$elm_css$Css$padding2 = $rtfeldman$elm_css$Css$prop2('padding');
 var $author$project$Style$textButton = _List_fromArray(
@@ -12805,11 +12811,11 @@ var $author$project$Style$textButton = _List_fromArray(
 		$rtfeldman$elm_css$Css$cursor($rtfeldman$elm_css$Css$pointer)
 	]);
 var $rtfeldman$elm_css$Css$valuesOrNone = function (list) {
-	return $elm$core$List$isEmpty(list) ? {T: 'none'} : {
-		T: A3(
+	return $elm$core$List$isEmpty(list) ? {R: 'none'} : {
+		R: A3(
 			$rtfeldman$elm_css$Css$String$mapJoin,
 			function ($) {
-				return $.T;
+				return $.R;
 			},
 			' ',
 			list)
@@ -12832,11 +12838,11 @@ var $rtfeldman$elm_css$Css$translate2 = F2(
 	function (tx, ty) {
 		return {
 			j: 0,
-			T: A2(
+			R: A2(
 				$rtfeldman$elm_css$Css$cssFunction,
 				'translate',
 				_List_fromArray(
-					[tx.T, ty.T]))
+					[tx.R, ty.R]))
 		};
 	});
 var $author$project$Pages$ViewParts$BottomFixedButton$view = F2(
@@ -12892,33 +12898,33 @@ var $author$project$Pages$ViewParts$BottomFixedButton$view = F2(
 	});
 var $author$project$UI$DivTable$customizeTableStyle = F2(
 	function (style, cfg) {
-		var table = cfg.bl;
+		var table = cfg.bh;
 		return _Utils_update(
 			cfg,
 			{
-				bl: $rtfeldman$elm_css$Css$batch(
+				bh: $rtfeldman$elm_css$Css$batch(
 					A2($elm$core$List$cons, table, style))
 			});
 	});
 var $author$project$UI$DivTable$emptyStyle = {
-	aH: $rtfeldman$elm_css$Css$batch(_List_Nil),
-	bF: $rtfeldman$elm_css$Css$batch(_List_Nil),
-	bc: $rtfeldman$elm_css$Css$batch(_List_Nil),
-	au: $rtfeldman$elm_css$Css$batch(_List_Nil),
-	bl: $rtfeldman$elm_css$Css$batch(_List_Nil)
+	aA: $rtfeldman$elm_css$Css$batch(_List_Nil),
+	bD: $rtfeldman$elm_css$Css$batch(_List_Nil),
+	a8: $rtfeldman$elm_css$Css$batch(_List_Nil),
+	an: $rtfeldman$elm_css$Css$batch(_List_Nil),
+	bh: $rtfeldman$elm_css$Css$batch(_List_Nil)
 };
 var $rtfeldman$elm_css$Html$Styled$h3 = $rtfeldman$elm_css$Html$Styled$node('h3');
 var $author$project$UI$DivTable$fromBody = function (bodyRows) {
-	return {ev: bodyRows, bE: _List_Nil};
+	return {ev: bodyRows, bC: _List_Nil};
 };
-var $rtfeldman$elm_css$Css$tableCell = {l: 0, T: 'table-cell'};
+var $rtfeldman$elm_css$Css$tableCell = {l: 0, R: 'table-cell'};
 var $author$project$UI$DivTable$renderCell = F2(
 	function (tableStyleConfig, content) {
 		var cellStyle = $rtfeldman$elm_css$Css$batch(
 			_List_fromArray(
 				[
 					$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$tableCell),
-					tableStyleConfig.aH
+					tableStyleConfig.aA
 				]));
 		return A4(
 			$rtfeldman$elm_css$Html$Styled$styled,
@@ -12928,14 +12934,14 @@ var $author$project$UI$DivTable$renderCell = F2(
 			_List_Nil,
 			content);
 	});
-var $rtfeldman$elm_css$Css$tableRow = {l: 0, T: 'table-row'};
+var $rtfeldman$elm_css$Css$tableRow = {l: 0, R: 'table-row'};
 var $author$project$UI$DivTable$renderRow = F2(
 	function (tableStyleConfig, cells) {
 		var rowStyle = $rtfeldman$elm_css$Css$batch(
 			_List_fromArray(
 				[
 					$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$tableRow),
-					tableStyleConfig.au
+					tableStyleConfig.an
 				]));
 		return A4(
 			$rtfeldman$elm_css$Html$Styled$styled,
@@ -12961,7 +12967,7 @@ var $author$project$UI$DivTable$renderHeaderCell = F2(
 			_List_fromArray(
 				[
 					$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$tableCell),
-					tableStyleConfig.bF
+					tableStyleConfig.bD
 				]));
 		return A4(
 			$rtfeldman$elm_css$Html$Styled$styled,
@@ -12977,7 +12983,7 @@ var $author$project$UI$DivTable$renderHeader = F2(
 			_List_fromArray(
 				[
 					$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$tableRow),
-					tableStyleConfig.bc
+					tableStyleConfig.a8
 				]));
 		if (!cells.b) {
 			return $rtfeldman$elm_css$Html$Styled$text('');
@@ -12994,14 +13000,14 @@ var $author$project$UI$DivTable$renderHeader = F2(
 					cells));
 		}
 	});
-var $rtfeldman$elm_css$Css$table = {l: 0, T: 'table'};
+var $rtfeldman$elm_css$Css$table = {l: 0, R: 'table'};
 var $author$project$UI$DivTable$render = F2(
 	function (tableStyleConfig, table) {
 		var tableStyle = $rtfeldman$elm_css$Css$batch(
 			_List_fromArray(
 				[
 					$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$table),
-					tableStyleConfig.bl
+					tableStyleConfig.bh
 				]));
 		return A4(
 			$rtfeldman$elm_css$Html$Styled$styled,
@@ -13011,7 +13017,7 @@ var $author$project$UI$DivTable$render = F2(
 			_List_Nil,
 			A2(
 				$elm$core$List$cons,
-				A2($author$project$UI$DivTable$renderHeader, tableStyleConfig, table.bE),
+				A2($author$project$UI$DivTable$renderHeader, tableStyleConfig, table.bC),
 				A2($author$project$UI$DivTable$renderBodyInternal, tableStyleConfig, table.ev)));
 	});
 var $author$project$UI$DivTable$renderBody = F2(
@@ -13176,7 +13182,7 @@ var $author$project$Pages$Home$view = F2(
 											$rtfeldman$elm_css$Html$Styled$text(a)
 										]));
 							},
-							ticketType.bd))
+							ticketType.a9))
 					]));
 		};
 		var maybeMargin = function () {
@@ -13251,7 +13257,7 @@ var $author$project$Pages$Home$view = F2(
 							_List_Nil,
 							_List_fromArray(
 								[
-									$rtfeldman$elm_css$Html$Styled$text(evt.a8)
+									$rtfeldman$elm_css$Html$Styled$text(evt.a4)
 								])),
 							A4(
 							$rtfeldman$elm_css$Html$Styled$styled,
@@ -13266,7 +13272,7 @@ var $author$project$Pages$Home$view = F2(
 							_List_Nil,
 							_List_fromArray(
 								[
-									$rtfeldman$elm_css$Html$Styled$text(evt.bm + ' uur')
+									$rtfeldman$elm_css$Html$Styled$text(evt.bi + ' uur')
 								]))
 						]));
 			} else {
@@ -13303,7 +13309,7 @@ var $author$project$Pages$Home$view = F2(
 							_List_Nil,
 							_List_fromArray(
 								[
-									$rtfeldman$elm_css$Html$Styled$text(evt.bO)
+									$rtfeldman$elm_css$Html$Styled$text(evt.bM)
 								])),
 							dateTimeRow,
 							A4(
@@ -13330,7 +13336,7 @@ var $author$project$Pages$Home$view = F2(
 							_List_Nil,
 							_List_fromArray(
 								[
-									$rtfeldman$elm_css$Html$Styled$text(evt.cR)
+									$rtfeldman$elm_css$Html$Styled$text(evt.cS)
 								])),
 							A4(
 							$rtfeldman$elm_css$Html$Styled$styled,
@@ -13352,7 +13358,7 @@ var $author$project$Pages$Home$view = F2(
 									$rtfeldman$elm_css$Css$em(1))
 								]),
 							_List_Nil,
-							A2($elm$core$List$map, ticketTypes, evt.b0)),
+							A2($elm$core$List$map, ticketTypes, evt.b$)),
 							A4(
 							$rtfeldman$elm_css$Html$Styled$styled,
 							$rtfeldman$elm_css$Html$Styled$h2,
@@ -13384,7 +13390,7 @@ var $author$project$Pages$Home$view = F2(
 												$rtfeldman$elm_css$Html$Styled$text(a)
 											]));
 								},
-								evt.bC)),
+								evt.bA)),
 							maybeMargin,
 							maybeBottomButton
 						]))
@@ -13402,17 +13408,17 @@ var $author$project$Pages$InvoiceInfo$UpdateVatNumber = function (a) {
 };
 var $author$project$UI$DivTable$customizeCellStyle = F2(
 	function (style, cfg) {
-		var cell = cfg.aH;
+		var cell = cfg.aA;
 		return _Utils_update(
 			cfg,
 			{
-				aH: $rtfeldman$elm_css$Css$batch(
+				aA: $rtfeldman$elm_css$Css$batch(
 					A2($elm$core$List$cons, cell, style))
 			});
 	});
 var $rtfeldman$elm_css$Html$Styled$input = $rtfeldman$elm_css$Html$Styled$node('input');
 var $rtfeldman$elm_css$Css$borderColor = function (c) {
-	return A2($rtfeldman$elm_css$Css$property, 'border-color', c.T);
+	return A2($rtfeldman$elm_css$Css$property, 'border-color', c.R);
 };
 var $rtfeldman$elm_css$Css$Transitions$BorderColor = 10;
 var $rtfeldman$elm_css$Css$Transitions$borderColor3 = $rtfeldman$elm_css$Css$Transitions$fullTransition(10);
@@ -13441,7 +13447,7 @@ var $rtfeldman$elm_css$Css$paddingTop = $rtfeldman$elm_css$Css$prop1('padding-to
 var $rtfeldman$elm_css$Css$scale = function (x) {
 	return {
 		j: 0,
-		T: A2(
+		R: A2(
 			$rtfeldman$elm_css$Css$cssFunction,
 			'scale',
 			_List_fromArray(
@@ -13452,17 +13458,17 @@ var $rtfeldman$elm_css$Css$scale = function (x) {
 };
 var $rtfeldman$elm_css$Css$top = $rtfeldman$elm_css$Css$prop1('top');
 var $rtfeldman$elm_css$Css$translateY = function (_v0) {
-	var value = _v0.T;
+	var value = _v0.R;
 	return {
 		j: 0,
-		T: A2(
+		R: A2(
 			$rtfeldman$elm_css$Css$cssFunction,
 			'translateY',
 			_List_fromArray(
 				[value]))
 	};
 };
-var $rtfeldman$elm_css$Css$transparent = {by: 0, T: 'transparent'};
+var $rtfeldman$elm_css$Css$transparent = {bu: 0, R: 'transparent'};
 var $rtfeldman$elm_css$Css$Structure$TypeSelector = $elm$core$Basics$identity;
 var $rtfeldman$elm_css$Css$Global$typeSelector = F2(
 	function (selectorStr, styles) {
@@ -13479,7 +13485,7 @@ var $author$project$Style$input = function () {
 	var popoutLabelStyle = $rtfeldman$elm_css$Css$batch(
 		_List_fromArray(
 			[
-				$rtfeldman$elm_css$Css$borderColor($author$project$Style$theme.aR),
+				$rtfeldman$elm_css$Css$borderColor($author$project$Style$theme.aN),
 				$rtfeldman$elm_css$Css$borderRadius(
 				$rtfeldman$elm_css$Css$em(0.75)),
 				$rtfeldman$elm_css$Css$color(
@@ -13500,7 +13506,7 @@ var $author$project$Style$input = function () {
 										$rtfeldman$elm_css$Css$scale(0.9)
 									])),
 								$rtfeldman$elm_css$Css$backgroundColor($author$project$Style$theme.ca),
-								$rtfeldman$elm_css$Css$color($author$project$Style$theme.aR),
+								$rtfeldman$elm_css$Css$color($author$project$Style$theme.aN),
 								$rtfeldman$elm_css$Css$top($rtfeldman$elm_css$Css$zero),
 								$rtfeldman$elm_css$Css$padding($rtfeldman$elm_css$Css$zero)
 							]))
@@ -13563,7 +13569,7 @@ var $author$project$Style$label = _List_fromArray(
 		$rtfeldman$elm_css$Css$em(0.5)),
 		$rtfeldman$elm_css$Css$left(
 		$rtfeldman$elm_css$Css$em(0.5)),
-		$rtfeldman$elm_css$Css$color($author$project$Style$theme.bU),
+		$rtfeldman$elm_css$Css$color($author$project$Style$theme.bT),
 		$rtfeldman$elm_css$Css$pointerEvents($rtfeldman$elm_css$Css$none),
 		$rtfeldman$elm_css$Css$Transitions$transition(
 		_List_fromArray(
@@ -13812,9 +13818,9 @@ var $author$project$Pages$InvoiceInfo$view = F2(
 					]),
 				$author$project$UI$DivTable$emptyStyle));
 		var infoForm = function () {
-			var vatNumberInput = A5(renderInput, 'BTW Nummer', model.eh, $author$project$Pages$InvoiceInfo$UpdateVatNumber, model.a3, 'BTW Nummer is verplicht.');
-			var companyNameInput = A5(renderInput, 'Bedrijfsnaam', model.c7, $author$project$Pages$InvoiceInfo$UpdateCompanyName, model.aK, 'Bedrijfsnaam is verplicht.');
-			var addressInput = A5(renderTextArea, 'Adres', model.cR, $author$project$Pages$InvoiceInfo$UpdateAddress, model.aD, 'Adres is verplicht.');
+			var vatNumberInput = A5(renderInput, 'BTW Nummer', model.eh, $author$project$Pages$InvoiceInfo$UpdateVatNumber, model.a$, 'BTW Nummer is verplicht.');
+			var companyNameInput = A5(renderInput, 'Bedrijfsnaam', model.c8, $author$project$Pages$InvoiceInfo$UpdateCompanyName, model.aE, 'Bedrijfsnaam is verplicht.');
+			var addressInput = A5(renderTextArea, 'Adres', model.cS, $author$project$Pages$InvoiceInfo$UpdateAddress, model.aw, 'Adres is verplicht.');
 			return A2(
 				$author$project$UI$DivTable$renderBody,
 				formTableStyle,
@@ -13829,7 +13835,7 @@ var $author$project$Pages$InvoiceInfo$view = F2(
 					]));
 		}();
 		var evt = $author$project$Domain$Event$theEvent;
-		return model.bI ? A2(
+		return model.bG ? A2(
 			$rtfeldman$elm_css$Html$Styled$div,
 			_List_Nil,
 			_List_fromArray(
@@ -13855,7 +13861,7 @@ var $author$project$Pages$InvoiceInfo$view = F2(
 							_List_Nil,
 							_List_fromArray(
 								[
-									$rtfeldman$elm_css$Html$Styled$text(evt.bO)
+									$rtfeldman$elm_css$Html$Styled$text(evt.bM)
 								])),
 							A4(
 							$rtfeldman$elm_css$Html$Styled$styled,
@@ -13898,7 +13904,7 @@ var $author$project$Pages$InvoiceInfo$view = F2(
 							_List_Nil,
 							_List_fromArray(
 								[
-									$rtfeldman$elm_css$Html$Styled$text(evt.bO)
+									$rtfeldman$elm_css$Html$Styled$text(evt.bM)
 								])),
 							maybeTopButton,
 							infoForm,
@@ -14012,7 +14018,7 @@ var $author$project$Pages$OrderTickets$view = F2(
 							_List_fromArray(
 								[
 									$rtfeldman$elm_css$Html$Styled$text(
-									$elm$core$String$fromInt(ticketInfo.dJ))
+									$elm$core$String$fromInt(ticketInfo.bN))
 								]))
 						]),
 						_List_fromArray(
@@ -14107,7 +14113,7 @@ var $author$project$Pages$OrderTickets$view = F2(
 			}
 		}();
 		var maxFreeTickets = $elm$core$String$fromInt(
-			A2($elm$core$Basics$min, model.bb, 2));
+			A2($elm$core$Basics$min, model.cq, 2));
 		var formTableStyle = A2(
 			$author$project$UI$DivTable$customizeCellStyle,
 			_List_fromArray(
@@ -14126,10 +14132,10 @@ var $author$project$Pages$OrderTickets$view = F2(
 					]),
 				$author$project$UI$DivTable$emptyStyle));
 		var infoForm = function () {
-			var lastNameInput = A5(renderInput, 'Achternaam', model.e9, $author$project$Pages$OrderTickets$UpdateLastName, model.ac, 'Achternaam is verplicht.');
-			var emailInput = A5(renderInput, 'E-mailadres', model.eQ, $author$project$Pages$OrderTickets$UpdateEmail, model.Z && model._, 'Geef een geldig e-mailadres.');
-			var confirmEmailInput = A5(renderInput, 'E-mail Bevestigen', model.X, $author$project$Pages$OrderTickets$UpdateConfirmEmail, model.Y && model.al, 'E-mailadressen komen niet overeen.');
-			var christianNameInput = A5(renderInput, 'Voornaam', model.ez, $author$project$Pages$OrderTickets$UpdateChristianName, model.W, 'Voornaam is verplicht.');
+			var lastNameInput = A5(renderInput, 'Achternaam', model.e9, $author$project$Pages$OrderTickets$UpdateLastName, model.aP, 'Achternaam is verplicht.');
+			var emailInput = A5(renderInput, 'E-mailadres', model.eQ, $author$project$Pages$OrderTickets$UpdateEmail, model.aI && model.aJ, 'Geef een geldig e-mailadres.');
+			var confirmEmailInput = A5(renderInput, 'E-mail Bevestigen', model.aF, $author$project$Pages$OrderTickets$UpdateConfirmEmail, model.aG && model.a5, 'E-mailadressen komen niet overeen.');
+			var christianNameInput = A5(renderInput, 'Voornaam', model.ez, $author$project$Pages$OrderTickets$UpdateChristianName, model.aC, 'Voornaam is verplicht.');
 			var _v1 = shared.eL;
 			if (!_v1) {
 				return A2(
@@ -14186,7 +14192,7 @@ var $author$project$Pages$OrderTickets$view = F2(
 			_List_Nil,
 			_List_fromArray(
 				[
-					model.aL ? A2(
+					model.bv ? A2(
 					$rtfeldman$elm_css$Html$Styled$div,
 					_List_fromArray(
 						[
@@ -14217,7 +14223,7 @@ var $author$project$Pages$OrderTickets$view = F2(
 							_List_Nil,
 							_List_fromArray(
 								[
-									$rtfeldman$elm_css$Html$Styled$text(evt.bO)
+									$rtfeldman$elm_css$Html$Styled$text(evt.bM)
 								])),
 							dateTimeRow,
 							A4(
@@ -14269,7 +14275,7 @@ var $author$project$Pages$OrderTickets$view = F2(
 							A2($rtfeldman$elm_css$Html$Styled$br, _List_Nil, _List_Nil),
 							A2(
 							$author$project$Lib$ViewHelpers$showIfNot,
-							model.N,
+							model.ag,
 							A4(
 								$rtfeldman$elm_css$Html$Styled$styled,
 								$rtfeldman$elm_css$Html$Styled$div,
@@ -14284,8 +14290,8 @@ var $author$project$Pages$OrderTickets$view = F2(
 							ticketTableStyle,
 							_List_fromArray(
 								[
-									A3(ticketForm, model.w, $author$project$Pages$OrderTickets$AddStandardTicket, $author$project$Pages$OrderTickets$RemoveStandardTicket),
-									A3(ticketForm, model.x, $author$project$Pages$OrderTickets$AddVipTicket, $author$project$Pages$OrderTickets$RemoveVipTicket)
+									A3(ticketForm, model.E, $author$project$Pages$OrderTickets$AddStandardTicket, $author$project$Pages$OrderTickets$RemoveStandardTicket),
+									A3(ticketForm, model.F, $author$project$Pages$OrderTickets$AddVipTicket, $author$project$Pages$OrderTickets$RemoveVipTicket)
 								])),
 							maybeMargin,
 							maybeBottomButton
@@ -14352,12 +14358,12 @@ var $author$project$Pages$PaymentSuccess$view = F2(
 									_List_fromArray(
 										[
 											$rtfeldman$elm_css$Html$Styled$text(
-											A2($elm$core$String$repeat, model.R - 2, '.'))
+											A2($elm$core$String$repeat, model.ak - 2, '.'))
 										]))
 								]))
 						]))
 				]));
-		var _v0 = model.aX;
+		var _v0 = model.bP;
 		if (_v0.$ === 1) {
 			return verificatieView;
 		} else {
@@ -14444,7 +14450,7 @@ var $author$project$Pages$PaymentSuccess$view = F2(
 									]))
 							]));
 				} else {
-					var ticketHref = '/tickets/' + (orderInfo.ds + ('-' + orderInfo.eB));
+					var ticketHref = '/tickets/' + (orderInfo.dt + ('-' + orderInfo.eB));
 					return A2(
 						$rtfeldman$elm_css$Html$Styled$div,
 						_List_Nil,
@@ -14538,7 +14544,7 @@ var $author$project$Pages$TeesAndCees$Back = 0;
 var $rtfeldman$elm_css$VirtualDom$Styled$unstyledNode = $rtfeldman$elm_css$VirtualDom$Styled$Unstyled;
 var $rtfeldman$elm_css$Html$Styled$fromUnstyled = $rtfeldman$elm_css$VirtualDom$Styled$unstyledNode;
 var $elm_explorations$markdown$Markdown$defaultOptions = {
-	da: $elm$core$Maybe$Nothing,
+	db: $elm$core$Maybe$Nothing,
 	eX: $elm$core$Maybe$Just(
 		{ew: false, fB: false}),
 	fr: true,
@@ -14588,37 +14594,37 @@ var $author$project$Lib$DivTable$StyledCell = F2(
 var $rtfeldman$elm_css$Css$borderBottom3 = $rtfeldman$elm_css$Css$prop3('border-bottom');
 var $rtfeldman$elm_css$Css$borderCollapse = $rtfeldman$elm_css$Css$prop1('border-collapse');
 var $rtfeldman$elm_css$Css$borderTop3 = $rtfeldman$elm_css$Css$prop3('border-top');
-var $rtfeldman$elm_css$Css$collapse = {c$: 0, T: 'collapse', bs: 0};
+var $rtfeldman$elm_css$Css$collapse = {c0: 0, R: 'collapse', bo: 0};
 var $author$project$Lib$DivTable$customizeCellStyle = F2(
 	function (style, cfg) {
-		var cell = cfg.aH;
+		var cell = cfg.aA;
 		return _Utils_update(
 			cfg,
 			{
-				aH: $rtfeldman$elm_css$Css$batch(
+				aA: $rtfeldman$elm_css$Css$batch(
 					A2($elm$core$List$cons, cell, style))
 			});
 	});
 var $author$project$Lib$DivTable$customizeTableStyle = F2(
 	function (style, cfg) {
-		var table = cfg.bl;
+		var table = cfg.bh;
 		return _Utils_update(
 			cfg,
 			{
-				bl: $rtfeldman$elm_css$Css$batch(
+				bh: $rtfeldman$elm_css$Css$batch(
 					A2($elm$core$List$cons, table, style))
 			});
 	});
-var $rtfeldman$elm_css$Css$dashed = {y: 0, ay: 0, T: 'dashed'};
+var $rtfeldman$elm_css$Css$dashed = {w: 0, ar: 0, R: 'dashed'};
 var $author$project$Lib$DivTable$emptyStyle = {
-	aH: $rtfeldman$elm_css$Css$batch(_List_Nil),
-	bF: $rtfeldman$elm_css$Css$batch(_List_Nil),
-	bc: $rtfeldman$elm_css$Css$batch(_List_Nil),
-	ah: $elm$core$Maybe$Nothing,
-	au: $rtfeldman$elm_css$Css$batch(_List_Nil),
-	bl: $rtfeldman$elm_css$Css$batch(_List_Nil)
+	aA: $rtfeldman$elm_css$Css$batch(_List_Nil),
+	bD: $rtfeldman$elm_css$Css$batch(_List_Nil),
+	a8: $rtfeldman$elm_css$Css$batch(_List_Nil),
+	_: $elm$core$Maybe$Nothing,
+	an: $rtfeldman$elm_css$Css$batch(_List_Nil),
+	bh: $rtfeldman$elm_css$Css$batch(_List_Nil)
 };
-var $rtfeldman$elm_css$Css$noWrap = {a9: 0, bD: 0, T: 'nowrap', aC: 0};
+var $rtfeldman$elm_css$Css$noWrap = {a6: 0, bB: 0, R: 'nowrap', av: 0};
 var $rtfeldman$elm_css$Css$paddingRight = $rtfeldman$elm_css$Css$prop1('padding-right');
 var $pablohirafuji$elm_qrcode$QRCode$Quartile = 2;
 var $pablohirafuji$elm_qrcode$QRCode$QRCode = $elm$core$Basics$identity;
@@ -14687,17 +14693,17 @@ var $pablohirafuji$elm_qrcode$QRCode$Matrix$isOccupy = F4(
 		}
 	});
 var $pablohirafuji$elm_qrcode$QRCode$Matrix$nextModule = function (placement) {
-	var row = placement.au;
-	var col = placement.c4;
-	var isRight = placement.O;
-	var isUp = placement.be;
+	var row = placement.an;
+	var col = placement.c5;
+	var isRight = placement.N;
+	var isUp = placement.ba;
 	return isRight ? _Utils_update(
 		placement,
-		{c4: col - 1, O: false}) : (isUp ? _Utils_update(
+		{c5: col - 1, N: false}) : (isUp ? _Utils_update(
 		placement,
-		{c4: col + 1, O: true, au: row - 1}) : _Utils_update(
+		{c5: col + 1, N: true, an: row - 1}) : _Utils_update(
 		placement,
-		{c4: col + 1, O: true, au: row + 1}));
+		{c5: col + 1, N: true, an: row + 1}));
 };
 var $pablohirafuji$elm_qrcode$QRCode$Matrix$bitToColor = F2(
 	function (_byte, offset) {
@@ -14748,9 +14754,9 @@ var $elm$core$Array$set = F3(
 	});
 var $pablohirafuji$elm_qrcode$QRCode$Matrix$setDataModule = F3(
 	function (_v0, _byte, offset) {
-		var size = _v0.d6;
-		var row = _v0.au;
-		var col = _v0.c4;
+		var size = _v0.d7;
+		var row = _v0.an;
+		var col = _v0.c5;
 		return A2(
 			$elm$core$Array$set,
 			A3($pablohirafuji$elm_qrcode$QRCode$Matrix$getIndex, size, row, col),
@@ -14763,9 +14769,9 @@ var $pablohirafuji$elm_qrcode$QRCode$Matrix$addDataModule = F4(
 	function (placement, bytes, offset, matrix) {
 		addDataModule:
 		while (true) {
-			var size = placement.d6;
-			var row = placement.au;
-			var col = placement.c4;
+			var size = placement.d7;
+			var row = placement.an;
+			var col = placement.c5;
 			if (!bytes.b) {
 				return matrix;
 			} else {
@@ -14785,7 +14791,7 @@ var $pablohirafuji$elm_qrcode$QRCode$Matrix$addDataModule = F4(
 					if (col === 6) {
 						var $temp$placement = _Utils_update(
 							placement,
-							{c4: col - 1, O: true}),
+							{c5: col - 1, N: true}),
 							$temp$bytes = bytes,
 							$temp$offset = offset,
 							$temp$matrix = matrix;
@@ -14798,7 +14804,7 @@ var $pablohirafuji$elm_qrcode$QRCode$Matrix$addDataModule = F4(
 						if (row < 0) {
 							var $temp$placement = _Utils_update(
 								placement,
-								{c4: col - 2, O: true, be: false, au: 0}),
+								{c5: col - 2, N: true, ba: false, an: 0}),
 								$temp$bytes = bytes,
 								$temp$offset = offset,
 								$temp$matrix = matrix;
@@ -14811,7 +14817,7 @@ var $pablohirafuji$elm_qrcode$QRCode$Matrix$addDataModule = F4(
 							if (_Utils_cmp(row, size) > -1) {
 								var $temp$placement = _Utils_update(
 									placement,
-									{c4: col - 2, O: true, be: true, au: size - 1}),
+									{c5: col - 2, N: true, ba: true, an: size - 1}),
 									$temp$bytes = bytes,
 									$temp$offset = offset,
 									$temp$matrix = matrix;
@@ -14850,7 +14856,7 @@ var $pablohirafuji$elm_qrcode$QRCode$Matrix$addDataModule = F4(
 		}
 	});
 var $pablohirafuji$elm_qrcode$QRCode$Matrix$initPlacement = function (size) {
-	return {c4: size + 1, O: true, be: true, au: size + 1, d6: size};
+	return {c5: size + 1, N: true, ba: true, an: size + 1, d7: size};
 };
 var $pablohirafuji$elm_qrcode$QRCode$Matrix$addData = F3(
 	function (size, bytes, matrix) {
@@ -15795,10 +15801,10 @@ var $pablohirafuji$elm_qrcode$QRCode$Matrix$timingPattern = F2(
 			range);
 	});
 var $pablohirafuji$elm_qrcode$QRCode$Matrix$apply = function (_v0) {
-	var ecLevel = _v0.a.dc;
+	var ecLevel = _v0.a.dd;
 	var groupInfo = _v0.a.eY;
 	var bytes = _v0.b;
-	var version = groupInfo.cM;
+	var version = groupInfo.cN;
 	var size = ((version - 1) * 4) + 21;
 	return A2(
 		$elm$core$Result$map,
@@ -16057,9 +16063,9 @@ var $pablohirafuji$elm_qrcode$QRCode$Encode$charCountIndicatorLength = F2(
 var $pablohirafuji$elm_qrcode$QRCode$Encode$charCountIndicator = F2(
 	function (_v0, bits) {
 		var groupInfo = _v0.eY;
-		var inputStr = _v0.cs;
-		var mode = _v0.bM;
-		var length = A2($pablohirafuji$elm_qrcode$QRCode$Encode$charCountIndicatorLength, mode, groupInfo.cM);
+		var inputStr = _v0.ct;
+		var mode = _v0.bK;
+		var length = A2($pablohirafuji$elm_qrcode$QRCode$Encode$charCountIndicatorLength, mode, groupInfo.cN);
 		var charCount = (mode === 3) ? $elm$core$List$length(bits) : $elm$core$String$length(inputStr);
 		return _Utils_Tuple2(charCount, length);
 	});
@@ -16082,16 +16088,16 @@ var $pablohirafuji$elm_qrcode$QRCode$Encode$addInfoAndFinalBits = function (_v0)
 		model,
 		A2(
 			$pablohirafuji$elm_qrcode$QRCode$Encode$addFiller,
-			model.eY.bw,
+			model.eY.bs,
 			$pablohirafuji$elm_qrcode$QRCode$Encode$bitsToBytes(
 				A3(
 					$pablohirafuji$elm_qrcode$QRCode$Encode$addTerminator,
-					model.eY.bw,
+					model.eY.bs,
 					model.cc,
 					A2(
 						$elm$core$List$cons,
 						_Utils_Tuple2(
-							$pablohirafuji$elm_qrcode$QRCode$Encode$modeIndicator(model.bM),
+							$pablohirafuji$elm_qrcode$QRCode$Encode$modeIndicator(model.bK),
 							4),
 						A2(
 							$elm$core$List$cons,
@@ -16937,8 +16943,8 @@ var $pablohirafuji$elm_qrcode$QRCode$Encode$selectMode = function (input) {
 var $pablohirafuji$elm_qrcode$QRCode$Error$InputLengthOverflow = {$: 7};
 var $pablohirafuji$elm_qrcode$QRCode$Encode$filterCapacity = F3(
 	function (mode, dataLength, _v0) {
-		var version = _v0.cM;
-		var capacity = _v0.bw;
+		var version = _v0.cN;
+		var capacity = _v0.bs;
 		return _Utils_cmp(
 			A2($pablohirafuji$elm_qrcode$QRCode$Encode$charCountIndicatorLength, mode, version) + dataLength,
 			capacity) < 1;
@@ -16960,11 +16966,11 @@ var $pablohirafuji$elm_qrcode$QRCode$GroupInfo$byteCapacity = F2(
 var $pablohirafuji$elm_qrcode$QRCode$GroupInfo$newGroupInfo = F4(
 	function (version, ecPerBlock, group1, maybeGroup2) {
 		return {
-			bw: A2($pablohirafuji$elm_qrcode$QRCode$GroupInfo$byteCapacity, group1, maybeGroup2) * 8,
+			bs: A2($pablohirafuji$elm_qrcode$QRCode$GroupInfo$byteCapacity, group1, maybeGroup2) * 8,
 			eO: ecPerBlock,
-			dp: group1,
+			dq: group1,
 			fc: maybeGroup2,
-			cM: version
+			cN: version
 		};
 	});
 var $pablohirafuji$elm_qrcode$QRCode$GroupInfo$dataH = _List_fromArray(
@@ -18089,7 +18095,7 @@ var $pablohirafuji$elm_qrcode$QRCode$Encode$getVersion = F3(
 				A2(
 					$elm$core$List$sortBy,
 					function ($) {
-						return $.bw;
+						return $.bs;
 					},
 					A2(
 						$elm$core$List$filter,
@@ -18099,11 +18105,11 @@ var $pablohirafuji$elm_qrcode$QRCode$Encode$getVersion = F3(
 var $pablohirafuji$elm_qrcode$QRCode$Encode$versionToModel = F5(
 	function (inputStr, ecLevel, mode, partialBitsCount, groupInfo) {
 		return {
-			cc: partialBitsCount + A2($pablohirafuji$elm_qrcode$QRCode$Encode$charCountIndicatorLength, mode, groupInfo.cM),
-			dc: ecLevel,
+			cc: partialBitsCount + A2($pablohirafuji$elm_qrcode$QRCode$Encode$charCountIndicatorLength, mode, groupInfo.cN),
+			dd: ecLevel,
 			eY: groupInfo,
-			cs: inputStr,
-			bM: mode
+			ct: inputStr,
+			bK: mode
 		};
 	});
 var $pablohirafuji$elm_qrcode$QRCode$Encode$selectVersion = F4(
@@ -18177,7 +18183,7 @@ var $pablohirafuji$elm_qrcode$QRCode$Encode$toBlocks = function (_v0) {
 					A3(
 						$pablohirafuji$elm_qrcode$QRCode$Encode$breakList,
 						false,
-						groupInfo.dp,
+						groupInfo.dq,
 						_Utils_Tuple2(byteList, _List_Nil)))));
 	} else {
 		return A2(
@@ -18191,7 +18197,7 @@ var $pablohirafuji$elm_qrcode$QRCode$Encode$toBlocks = function (_v0) {
 				A3(
 					$pablohirafuji$elm_qrcode$QRCode$Encode$breakList,
 					true,
-					groupInfo.dp,
+					groupInfo.dq,
 					_Utils_Tuple2(byteList, _List_Nil))));
 	}
 };
@@ -18228,7 +18234,7 @@ var $pablohirafuji$elm_qrcode$QRCode$fromStringWith = F2(
 					return A2(
 						$elm$core$Result$map,
 						function (matrix) {
-							return {bi: matrix, cM: encodeModel.eY.cM};
+							return {be: matrix, cN: encodeModel.eY.cN};
 						},
 						$pablohirafuji$elm_qrcode$QRCode$Matrix$apply(
 							_Utils_Tuple2(encodeModel, encodedData)));
@@ -18263,12 +18269,12 @@ var $pablohirafuji$elm_qrcode$QRCode$Render$Svg$toRowLines = F2(
 	function (isDark, _v0) {
 		var lastRect = _v0.a;
 		var rowLines = _v0.b;
-		return isDark ? ((!lastRect.aw) ? _Utils_Tuple2(
+		return isDark ? ((!lastRect.ap) ? _Utils_Tuple2(
 			_Utils_update(
 				lastRect,
 				{fO: lastRect.fO + 1}),
 			rowLines) : _Utils_Tuple2(
-			{aw: 0, fO: 1},
+			{ap: 0, fO: 1},
 			A2(
 				$elm$core$List$cons,
 				$elm$core$String$concat(
@@ -18276,13 +18282,13 @@ var $pablohirafuji$elm_qrcode$QRCode$Render$Svg$toRowLines = F2(
 						[
 							(lastRect.fO > 0) ? ('h' + $elm$core$String$fromInt(lastRect.fO * $pablohirafuji$elm_qrcode$QRCode$Render$Svg$moduleSize)) : '',
 							'm',
-							$elm$core$String$fromInt(lastRect.aw * $pablohirafuji$elm_qrcode$QRCode$Render$Svg$moduleSize),
+							$elm$core$String$fromInt(lastRect.ap * $pablohirafuji$elm_qrcode$QRCode$Render$Svg$moduleSize),
 							' 0'
 						])),
 				rowLines))) : _Utils_Tuple2(
 			_Utils_update(
 				lastRect,
-				{aw: lastRect.aw + 1}),
+				{ap: lastRect.ap + 1}),
 			rowLines);
 	});
 var $elm$svg$Svg$Attributes$transform = _VirtualDom_attribute('transform');
@@ -18343,7 +18349,7 @@ var $pablohirafuji$elm_qrcode$QRCode$Render$Svg$viewBase = F3(
 											$elm$core$List$foldl,
 											$pablohirafuji$elm_qrcode$QRCode$Render$Svg$toRowLines,
 											_Utils_Tuple2(
-												{aw: 0, fO: 0},
+												{ap: 0, fO: 0},
 												_List_Nil)),
 										A2($elm$core$Basics$composeR, $pablohirafuji$elm_qrcode$QRCode$Render$Svg$appendLastRect, $elm$core$List$reverse)),
 									matrix)))))));
@@ -18351,7 +18357,7 @@ var $pablohirafuji$elm_qrcode$QRCode$Render$Svg$viewBase = F3(
 var $pablohirafuji$elm_qrcode$QRCode$Render$Svg$view = $pablohirafuji$elm_qrcode$QRCode$Render$Svg$viewBase(4);
 var $pablohirafuji$elm_qrcode$QRCode$toSvg = F2(
 	function (extraAttrs, _v0) {
-		var matrix = _v0.bi;
+		var matrix = _v0.be;
 		return A2($pablohirafuji$elm_qrcode$QRCode$Render$Svg$view, extraAttrs, matrix);
 	});
 var $elm$svg$Svg$Attributes$width = _VirtualDom_attribute('width');
@@ -18384,7 +18390,7 @@ var $author$project$Pages$Tickets$qrCodeView = function (message) {
 			$pablohirafuji$elm_qrcode$QRCode$fromString(message)));
 };
 var $author$project$Lib$DivTable$fromBody = function (bodyRows) {
-	return {ev: bodyRows, bE: _List_Nil};
+	return {ev: bodyRows, bC: _List_Nil};
 };
 var $author$project$Lib$ListHelpers$mapFML = F2(
 	function (_v0, items) {
@@ -18422,7 +18428,7 @@ var $author$project$Lib$DivTable$renderCell = F2(
 			_List_fromArray(
 				[
 					$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$tableCell),
-					tableStyleConfig.aH
+					tableStyleConfig.aA
 				]));
 		if (!cell.$) {
 			var content = cell.a;
@@ -18450,7 +18456,7 @@ var $author$project$Lib$DivTable$renderCellStyled = F3(
 			_List_fromArray(
 				[
 					$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$tableCell),
-					tableStyleConfig.aH
+					tableStyleConfig.aA
 				]));
 		if (!cell.$) {
 			var content = cell.a;
@@ -18481,9 +18487,9 @@ var $author$project$Lib$DivTable$renderFirstRowRounded = F2(
 			_List_fromArray(
 				[
 					$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$tableRow),
-					tableStyleConfig.au
+					tableStyleConfig.an
 				]));
-		var _v0 = tableStyleConfig.ah;
+		var _v0 = tableStyleConfig._;
 		if (_v0.$ === 1) {
 			return A4(
 				$rtfeldman$elm_css$Html$Styled$styled,
@@ -18534,9 +18540,9 @@ var $author$project$Lib$DivTable$renderLastRowRounded = F2(
 			_List_fromArray(
 				[
 					$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$tableRow),
-					tableStyleConfig.au
+					tableStyleConfig.an
 				]));
-		var _v0 = tableStyleConfig.ah;
+		var _v0 = tableStyleConfig._;
 		if (_v0.$ === 1) {
 			return A4(
 				$rtfeldman$elm_css$Html$Styled$styled,
@@ -18587,7 +18593,7 @@ var $author$project$Lib$DivTable$renderRow = F2(
 			_List_fromArray(
 				[
 					$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$tableRow),
-					tableStyleConfig.au
+					tableStyleConfig.an
 				]));
 		return A4(
 			$rtfeldman$elm_css$Html$Styled$styled,
@@ -18602,7 +18608,7 @@ var $author$project$Lib$DivTable$renderRow = F2(
 	});
 var $author$project$Lib$DivTable$renderBodyInternal = F3(
 	function (withoutHeaders, tableStyleConfig, rows) {
-		var _v0 = tableStyleConfig.ah;
+		var _v0 = tableStyleConfig._;
 		if (_v0.$ === 1) {
 			return A2(
 				$elm$core$List$map,
@@ -18629,7 +18635,7 @@ var $author$project$Lib$DivTable$renderHeaderCell = F2(
 			_List_fromArray(
 				[
 					$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$tableCell),
-					tableStyleConfig.bF
+					tableStyleConfig.bD
 				]));
 		if (!cell.$) {
 			var content = cell.a;
@@ -18657,7 +18663,7 @@ var $author$project$Lib$DivTable$renderHeaderCellStyled = F3(
 			_List_fromArray(
 				[
 					$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$tableCell),
-					tableStyleConfig.bF
+					tableStyleConfig.bD
 				]));
 		if (!cell.$) {
 			var content = cell.a;
@@ -18688,12 +18694,12 @@ var $author$project$Lib$DivTable$renderHeader = F2(
 			_List_fromArray(
 				[
 					$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$tableRow),
-					tableStyleConfig.bc
+					tableStyleConfig.a8
 				]));
 		if (!cells.b) {
 			return $rtfeldman$elm_css$Html$Styled$text('');
 		} else {
-			var _v1 = tableStyleConfig.ah;
+			var _v1 = tableStyleConfig._;
 			if (_v1.$ === 1) {
 				return A4(
 					$rtfeldman$elm_css$Html$Styled$styled,
@@ -18741,12 +18747,12 @@ var $author$project$Lib$DivTable$renderHeader = F2(
 	});
 var $author$project$Lib$DivTable$render = F2(
 	function (tableStyleConfig, table) {
-		var withoutHeaders = $elm$core$List$isEmpty(table.bE);
+		var withoutHeaders = $elm$core$List$isEmpty(table.bC);
 		var tableStyle = $rtfeldman$elm_css$Css$batch(
 			_List_fromArray(
 				[
 					$rtfeldman$elm_css$Css$display($rtfeldman$elm_css$Css$table),
-					tableStyleConfig.bl
+					tableStyleConfig.bh
 				]));
 		return A4(
 			$rtfeldman$elm_css$Html$Styled$styled,
@@ -18756,7 +18762,7 @@ var $author$project$Lib$DivTable$render = F2(
 			_List_Nil,
 			A2(
 				$elm$core$List$cons,
-				A2($author$project$Lib$DivTable$renderHeader, tableStyleConfig, table.bE),
+				A2($author$project$Lib$DivTable$renderHeader, tableStyleConfig, table.bC),
 				A3($author$project$Lib$DivTable$renderBodyInternal, withoutHeaders, tableStyleConfig, table.ev)));
 	});
 var $author$project$Lib$DivTable$renderBody = F2(
@@ -18768,7 +18774,7 @@ var $author$project$Lib$DivTable$renderBody = F2(
 	});
 var $author$project$Pages$Tickets$ticketView = F5(
 	function (device, name, orderNr, index, ticket) {
-		var numberString = orderNr + ('-' + ticket.ds);
+		var numberString = orderNr + ('-' + ticket.dt);
 		var evt = $author$project$Domain$Event$theEvent;
 		if (device === 1) {
 			return A2(
@@ -18829,7 +18835,7 @@ var $author$project$Pages$Tickets$ticketView = F5(
 														_List_Nil,
 														_List_fromArray(
 															[
-																$rtfeldman$elm_css$Html$Styled$text(evt.bO)
+																$rtfeldman$elm_css$Html$Styled$text(evt.bM)
 															]))
 													]))
 											]),
@@ -18859,7 +18865,7 @@ var $author$project$Pages$Tickets$ticketView = F5(
 												$author$project$Lib$DivTable$Cell(
 												_List_fromArray(
 													[
-														$rtfeldman$elm_css$Html$Styled$text(evt.cR)
+														$rtfeldman$elm_css$Html$Styled$text(evt.cS)
 													]))
 											]),
 											_List_fromArray(
@@ -18994,7 +19000,7 @@ var $author$project$Pages$Tickets$ticketView = F5(
 														_List_Nil,
 														_List_fromArray(
 															[
-																$rtfeldman$elm_css$Html$Styled$text(evt.bO)
+																$rtfeldman$elm_css$Html$Styled$text(evt.bM)
 															]))
 													]))
 											]),
@@ -19024,7 +19030,7 @@ var $author$project$Pages$Tickets$ticketView = F5(
 												$author$project$Lib$DivTable$Cell(
 												_List_fromArray(
 													[
-														$rtfeldman$elm_css$Html$Styled$text(evt.cR)
+														$rtfeldman$elm_css$Html$Styled$text(evt.cS)
 													]))
 											]),
 											_List_fromArray(
@@ -19115,12 +19121,12 @@ var $author$project$Pages$Tickets$ticketsView = F4(
 	});
 var $author$project$Pages$Tickets$view = F2(
 	function (shared, model) {
-		var _v0 = model.aX;
+		var _v0 = model.bP;
 		if (_v0.$ === 1) {
 			return $rtfeldman$elm_css$Html$Styled$text('');
 		} else {
 			var orderInfo = _v0.a;
-			return (!model.bK) ? A2(
+			return (!model.bI) ? A2(
 				$rtfeldman$elm_css$Html$Styled$h1,
 				_List_Nil,
 				_List_fromArray(
@@ -19136,7 +19142,7 @@ var $author$project$Pages$Tickets$view = F2(
 						$rtfeldman$elm_css$Html$Styled$div,
 						$author$project$Style$container,
 						_List_Nil,
-						A4($author$project$Pages$Tickets$ticketsView, shared.eL, orderInfo.ez + (' ' + orderInfo.e9), orderInfo.ds, orderInfo.fD))
+						A4($author$project$Pages$Tickets$ticketsView, shared.eL, orderInfo.ez + (' ' + orderInfo.e9), orderInfo.dt, orderInfo.fD))
 					]));
 		}
 	});
@@ -19208,7 +19214,7 @@ var $author$project$Helmsman$view = F2(
 var $author$project$App$view = function (model) {
 	var mainFont = function () {
 		var fontSize = function () {
-			var _v1 = model.D.eL;
+			var _v1 = model.B.eL;
 			if (!_v1) {
 				return $rtfeldman$elm_css$Css$px(16);
 			} else {
@@ -19222,7 +19228,7 @@ var $author$project$App$view = function (model) {
 				$rtfeldman$elm_css$Css$fontWeight($rtfeldman$elm_css$Css$normal)
 			]);
 	}();
-	var _v0 = model.D.eR;
+	var _v0 = model.B.eR;
 	if (_v0.$ === 1) {
 		return A4(
 			$rtfeldman$elm_css$Html$Styled$styled,
@@ -19234,7 +19240,7 @@ var $author$project$App$view = function (model) {
 					A2(
 					$rtfeldman$elm_css$Html$Styled$map,
 					$author$project$App$HelmsmanMsg,
-					A2($author$project$Helmsman$view, model.D, model.aS))
+					A2($author$project$Helmsman$view, model.B, model.aO))
 				]));
 	} else {
 		var err = _v0.a;
@@ -19254,11 +19260,11 @@ var $author$project$App$main = $elm$browser$Browser$application(
 						A2(
 						$elm$core$Platform$Sub$map,
 						$author$project$App$SharedMsg,
-						$author$project$Shared$subscriptions(m.D)),
+						$author$project$Shared$subscriptions(m.B)),
 						A2(
 						$elm$core$Platform$Sub$map,
 						$author$project$App$HelmsmanMsg,
-						$author$project$Helmsman$subscriptions(m.aS))
+						$author$project$Helmsman$subscriptions(m.aO))
 					]));
 		},
 		fI: $author$project$App$update,

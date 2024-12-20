@@ -38,6 +38,8 @@ encoder orderInfo =
         , ( "lastName", Json.Encode.string orderInfo.lastName )
         , ( "email", Json.Encode.string orderInfo.email )
         , ( "ticketsInfo", Json.Encode.list ticketEncoder orderInfo.ticketsInfo )
+        , ( "tickets", Json.Encode.list Json.Encode.string [] )
+        , ( "code", Json.Encode.string "PROCESSING" )
         ]
 
 
