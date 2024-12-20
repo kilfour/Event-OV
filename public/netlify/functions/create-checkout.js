@@ -11,7 +11,7 @@ exports.handler = async function (event, context) {
                 value: data.amount, // You must send the correct number of decimals, thus we enforce the use of strings
             },
             description: data.orderId,
-            redirectUrl: 'https://pequivents.netlify.app/payment/' + data.orderId,
+            redirectUrl: 'https://pequivents.netlify.app/payment-success/' + data.orderId,
             webhookUrl: 'https://pequivents.netlify.app/.netlify/functions/webhook',
         });
         var url = payment.getCheckoutUrl();
