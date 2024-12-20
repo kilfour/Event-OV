@@ -4,8 +4,6 @@ import Helmsman
 import Pages.Home as Home
 import Pages.InvoiceInfo as InvoiceInfo
 import Pages.OrderTickets as OrderTickets
-import Pages.OrderTicketsTemp as OrderTicketsTemp
-import Pages.Payment as Payment
 import Pages.PaymentSuccess as PaymentSuccess
 import Pages.TeesAndCees as TeesAndCees
 import Pages.Tickets as Tickets
@@ -17,10 +15,9 @@ import Url.Parser as Parser exposing ((</>), Parser, oneOf)
 type Route
     = NotFound
     | Splash
+    | Maintenance
     | Home
     | OrderTickets
-    | OrderTicketsTemp
-    | Payment String
     | PaymentSuccess String
     | TeesAndCees
     | InvoiceInfo
@@ -30,11 +27,9 @@ type Route
 parser : Parser (Route -> a) a
 parser =
     oneOf
-        [ Parser.map Home Parser.top
+        [ Parser.map Maintenance Parser.top
         , Parser.map Home (Parser.s "home")
         , Parser.map OrderTickets (Parser.s "order-tickets")
-        , Parser.map OrderTicketsTemp (Parser.s "order-tickets-temp")
-        , Parser.map Payment (Parser.s "payment" </> Parser.string)
         , Parser.map PaymentSuccess (Parser.s "payment-success" </> Parser.string)
         , Parser.map TeesAndCees (Parser.s "tees-and-cees")
         , Parser.map InvoiceInfo (Parser.s "invoice-info")
@@ -60,6 +55,9 @@ changeRouteTo route model =
         Splash ->
             ( { model | helmsman = Helmsman.SplashPage }, Cmd.none )
 
+        Maintenance ->
+            ( { model | helmsman = Helmsman.MaintenancePage }, Cmd.none )
+
         Home ->
             ( { model | helmsman = Helmsman.HomePage Home.init }, Cmd.none )
 
@@ -69,20 +67,6 @@ changeRouteTo route model =
                     OrderTickets.init model.shared
             in
             ( { model | helmsman = Helmsman.OrderTicketsPage page }, Cmd.map Helmsman.OrderTicketsMsg cmd )
-
-        OrderTicketsTemp ->
-            let
-                ( page, cmd ) =
-                    OrderTicketsTemp.init model.shared
-            in
-            ( { model | helmsman = Helmsman.OrderTicketsTempPage page }, Cmd.map Helmsman.OrderTicketsTempMsg cmd )
-
-        Payment orderId ->
-            let
-                ( page, cmd ) =
-                    Payment.init model.shared orderId
-            in
-            ( { model | helmsman = Helmsman.PaymentPage page }, Cmd.map Helmsman.PaymentMsg cmd )
 
         PaymentSuccess orderId ->
             let

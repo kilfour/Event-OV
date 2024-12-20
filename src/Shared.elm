@@ -2,7 +2,6 @@ module Shared exposing (..)
 
 import Api.CreateCheckOut as CreateCheckOut
 import Api.Helpers.ObjectId exposing (Id)
-import Api.LogToServer
 import Api.OrderInfoEntered as OrderInfoEntered
 import Browser.Dom
 import Browser.Events
@@ -63,8 +62,6 @@ type Msg
     | OrderInfoEntered OrderInfoEntered.OrderInfo Float
     | OrderInfoEnteredSaved (Result Http.Error Id)
     | CheckOutCreated (Result Http.Error String)
-    | LogToServer String
-    | StuffLogged (Result Http.Error Api.LogToServer.Response)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -96,13 +93,4 @@ update msg model =
             ( model, Nav.load url )
 
         CheckOutCreated (Err err) ->
-            ( { model | error = Just err }, Cmd.none )
-
-        LogToServer info ->
-            ( model, Api.LogToServer.dispatch model.baseApiUrl info StuffLogged )
-
-        StuffLogged (Ok _) ->
-            ( model, Cmd.none )
-
-        StuffLogged (Err err) ->
             ( { model | error = Just err }, Cmd.none )

@@ -1,7 +1,6 @@
 module Pages.PaymentSuccess exposing (..)
 
 import Api.GetOrderInfo as GetOrderInfo exposing (Order)
-import Api.SendMail as SendMail
 import Browser.Navigation as Nav
 import Css
 import Domain.Event exposing (..)
@@ -11,24 +10,22 @@ import Html.Styled.Events exposing (..)
 import Http
 import Lib.Effect as Effect exposing (Effect)
 import Pages.ViewParts.Banner as Banner
+import Process
 import Shared
 import Style
+import Task
 
 
 type alias Model =
-    { orderInfo : Maybe Order
-    }
-
-
-emptyModel : Model
-emptyModel =
-    { orderInfo = Nothing
+    { orderId : String
+    , numberOfTries : Int
+    , orderInfo : Maybe Order
     }
 
 
 init : Shared.Model -> String -> ( Model, Cmd Msg )
 init shared orderId =
-    ( emptyModel
+    ( { orderId = orderId, numberOfTries = 2, orderInfo = Nothing }
     , GetOrderInfo.dispatch shared.baseApiUrl orderId OrderInfoLoaded
     )
 
@@ -36,7 +33,7 @@ init shared orderId =
 type Msg
     = NoOp
     | OrderInfoLoaded (Result Http.Error Order)
-    | MailSend (Result Http.Error SendMail.MailResult)
+    | CheckOrderInfo
 
 
 update : Msg -> Shared.Model -> Model -> ( Model, Effect Shared.Msg Msg )
@@ -48,24 +45,22 @@ update msg shared model =
             )
 
         OrderInfoLoaded (Ok orderInfo) ->
-            ( { model | orderInfo = Just orderInfo }
-            , Effect.Cmd <|
-                SendMail.dispatch shared.baseApiUrl
-                    { email = orderInfo.email
-                    , orderId = orderInfo.id
-                    , total = totalAmount orderInfo
-                    , url = "https://pequivents.netlify.app/tickets/" ++ orderInfo.id ++ "-" ++ orderInfo.code
-                    }
-                    MailSend
+            let
+                cmd =
+                    if orderInfo.code == "PROCESSING" && model.numberOfTries <= 25 then
+                        Task.perform (always <| CheckOrderInfo) (Process.sleep (toFloat model.numberOfTries * 1000))
+
+                    else
+                        Cmd.none
+            in
+            ( { model | orderInfo = Just orderInfo, numberOfTries = model.numberOfTries + 1 }
+            , Effect.Cmd cmd
             )
 
+        CheckOrderInfo ->
+            ( model, Effect.Cmd <| GetOrderInfo.dispatch shared.baseApiUrl model.orderId OrderInfoLoaded )
+
         OrderInfoLoaded (Err error) ->
-            ( model, Effect.Shared <| Shared.Error error )
-
-        MailSend (Ok _) ->
-            ( model, Effect.none )
-
-        MailSend (Err error) ->
             ( model, Effect.Shared <| Shared.Error error )
 
 
@@ -76,48 +71,80 @@ totalAmount orderInfo =
 
 view : Shared.Model -> Model -> Html Msg
 view shared model =
-    case model.orderInfo of
-        Nothing ->
-            Html.div [] <|
-                [ Banner.view shared.device
-                ]
-
-        Just orderInfo ->
-            let
-                invoiceInfoLink =
-                    [ Html.div [] <|
-                        [ Html.text "Indien u een faktuur vereist, gelieve uw bedrijfs informatie in te geven via het volgende formulier :" ]
-                    , Html.div [] <|
-                        [ Html.styled Html.a [ Style.hyperLink, Css.fontSize (Css.em 1.25) ] [ href "/invoice-info" ] [ Html.text "Fakturatie gegevens" ] ]
-                    , Html.br [] []
-                    ]
-
-                ticketHref =
-                    "/tickets/" ++ orderInfo.id ++ "-" ++ orderInfo.code
-            in
+    let
+        verificatieView =
             Html.div [] <|
                 [ Banner.view shared.device
                 , Html.styled Html.div Style.container [] <|
-                    [ Html.styled Html.h2 ([ Css.marginBottom (Css.em 0.375), Css.paddingBottom (Css.em 0.5) ] ++ Style.pageHeader) [] [ Html.text "Tickets Aangekocht" ]
+                    [ Html.styled Html.h2 ([ Css.marginBottom (Css.em 0.375), Css.paddingBottom (Css.em 0.5) ] ++ Style.pageHeader) [] [ Html.text "Verificatie in behandeling." ]
                     , Html.styled Html.div [ Css.paddingLeft (Css.em 1), Css.paddingBottom (Css.em 1.5) ] [] <|
-                        -- invoiceInfoLink ++
                         [ Html.div [] <|
                             [ Html.text
-                                ("Hieronder vind u een link naar de aangekochte tickets. "
-                                    ++ "U kan deze afdrukken, bewaren als pdf (via 'Print to Pdf'), of u kan ook deze pagina rechtstreeks gebruiken als toegang op het event."
+                                ("We wachten op confirmatie van de betalings provider. Dit kan potentiëel wel enkele minuten duren onder niet ideale omstandigheden."
+                                    ++ "U ontvangt zowiezo een mail met uw tickets ook als u deze site verlaat."
                                 )
                             ]
                         , Html.br [] []
-                        , Html.div [] <|
-                            [ Html.text
-                                ("Een kopie van deze informatie inclusief link naar afdrukbare pagina is naar "
-                                    ++ orderInfo.email
-                                    ++ " verstuurd."
-                                )
-                            ]
                         , Html.br [] []
-                        , Html.div [] <|
-                            [ Html.styled Html.a [ Style.hyperLink, Css.fontSize (Css.em 1.25) ] [ href ticketHref ] [ Html.text "Tickets Weergeven" ] ]
+                        , Html.h3 [] <|
+                            [ Html.text <| String.repeat (model.numberOfTries - 2) "."
+                            ]
                         ]
                     ]
                 ]
+    in
+    case model.orderInfo of
+        Nothing ->
+            verificatieView
+
+        Just orderInfo ->
+            if orderInfo.code == "PROCESSING" then
+                verificatieView
+
+            else if orderInfo.code == "FAILED" then
+                Html.div [] <|
+                    [ Banner.view shared.device
+                    , Html.styled Html.div Style.container [] <|
+                        [ Html.styled Html.h2 ([ Css.marginBottom (Css.em 0.375), Css.paddingBottom (Css.em 0.5) ] ++ Style.pageHeader) [] [ Html.text "Betaling Mislukt" ]
+                        , Html.styled Html.div [ Css.paddingLeft (Css.em 1), Css.paddingBottom (Css.em 1.5) ] [] <|
+                            [ Html.div [] <|
+                                [ Html.text
+                                    "De betalings provider heeft u betaling geweigerd. Gebruik onderstaande link om terug te gaan naar de start pagina. "
+                                ]
+                            , Html.br [] []
+                            , Html.div [] <|
+                                [ Html.styled Html.a [ Style.hyperLink, Css.fontSize (Css.em 1.25) ] [ href "/" ] [ Html.text "Terug naar start pagina" ] ]
+                            ]
+                        ]
+                    ]
+
+            else
+                let
+                    ticketHref =
+                        "/tickets/" ++ orderInfo.id ++ "-" ++ orderInfo.code
+                in
+                Html.div [] <|
+                    [ Banner.view shared.device
+                    , Html.styled Html.div Style.container [] <|
+                        [ Html.styled Html.h2 ([ Css.marginBottom (Css.em 0.375), Css.paddingBottom (Css.em 0.5) ] ++ Style.pageHeader) [] [ Html.text "Tickets Aangekocht" ]
+                        , Html.styled Html.div [ Css.paddingLeft (Css.em 1), Css.paddingBottom (Css.em 1.5) ] [] <|
+                            [ Html.div [] <|
+                                [ Html.text
+                                    ("Hieronder vind u een link naar de aangekochte tickets. "
+                                        ++ "U kan deze afdrukken, bewaren als pdf (via 'Print to Pdf'), of u kan ook deze pagina rechtstreeks gebruiken als toegang op het event."
+                                    )
+                                ]
+                            , Html.br [] []
+                            , Html.div [] <|
+                                [ Html.text
+                                    ("Een kopie van deze informatie inclusief link naar afdrukbare pagina is naar "
+                                        ++ orderInfo.email
+                                        ++ " verstuurd."
+                                    )
+                                ]
+                            , Html.br [] []
+                            , Html.div [] <|
+                                [ Html.styled Html.a [ Style.hyperLink, Css.fontSize (Css.em 1.25) ] [ href ticketHref ] [ Html.text "Tickets Weergeven" ] ]
+                            ]
+                        ]
+                    ]

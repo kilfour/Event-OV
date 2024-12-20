@@ -1,6 +1,5 @@
 module Pages.OrderTickets exposing (..)
 
-import Api.GetFreeTicketsAvailable as GetFreeTicketsAvailable
 import Css
 import Domain.Event exposing (..)
 import Email
@@ -46,31 +45,6 @@ type alias Model =
     }
 
 
-
--- init : Shared.Model -> ( Model, Cmd Msg )
--- init shared =
---     ( { christianName = "a@a.aa"
---       , christianNameExists = True
---       , lastName = "a@a.aa"
---       , lastNameExists = True
---       , email = "a@a.aa"
---       , emailExists = True
---       , emailIsValid = True
---       , confirmEmail = "a@a.aa"
---       , confirmEmailExists = True
---       , emailMatches = True
---       , standardTicketInfo = { id = "LID", description = "Leden", price = 1, numberOfTickets = 0 }
---       , vipTicketInfo = { id = "N-LID", description = "Niet-Leden", price = 60, numberOfTickets = 0 }
---       , freeTicketInfo = { id = "GR", description = "Gratis", price = 0, numberOfTickets = 0 }
---       , freeTicketCode = "MMOKT0724"
---       , freeTicketCodeMatches = True
---       , hasTickets = True
---       , freeTicketsAvailable = 0
---       }
---     , GetFreeTicketsAvailable.dispatch shared.baseApiUrl FreeTicketsAvailableReceived
---     )
-
-
 init : Shared.Model -> ( Model, Cmd Msg )
 init shared =
     ( { christianName = ""
@@ -107,7 +81,6 @@ totalAmount model =
 
 type Msg
     = NoOp
-    | FreeTicketsAvailableReceived (Result Http.Error GetFreeTicketsAvailable.Response)
     | UpdateChristianName String
     | UpdateLastName String
     | UpdateEmail String
@@ -126,14 +99,6 @@ update msg _ model =
             ( model
             , Effect.None
             )
-
-        FreeTicketsAvailableReceived (Ok response) ->
-            ( { model | freeTicketsAvailable = response.amount }
-            , Effect.none
-            )
-
-        FreeTicketsAvailableReceived (Err error) ->
-            ( model, Effect.Shared <| Shared.Error error )
 
         UpdateChristianName str ->
             ( { model | christianName = str, christianNameExists = not <| String.isEmpty str }

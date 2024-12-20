@@ -3,11 +3,8 @@ import createMollieClient from '@mollie/api-client';
 exports.handler = async function (event, context) {
 
     try {
-
-        const data = JSON.parse(event.body);
-        console.log(event.body);
-
         const mollieClient = createMollieClient({ apiKey: 'live_7nuWz7gkkpvSERdUp7P25ActcrwGsx' });
+        //const mollieClient = createMollieClient({ apiKey: 'test_zPhwMGNRwTThJxUwGR9n4fJHtUVUaU' });
         const payment = await mollieClient.payments.create({
             amount: {
                 currency: 'EUR',
@@ -15,12 +12,9 @@ exports.handler = async function (event, context) {
             },
             description: data.orderId,
             redirectUrl: 'https://pequivents.netlify.app/payment/' + data.orderId,
-            // webhookUrl: 'https://webshop.example.org/payments/webhook/',
-
+            webhookUrl: 'https://pequivents.netlify.app/.netlify/functions/webhook',
         });
-        //console.log(payment);
         var url = payment.getCheckoutUrl();
-        console.log(url);
         return {
             statusCode: 200,
             body: url

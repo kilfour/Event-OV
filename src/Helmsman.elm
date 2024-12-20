@@ -7,8 +7,6 @@ import Lib.Effect as Effect
 import Pages.Home as Home
 import Pages.InvoiceInfo as InvoiceInfo
 import Pages.OrderTickets as OrderTickets
-import Pages.OrderTicketsTemp as OrderTicketsTemp
-import Pages.Payment as Payment
 import Pages.PaymentSuccess as PaymentSuccess
 import Pages.TeesAndCees as TeesAndCees
 import Pages.Tickets as Tickets
@@ -22,14 +20,13 @@ import Shared
 type Model
     = NotFound
     | SplashPage
+    | MaintenancePage
     | HomePage Home.Model
     | OrderTicketsPage OrderTickets.Model
     | PaymentSuccessPage PaymentSuccess.Model
-    | PaymentPage Payment.Model
     | TeesAndCeesPage TeesAndCees.Model
     | InvoiceInfoPage InvoiceInfo.Model
     | TicketsPage Tickets.Model
-    | OrderTicketsTempPage OrderTicketsTemp.Model
 
 
 
@@ -43,23 +40,16 @@ init =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    case model of
-        PaymentPage page ->
-            Sub.map PaymentMsg (Payment.subscriptions page)
-
-        _ ->
-            Sub.none
+    Sub.none
 
 
 type Msg
     = HomeMsg Home.Msg
     | OrderTicketsMsg OrderTickets.Msg
     | PaymentSuccessMsg PaymentSuccess.Msg
-    | PaymentMsg Payment.Msg
     | TeesAndCeesMsg TeesAndCees.Msg
     | InvoiceInfoMsg InvoiceInfo.Msg
     | TicketsMsg Tickets.Msg
-    | OrderTicketsTempMsg OrderTicketsTemp.Msg
 
 
 
@@ -90,13 +80,6 @@ update msg shared model =
             in
             ( PaymentSuccessPage updatedPage, Effect.map PaymentSuccessMsg effect )
 
-        ( PaymentMsg pageMsg, PaymentPage page ) ->
-            let
-                ( updatedPage, effect ) =
-                    Payment.update pageMsg shared page
-            in
-            ( PaymentPage updatedPage, Effect.map PaymentMsg effect )
-
         ( TeesAndCeesMsg pageMsg, TeesAndCeesPage page ) ->
             let
                 ( updatedPage, effect ) =
@@ -117,13 +100,6 @@ update msg shared model =
                     Tickets.update pageMsg shared page
             in
             ( TicketsPage updatedPage, Effect.map TicketsMsg effect )
-
-        ( OrderTicketsTempMsg pageMsg, OrderTicketsTempPage page ) ->
-            let
-                ( updatedPage, effect ) =
-                    OrderTicketsTemp.update pageMsg shared page
-            in
-            ( OrderTicketsTempPage updatedPage, Effect.map OrderTicketsTempMsg effect )
 
         -- ( AAAMsg pageMsg, AAAPage page ) ->
         --     let
@@ -146,6 +122,9 @@ view shared model =
         SplashPage ->
             h1 [] [ text "Loading Data" ]
 
+        MaintenancePage ->
+            h1 [] [ text "De site ondergaat momenteel een kort onderhoud en is tijdelijk offline." ]
+
         HomePage page ->
             Html.Styled.map HomeMsg <| Home.view shared page
 
@@ -155,9 +134,6 @@ view shared model =
         PaymentSuccessPage page ->
             Html.Styled.map PaymentSuccessMsg <| PaymentSuccess.view shared page
 
-        PaymentPage page ->
-            Html.Styled.map PaymentMsg <| Payment.view shared page
-
         TeesAndCeesPage page ->
             Html.Styled.map TeesAndCeesMsg <| TeesAndCees.view shared page
 
@@ -166,9 +142,6 @@ view shared model =
 
         TicketsPage page ->
             Html.Styled.map TicketsMsg <| Tickets.view shared page
-
-        OrderTicketsTempPage page ->
-            Html.Styled.map OrderTicketsTempMsg <| OrderTicketsTemp.view shared page
 
 
 
