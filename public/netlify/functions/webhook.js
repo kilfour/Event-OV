@@ -8,8 +8,8 @@ const { MailtrapTransport } = require("mailtrap");
 exports.handler = async function (event, context) {
     try {
         const q = faunadb.query;
-        //const mollieClient = createMollieClient({ apiKey: 'live_7nuWz7gkkpvSERdUp7P25ActcrwGsx' });
-        const mollieClient = createMollieClient({ apiKey: 'test_zPhwMGNRwTThJxUwGR9n4fJHtUVUaU' });
+        const mollieClient = createMollieClient({ apiKey: 'live_7nuWz7gkkpvSERdUp7P25ActcrwGsx' });
+        //const mollieClient = createMollieClient({ apiKey: 'test_zPhwMGNRwTThJxUwGR9n4fJHtUVUaU' });
         const mollieId = event.body.split("=")[1];
         const payment = await mollieClient.payments.get(mollieId);
         const orderId = payment.description;
