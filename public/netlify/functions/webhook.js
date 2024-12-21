@@ -13,7 +13,7 @@ exports.handler = async function (event, context) {
         const mollieId = event.body.split("=")[1];
         const payment = await mollieClient.payments.get(mollieId);
         const orderId = payment.description;
-        if (payment.status === 'paid') {
+        if (payment.status == 'paid') {
             const result = await connect
                 .query(q.Call(q.Function("orderPaid"), orderId), ((ret) => ret));
             const data = JSON.parse(result.body);
